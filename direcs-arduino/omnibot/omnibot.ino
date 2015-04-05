@@ -299,30 +299,8 @@ void setup()
    //
    DDRC = (1 << DDC0) | (1 << DDC1) | (1 << DDC2) | (1 << DDC4) | (1 << DDC5) | (1 << DDC6) | (1 << DDC7);
    
-   // DDRB is the SPI / I2C Port and set at init_spi in micromag.c
-   // PB6 is used for checking if the micromag modul is connected. High = connected. 
-   
-   // switch some bits on port A to input (camera pan tilt end switches)
-   //DDRA &= ~((1 << DDA0) | (1 << DDA1) | (1 << DDA2) | (1 << DDA3));
-   
-   
-   // switch port L (all PINS) to output [drive motor 1 to 3]
-   DDRL = 0xff;
-   
-   
-   // switch some bits on port D to output [read LED, motor 4]
-   DDRD |= (1 << DDD5) | (1 << DDD6) | (1 << DDD7);
-   
-   // switch some bits on port G to output [motor 4 pwm]
-   DDRG |= (1<<PIN5);
-   
-   
-   // switch port H (all PINS) to output [servos / RGB LEDs]
-   DDRH = 0xff;
-   
-   // switch some bits on port E to output [2 more servos]
-   DDRE |= (1 << DDE3) | (1 << DDE4);
-   */
+  */
+
   // red LED on. Now we know, that the program runs.
   redLED(ON);
 
@@ -334,7 +312,7 @@ void setup()
 
   // flashlight off
   relais(OFF);
-   
+  
   //-------------------------------------------------------------------------------------------------
   // turn all drive motor bits off
   //-------------------------------------------------------------------------------------------------
@@ -389,16 +367,6 @@ void setup()
   // Bit3 = Cam L Pan Endswitch
   //DDRK &= ~((1 << DDK0) | (1 << DDK1) | (1 << DDK2) | (1 << DDK3));
 
-  //----------------------------------------------------------------------------
-  // initialzie SPI stuff
-  //----------------------------------------------------------------------------
-
-
-  // turn OFF "power saving mode" for SPI (serial peripheral interface)!
-  // (turn on power for SPI)
-  PRR0 &= ~(1<<PRSPI);
-
-  init_spi();
 */
 
   // initialize the PWM timer (with compare value 100)  [this is the motor speed!]
@@ -1160,7 +1128,134 @@ void loop()
     analogWrite(motor3PWMPin, command.toInt());
     Serial.print("*mv0#");
     Serial.flush();
-  }/*
+  }
+
+
+
+/* to be ported to Arduino
+
+  // RGB LED 1
+  if (strncmp(stringbuffer, "*rgb1", 5) == 0)
+  {
+    // change first five chars for upcoming string conversion
+    stringbuffer[0] = '0';
+    stringbuffer[1] = '0';
+    stringbuffer[2] = '0';
+    stringbuffer[3] = '0';
+    stringbuffer[4] = '0';
+
+    // convert to int
+    i = atoi(stringbuffer);
+
+    // set speed / PWM
+    timerUpdate(RGB1, i);
+
+    // answer with "ok"
+    put_string("*rgb1#");
+  }
+  else
+  // RGB LED 2
+  if (strncmp(stringbuffer, "*rgb2", 5) == 0)
+  {
+    // change first five chars for upcoming string conversion
+    stringbuffer[0] = '0';
+    stringbuffer[1] = '0';
+    stringbuffer[2] = '0';
+    stringbuffer[3] = '0';
+    stringbuffer[4] = '0';
+
+    // convert to int
+    i = atoi(stringbuffer);
+
+    // set speed / PWM
+    timerUpdate(RGB2, i);
+
+    // answer with "ok"
+    put_string("*rgb2#");
+  }
+  else
+  // RGB LED 3
+  if (strncmp(stringbuffer, "*rgb3", 5) == 0)
+  {
+    // change first five chars for upcoming string conversion
+    stringbuffer[0] = '0';
+    stringbuffer[1] = '0';
+    stringbuffer[2] = '0';
+    stringbuffer[3] = '0';
+    stringbuffer[4] = '0';
+
+    // convert to int
+    i = atoi(stringbuffer);
+
+    // set speed / PWM
+    timerUpdate(RGB3, i);
+
+    // answer with "ok"
+    put_string("*rgb3#");
+  }
+  else
+  // RGB LED 4
+  if (strncmp(stringbuffer, "*rgb4", 5) == 0)
+  {
+    // change first five chars for upcoming string conversion
+    stringbuffer[0] = '0';
+    stringbuffer[1] = '0';
+    stringbuffer[2] = '0';
+    stringbuffer[3] = '0';
+    stringbuffer[4] = '0';
+
+    // convert to int
+    i = atoi(stringbuffer);
+
+    // set speed / PWM
+    timerUpdate(RGB4, i);
+
+    // answer with "ok"
+    put_string("*rgb4#");
+  }
+  else
+  // RGB LED 5
+  if (strncmp(stringbuffer, "*rgb5", 5) == 0)
+  {
+    // change first five chars for upcoming string conversion
+    stringbuffer[0] = '0';
+    stringbuffer[1] = '0';
+    stringbuffer[2] = '0';
+    stringbuffer[3] = '0';
+    stringbuffer[4] = '0';
+
+    // convert to int
+    i = atoi(stringbuffer);
+
+    // set speed / PWM
+    timerUpdate(RGB5, i);
+
+    // answer with "ok"
+    put_string("*rgb5#");
+  }
+  else
+  // RGB LED 6
+  if (strncmp(stringbuffer, "*rgb6", 5) == 0)
+  {
+    // change first five chars for upcoming string conversion
+    stringbuffer[0] = '0';
+    stringbuffer[1] = '0';
+    stringbuffer[2] = '0';
+    stringbuffer[3] = '0';
+    stringbuffer[4] = '0';
+
+    // convert to int
+    i = atoi(stringbuffer);
+
+    // set speed / PWM
+    timerUpdate(RGB6, i);
+
+    // answer with "ok"
+    put_string("*rgb6#");
+  }
+*/
+
+  /*
      else
      // BOTSTOP
      if (command == "*bst#")
@@ -1433,201 +1528,8 @@ void loop()
      
      // answer with "ok"
      put_string("*btr#");
-     }
-     else
-     // SET SERVO 1
-     if (strncmp(stringbuffer, "*sv1", 4)
-     {
-     // change first chars for upcoming string conversion
-     stringbuffer[0] = '0';
-     stringbuffer[1] = '0';
-     stringbuffer[2] = '0';
-     stringbuffer[3] = '0';
-     // get value from string
-     servoPosition = atoi(stringbuffer);
-     if (servoPosition == 0)
-     {
-     // stop PWM for servos 1, 2, 3 (due to same Atmel ports)
-     servoPWM123isOFF = 1;
-     stopPWMServo(1);
-     }
-     else
-     {
-     // turn on PWM if it was turned off before
-     if (servoPWM123isOFF == 1)
-     {
-     servoPWM123isOFF = 0;
-     // start PWM for servos 1, 2, 3 (due to same Atmel ports)
-     startPWMServo(1);
-     }
-     // set PWM
-     setServoPosition(1, servoPosition);
-     }
-     // answer with "ok"
-     put_string("*sv1#");
-     }
-     else
-     // SET SERVO 2
-     if (strncmp(stringbuffer, "*sv2", 4)
-     {
-     // change first chars for upcoming string conversion
-     stringbuffer[0] = '0';
-     stringbuffer[1] = '0';
-     stringbuffer[2] = '0';
-     stringbuffer[3] = '0';
-     // get value from string
-     servoPosition = atoi(stringbuffer);
-     if (servoPosition == 0)
-     {
-     // stop PWM for servos 1, 2, 3 (due to same Atmel ports)
-     servoPWM123isOFF = 1;
-     stopPWMServo(2);
-     }
-     else
-     {
-     // turn on PWM if it was turned off before
-     if (servoPWM123isOFF == 1)
-     {
-     servoPWM123isOFF = 0;
-     // start PWM for servos 1, 2, 3 (due to same Atmel ports)
-     startPWMServo(2);
-     }
-     // set PWM
-     setServoPosition(2, servoPosition);
-     }
-     // answer with "ok"
-     put_string("*sv2#");
-     }
-     else
-     // SET SERVO 3
-     if (strncmp(stringbuffer, "*sv3", 4)
-     {
-     // change first chars for upcoming string conversion
-     stringbuffer[0] = '0';
-     stringbuffer[1] = '0';
-     stringbuffer[2] = '0';
-     stringbuffer[3] = '0';
-     // get value from string
-     servoPosition = atoi(stringbuffer);
-     if (servoPosition == 0)
-     {
-     // stop PWM for servos 1, 2, 3 (due to same Atmel ports)
-     servoPWM123isOFF = 1;
-     stopPWMServo(3);
-     }
-     else
-     {
-     // turn on PWM if it was turned off before
-     if (servoPWM123isOFF == 1)
-     {
-     servoPWM123isOFF = 0;
-     // start PWM for servos 1, 2, 3 (due to same Atmel ports)
-     startPWMServo(3);
-     }
-     // set PWM
-     setServoPosition(3, servoPosition);
-     }
-     // answer with "ok"
-     put_string("*sv3#");
-     }
-     else
-     // SET SERVO 4
-     if (strncmp(stringbuffer, "*sv4", 4)
-     {
-     // change first chars for upcoming string conversion
-     stringbuffer[0] = '0';
-     stringbuffer[1] = '0';
-     stringbuffer[2] = '0';
-     stringbuffer[3] = '0';
-     // get value from string
-     servoPosition = atoi(stringbuffer);
-     if (servoPosition == 0)
-     {
-     // stop PWM for servos 4
-     servoPWM4isOFF = 1;
-     stopPWMServo(4);
-     }
-     else
-     {
-     // turn on PWM if it was turned off before
-     if (servoPWM4isOFF == 1)
-     {
-     servoPWM4isOFF = 0;
-     // start PWM for servo 4
-     startPWMServo(4);
-     }
-     // set PWM
-     setServoPosition(4, servoPosition);
-     }
-     // answer with "ok"
-     put_string("*sv4#");
-     }
-     else
-     // SET SERVO 5
-     if (strncmp(stringbuffer, "*sv5", 4)
-     {
-     // change first chars for upcoming string conversion
-     stringbuffer[0] = '0';
-     stringbuffer[1] = '0';
-     stringbuffer[2] = '0';
-     stringbuffer[3] = '0';
-     // get value from string
-     servoPosition = atoi(stringbuffer);
-     if (servoPosition == 0)
-     {
-     // stop PWM for servos 5, 6 (due to same Atmel ports)
-     servoPWM56isOFF = 1;
-     stopPWMServo(5);
-     }
-     else
-     {
-     // turn on PWM if it was turned off before
-     if (servoPWM56isOFF == 1)
-     {
-     servoPWM56isOFF = 0;
-     // start PWM for servos 5, 6 (due to same Atmel ports)
-     startPWMServo(5);
-     }
-     // set PWM
-     setServoPosition(5, servoPosition);
-     }
-     // answer with "ok"
-     put_string("*sv5#");
-     }
-     else
-     // SET SERVO 6
-     if (strncmp(stringbuffer, "*sv6", 4)
-     {
-     // change first chars for upcoming string conversion
-     stringbuffer[0] = '0';
-     stringbuffer[1] = '0';
-     stringbuffer[2] = '0';
-     stringbuffer[3] = '0';
-     // get value from string
-     servoPosition = atoi(stringbuffer);
-     if (servoPosition == 0)
-     {
-     // stop PWM for servos 5, 6 (due to same Atmel ports)
-     servoPWM56isOFF = 1;
-     stopPWMServo(6);
-     }
-     else
-     {
-     // turn on PWM if it was turned off before
-     if (servoPWM56isOFF == 1)
-     {
-     servoPWM56isOFF = 0;
-     // start PWM for servos 5, 6 (due to same Atmel ports)
-     startPWMServo(6);
-     }
-     // set PWM
-     setServoPosition(6, servoPosition);
-     }
-     // answer with "ok"
-     put_string("*sv6#");
-     }
-     */    // to be ported    
-  // } // serial data available
+  }
+*/    // to be ported    
 
   // no valid command found (i.e. *wtf# )
   // delete command string
