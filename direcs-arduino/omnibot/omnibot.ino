@@ -3,6 +3,7 @@
 int ledRed    = 13; /// @todo change name (color)
 int ledGreen  =  2;
 int ledYellow =  3;
+int relaisPin =  4;
 
 // test:
 const int analogInPin = A0;  // Analog input pin that the potentiometer is attached to
@@ -600,8 +601,8 @@ void loop()
       greenLED(OFF);
       yellowLED(OFF);
       
-        greenLED(OFF);
-        yellowLED(OFF);
+      greenLED(OFF);
+      yellowLED(OFF);
       
       /* to be ported    
        
@@ -613,13 +614,12 @@ void loop()
        PORTL &= ~(1<<PIN6);
        PORTL &= ~(1<<PIN7);
        PORTD &= ~(1<<PIN6);
-        greenLED(OFF);
-        yellowLED(OFF);
-      
        PORTD &= ~(1<<PIN7);
-       // flashlight off
-       relais(OFF);
        */
+       
+      // flashlight off
+      relais(OFF);
+       
       // red LED off. Know we know, that the program on the PC/Mac has initialised the Atmel
       redLED(OFF);
 
@@ -1712,33 +1712,31 @@ void yellowLED(uint8_t state)
 
 void greenLED(uint8_t state)
 {
-   if (state == ON)
-   {
-   // green LED on
-    digitalWrite(ledGreen, HIGH);
-   }
-   else
-   {
-   // green LED off
+  if (state == ON)
+  {
+     // green LED on
+     digitalWrite(ledGreen, HIGH);
+  }
+  else
+  {
+    // green LED off
     digitalWrite(ledGreen, LOW);
-   }
+  }
 }
 
 
 void relais(uint8_t state)
 {
-  /* // to be ported    
-   if (state == ON)
-   {
-   // relais on
-   PORTC |= (1<<PIN1);
-   }
-   else
-   {
-   // relais off
-   PORTC &= ~(1<<PIN1);
-   }
-   */
+  if (state == ON)
+  {
+     // relais on
+     digitalWrite(relaisPin, HIGH);
+  }
+  else
+  {
+    // relais off
+    digitalWrite(relaisPin, LOW);
+  }
 }
 
 
@@ -1751,8 +1749,8 @@ void relais(uint8_t state)
  
 
 // print a letter on the adafruit bi-color 8x8 led matrix
- void letter(String text, uint16_t color)
- {
+void letter(String text, uint16_t color)
+{
   /*------------------ DEBUG 2 ------------------------/
   matrix.clear();
   matrix.setTextColor(color);
@@ -1760,5 +1758,5 @@ void relais(uint8_t state)
   matrix.print(text);
   matrix.writeDisplay();
   //------------------ DEBUG 2 ------------------------*/
- }
- 
+}
+
