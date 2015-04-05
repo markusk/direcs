@@ -983,31 +983,27 @@ void loop()
     Serial.print("*mp1of#");
     Serial.flush();
   }
-  /*
-     else
-     // MOTOR 1 CLOCKWISE = forward
-     if (command == "*md1cw#")
-     {
-     // delete Motor1 A bit
-     PORTL &= ~(1<<PIN0);
-     // set Motor1 B bit
-     PORTL |= (1<<PIN1);
-     
-     // answer with "ok"
-     put_string("*md1cw#");
-     }
-     else
-     // MOTOR 1 COUNTERCLOCKWISE = backward
-     if (command == "*md1cc#")
-     {
-     // set Motor1 A bit
-     PORTL |= (1<<PIN0);
-     // delete Motor1 B bit
-     PORTL &= ~(1<<PIN1);
-     
-     // answer with "ok"
-     put_string("*md1cc#");
-     }
+  else
+  // MOTOR 1 CLOCKWISE = forward
+  if (command == "*md1cw#")
+  {
+    digitalWrite(motor1aPin, LOW);
+    digitalWrite(motor1bPin, HIGH);
+    Serial.print("*mp1cw#");
+    Serial.flush();
+  } /*
+  else
+  // MOTOR 1 COUNTERCLOCKWISE = backward
+  if (command == "*md1cc#")
+  {
+    // set Motor1 A bit
+    PORTL |= (1<<PIN0);
+    // delete Motor1 B bit
+    PORTL &= ~(1<<PIN1);
+
+    // answer with "ok"
+    put_string("*md1cc#");
+  }
      else
      // MOTOR1_SPEED_SET
      if (strncmp(stringbuffer, "*mv1", 4)
@@ -1030,19 +1026,16 @@ void loop()
     digitalWrite(motor2bPin, LOW);
     Serial.print("*mp2of#");
     Serial.flush();
+  }
+  else
+  // MOTOR 2 CLOCKWISE = forward
+  if (command == "*md2cw#")
+  {
+    digitalWrite(motor2aPin, LOW);
+    digitalWrite(motor2bPin, HIGH);
+    Serial.print("*mp2cw#");
+    Serial.flush();
   }/*
-     else
-     // MOTOR 2 CLOCKWISE = forward
-     if (command == "*md2cw#")
-     {
-     // delete Motor2 A bit
-     PORTL &= ~(1<<PIN2);
-     // set Motor2 B bit
-     PORTL |= (1<<PIN3);
-     
-     // answer with "ok"
-     put_string("*md2cw#");
-     }
      else
      // MOTOR 2 COUNTERCLOCKWISE = backward
      if (command == "*md2cc#")
@@ -1077,19 +1070,16 @@ void loop()
     digitalWrite(motor3bPin, LOW);
     Serial.print("*mp3of#");
     Serial.flush();
+  }
+  else
+  // MOTOR 3 CLOCKWISE = forward
+  if (command == "*md3cw#")
+  {
+    digitalWrite(motor3aPin, LOW);
+    digitalWrite(motor3bPin, HIGH);
+    Serial.print("*mp3cw#");
+    Serial.flush();
   }/*
-     else
-     // MOTOR 3 CLOCKWISE = forward
-     if (command == "*md3cw#")
-     {
-     // delete Motor3 A bit
-     PORTL &= ~(1<<PIN6);
-     // set Motor3 B bit
-     PORTL |= (1<<PIN7);
-     
-     // answer with "ok"
-     put_string("*md3cw#");
-     }
      else
      // MOTOR 3 COUNTERCLOCKWISE = backward
      if (command == "*md3cc#")
