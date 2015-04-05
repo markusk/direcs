@@ -345,10 +345,6 @@ void setup()
   cli();
 
 
-  // init AD converter with Interrrupt etc.
-  // initADC();
-
-
   // turn OFF "power saving mode" for AD converter (turn on power for ADC)
   PRR0 &= ~(1<<PRADC);
 
