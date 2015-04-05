@@ -288,120 +288,120 @@ void setup()
 
   /* omnibot to pe ported
    
-   // turn all drive motor bits off (except PWM bits)
-   // motor 1
-   PORTL &= ~(1<<PIN0);
-   PORTL &= ~(1<<PIN1);
-   // motor 2
-   PORTL &= ~(1<<PIN2);
-   PORTL &= ~(1<<PIN3);
-   // motor 3
-   PORTL &= ~(1<<PIN6);
-   PORTL &= ~(1<<PIN7);
-   // motor 4
-   PORTD &= ~(1<<PIN6);
-   PORTD &= ~(1<<PIN7);
+  // turn all drive motor bits off (except PWM bits)
+  // motor 1
+  PORTL &= ~(1<<PIN0);
+  PORTL &= ~(1<<PIN1);
+  // motor 2
+  PORTL &= ~(1<<PIN2);
+  PORTL &= ~(1<<PIN3);
+  // motor 3
+  PORTL &= ~(1<<PIN6);
+  PORTL &= ~(1<<PIN7);
+  // motor 4
+  PORTD &= ~(1<<PIN6);
+  PORTD &= ~(1<<PIN7);
    
    
    
-   //-------------------------------------------------------------
-   // no interrupts please!
-   // this is *here* for setting the interrupt control registers
-   //-------------------------------------------------------------
-   cli();
-   
-   
-   // init AD converter with Interrrupt etc.
-   // initADC();
-   
-   
-   // turn OFF "power saving mode" for AD converter (turn on power for ADC)
-   PRR0 &= ~(1<<PRADC);
-   
-   // switch some bits on port J to input
-   //
-   // Bit3 = Motor 1 Encoder 1
-   // Bit4 = Motor 1 Encoder 2
-   // Bit5 = Motor 2 Encoder 1
-   // Bit6 = Motor 2 Encoder 2
-   DDRJ &= ~((1 << DDJ3) | (1 << DDJ4) | (1 << DDJ5) | (1 << DDJ6));
-   
-   
-   // switch some bits on port K to input
-   //
-   // Bit0 = Cam R Tilt Endswitch
-   // Bit1 = Cam L Tilt Endswitch
-   // Bit2 = Cam R Pan Endswitch
-   // Bit3 = Cam L Pan Endswitch
-   //DDRK &= ~((1 << DDK0) | (1 << DDK1) | (1 << DDK2) | (1 << DDK3));
-   
-   //----------------------------------------------------------------------------
-   // initialzie SPI stuff
-   //----------------------------------------------------------------------------
-   
-   
-   // turn OFF "power saving mode" for SPI (serial peripheral interface)!
-   // (turn on power for SPI)
-   PRR0 &= ~(1<<PRSPI);
-   
-   init_spi();
-   
-   
-   // initialize the PWM timer (with compare value 100)  [this is the motor speed!]
-   // This value is changed by the mrs programm, when value is read from ini-file!
-   // 100 * 64 µs = 6400 µs = 6,4 ms
-   //
-   // drive motor 1
-   setPWMwidth(1, 60);
-   // drive motor 2
-   setPWMwidth(2, 60);
-   // drive motor 3
-   setPWMwidth(3, 60);
-   // drive motor 4
-   setPWMwidth(4, 60);
-   
-   // start the motor PWM timers
-   startPWM();
-   
-   // initialize the servo PWM timers
-   // This value will be changed by the direcs programm, when value is read from ini-file!
-   setServoPosition(1, 0);
-   setServoPosition(2, 0);
-   setServoPosition(3, 0);
-   setServoPosition(4, 0);
-   setServoPosition(5, 0);
-   setServoPosition(6, 0);
-   
-   // start the servo PWM timer
-   startPWMServo(1);
-   startPWMServo(2);
-   startPWMServo(3);
-   startPWMServo(4);
-   startPWMServo(5);
-   startPWMServo(6);
-   
-   unsigned char servoPosition    = 0;
-   unsigned char servoPWM123isOFF = 0;
-   unsigned char servoPWM4isOFF   = 0;
-   unsigned char servoPWM56isOFF  = 0;
-   
-   
-   
-   //-----------------------------------------------------
-   //-----------------------------------------------------
-   
-   
-   // UART 3 konfigurieren
-   UBRR3H = (unsigned char) (USART_BAUD_SELECT >> 8);
-   UBRR3L = (unsigned char) USART_BAUD_SELECT;
-   // enable UART3 and Interrupts for RX and TX
-   UCSR3B |= (1<<RXCIE3) | (1<<RXEN3) | (1<<TXEN3); 
-   
-   //----------------------------------------------------------------------------
-   // enable global interrupts
-   //----------------------------------------------------------------------------
-   sei();
-   */  // end to be ported
+  //-------------------------------------------------------------
+  // no interrupts please!
+  // this is *here* for setting the interrupt control registers
+  //-------------------------------------------------------------
+  cli();
+
+
+  // init AD converter with Interrrupt etc.
+  // initADC();
+
+
+  // turn OFF "power saving mode" for AD converter (turn on power for ADC)
+  PRR0 &= ~(1<<PRADC);
+
+  // switch some bits on port J to input
+  //
+  // Bit3 = Motor 1 Encoder 1
+  // Bit4 = Motor 1 Encoder 2
+  // Bit5 = Motor 2 Encoder 1
+  // Bit6 = Motor 2 Encoder 2
+  DDRJ &= ~((1 << DDJ3) | (1 << DDJ4) | (1 << DDJ5) | (1 << DDJ6));
+
+
+  // switch some bits on port K to input
+  //
+  // Bit0 = Cam R Tilt Endswitch
+  // Bit1 = Cam L Tilt Endswitch
+  // Bit2 = Cam R Pan Endswitch
+  // Bit3 = Cam L Pan Endswitch
+  //DDRK &= ~((1 << DDK0) | (1 << DDK1) | (1 << DDK2) | (1 << DDK3));
+
+  //----------------------------------------------------------------------------
+  // initialzie SPI stuff
+  //----------------------------------------------------------------------------
+
+
+  // turn OFF "power saving mode" for SPI (serial peripheral interface)!
+  // (turn on power for SPI)
+  PRR0 &= ~(1<<PRSPI);
+
+  init_spi();
+
+
+  // initialize the PWM timer (with compare value 100)  [this is the motor speed!]
+  // This value is changed by the mrs programm, when value is read from ini-file!
+  // 100 * 64 µs = 6400 µs = 6,4 ms
+  //
+  // drive motor 1
+  setPWMwidth(1, 60);
+  // drive motor 2
+  setPWMwidth(2, 60);
+  // drive motor 3
+  setPWMwidth(3, 60);
+  // drive motor 4
+  setPWMwidth(4, 60);
+
+  // start the motor PWM timers
+  startPWM();
+
+  // initialize the servo PWM timers
+  // This value will be changed by the direcs programm, when value is read from ini-file!
+  setServoPosition(1, 0);
+  setServoPosition(2, 0);
+  setServoPosition(3, 0);
+  setServoPosition(4, 0);
+  setServoPosition(5, 0);
+  setServoPosition(6, 0);
+
+  // start the servo PWM timer
+  startPWMServo(1);
+  startPWMServo(2);
+  startPWMServo(3);
+  startPWMServo(4);
+  startPWMServo(5);
+  startPWMServo(6);
+
+  unsigned char servoPosition    = 0;
+  unsigned char servoPWM123isOFF = 0;
+  unsigned char servoPWM4isOFF   = 0;
+  unsigned char servoPWM56isOFF  = 0;
+
+
+
+  //-----------------------------------------------------
+  //-----------------------------------------------------
+
+
+  // UART 3 konfigurieren
+  UBRR3H = (unsigned char) (USART_BAUD_SELECT >> 8);
+  UBRR3L = (unsigned char) USART_BAUD_SELECT;
+  // enable UART3 and Interrupts for RX and TX
+  UCSR3B |= (1<<RXCIE3) | (1<<RXEN3) | (1<<TXEN3); 
+
+  //----------------------------------------------------------------------------
+  // enable global interrupts
+  //----------------------------------------------------------------------------
+  sei();
+  */  // end to be ported
 }
 
 
@@ -409,9 +409,7 @@ void loop()
 {
   static uint8_t string_started = 0;  // Sind wir jetzt im String?
 
-// Serial.println("serialEvent"); Okay
-
-//  letter("w", LED_RED);
+  //  letter("w", LED_RED);
 
   do
   {
@@ -575,388 +573,389 @@ void loop()
 */
 
   // Wurde ein kompletter String empfangen und ist der Buffer ist leer?
-    // delete flag
-    stringComplete = false;
+  // delete flag
+  stringComplete = false;
 
+  /* to be ported    
+  // Everything's fine, so reset the watchdog timer (wdt).
+  //  wdt_reset();
+  */
+
+  //--------------------------
+  // check what was received
+  //--------------------------
+
+  /*------------------ DEBUG ------------------------
+  lcd.setBacklight(BLUE);
+  lcd.setCursor(0,1);
+  lcd.print("commmand=");
+  lcd.print(command);
+  lcd.print(".");
+  //------------------ DEBUG ------------------------*/
+
+  // RESET / INIT
+  if (command == "*re#")
+  {
+    greenLED(OFF);
+    yellowLED(OFF);
+    
+    greenLED(OFF);
+    yellowLED(OFF);
+    
     /* to be ported    
-     // Everything's fine, so reset the watchdog timer (wdt).
-     //  wdt_reset();
+
+    // turn all drive motor bits off (except PWM bits)
+    PORTL &= ~(1<<PIN0);
+    PORTL &= ~(1<<PIN1);
+    PORTL &= ~(1<<PIN2);
+    PORTL &= ~(1<<PIN3);
+    PORTL &= ~(1<<PIN6);
+    PORTL &= ~(1<<PIN7);
+    PORTD &= ~(1<<PIN6);
+    PORTD &= ~(1<<PIN7);
+    */
+     
+    // flashlight off
+    relais(OFF);
+     
+    // red LED off. Know we know, that the program on the PC/Mac has initialised the Atmel
+    redLED(OFF);
+
+    // setServoPosition(1, 17); // <- exact position now in the mrs.ini!
+    // setServoPosition(2, 19); // <- exact position now in the mrs.ini!
+    // setServoPosition(3, 23); // <- exact position now in the mrs.ini!
+    // setServoPosition(4, 19); // <- exact position now in the mrs.ini!
+    // setServoPosition(5, 19); // <- exact position now in the mrs.ini!
+    // setServoPosition(6, 22); // <- exact position now in the mrs.ini!
+
+    // answer with "ok"
+    // this answer is used to see if the robot is "on"
+    Serial.print("*re#");
+    // write all data immediately!
+    Serial.flush();
+
+    // e n a b l e  watchdog!
+    /* to be ported    
+     watchdog(ENABLE);
      */
+  }
+  /* to be ported    
+  else
+  // SLEEP (and turn off watchdog)
+  if (strcmp(stringbuffer, "*sl#") == 0)
+  {
+    // turn all drive motor bits off (except PWM bits)
+    PORTL &= ~(1<<PIN0);
+    PORTL &= ~(1<<PIN1);
+    PORTL &= ~(1<<PIN2);
+    PORTL &= ~(1<<PIN3);
+    PORTL &= ~(1<<PIN6);
+    PORTL &= ~(1<<PIN7);
+    PORTD &= ~(1<<PIN6);
+    PORTD &= ~(1<<PIN7);
+   
+    // flashlight off
+    relais(OFF);
+     
+    // red LED off
+    redLED(OFF);
+     
+    // d i s a b l e  watchdog!
+    watchdog(DISABLE);
+     
+    // answer
+    put_string("*sl#");
+  }
+  else
+  // READ_SENSOR_1
+  if (strcmp(stringbuffer, "*s1#") == 0)
+  {
+    // read ADC and send answer over serial port
+    sendUInt( readADC(SENSOR1) );
+  }
+  else
+  // READ_SENSOR_2
+  if (strcmp(stringbuffer, "*s2#") == 0)
+  {
+    // read ADC and send answer over serial port
+    sendUInt( readADC(SENSOR2) );
+  }
+  else
+  // READ_SENSOR_3
+  if (strcmp(stringbuffer, "*s3#") == 0)
+  {
+    // read ADC and send answer over serial port
+    sendUInt( readADC(SENSOR3) );
+  }
+  else
+  // READ_SENSOR_4
+  if (strcmp(stringbuffer, "*s4#") == 0)
+  {
+    // read ADC and send answer over serial port
+    sendUInt( readADC(SENSOR4) );
+  }
+  else
+  // READ_SENSOR_5
+  if (strcmp(stringbuffer, "*s5#") == 0)
+  {
+    // read ADC and send answer over serial port
+    sendUInt( readADC(SENSOR5) );
+  }
+  else
+  // READ_SENSOR_6
+  if (strcmp(stringbuffer, "*s6#") == 0)
+  {
+    // read ADC and send answer over serial port
+    sendUInt( readADC(SENSOR6) );
+  }
+  */
+  else
+  // READ_SENSOR_7 (24 V supply)
+  if (command == "*s7#")
+  {
+    /*------------------ DEBUG 2 ------------------------/
+    letter("z", LED_YELLOW);
+    //------------------ DEBUG 2 ------------------------*/
 
-    //--------------------------
-    // check what was received
-    //--------------------------
+    greenLED(OFF);
+    yellowLED(OFF);
 
-    /*------------------ DEBUG ------------------------
-    lcd.setBacklight(BLUE);
-    lcd.setCursor(0,1);
-    lcd.print("commmand=");
-    lcd.print(command);
-    lcd.print(".");
-    //------------------ DEBUG ------------------------*/
-
-    // RESET / INIT
-    if (command == "*re#")
+    // read the analog in value
+    // print the results to the serial monitor:
+    if (Serial.print("*") < 1)
     {
-      greenLED(OFF);
-      yellowLED(OFF);
-      
-      greenLED(OFF);
-      yellowLED(OFF);
-      
-      /* to be ported    
-       
-       // turn all drive motor bits off (except PWM bits)
-       PORTL &= ~(1<<PIN0);
-       PORTL &= ~(1<<PIN1);
-       PORTL &= ~(1<<PIN2);
-       PORTL &= ~(1<<PIN3);
-       PORTL &= ~(1<<PIN6);
-       PORTL &= ~(1<<PIN7);
-       PORTD &= ~(1<<PIN6);
-       PORTD &= ~(1<<PIN7);
-       */
-       
-      // flashlight off
-      relais(OFF);
-       
-      // red LED off. Know we know, that the program on the PC/Mac has initialised the Atmel
-      redLED(OFF);
+      /*------------------ DEBUG 2 ------------------------/
+      letter("y", LED_YELLOW);
+      //------------------ DEBUG 2 ------------------------*/
 
-      // setServoPosition(1, 17); // <- exact position now in the mrs.ini!
-      // setServoPosition(2, 19); // <- exact position now in the mrs.ini!
-      // setServoPosition(3, 23); // <- exact position now in the mrs.ini!
-      // setServoPosition(4, 19); // <- exact position now in the mrs.ini!
-      // setServoPosition(5, 19); // <- exact position now in the mrs.ini!
-      // setServoPosition(6, 22); // <- exact position now in the mrs.ini!
-
-      // answer with "ok"
-      // this answer is used to see if the robot is "on"
-      Serial.print("*re#");
-      // write all data immediately!
-      Serial.flush();
-
-      // e n a b l e  watchdog!
-      /* to be ported    
-       watchdog(ENABLE);
-       */
+      // ERROR!!
+      delay(10000);
+      return;
     }
-    /* to be ported    
-     else
-     // SLEEP (and turn off watchdog)
-     if (strcmp(stringbuffer, "*sl#") == 0)
-     {
-     // turn all drive motor bits off (except PWM bits)
-     PORTL &= ~(1<<PIN0);
-     PORTL &= ~(1<<PIN1);
-     PORTL &= ~(1<<PIN2);
-     PORTL &= ~(1<<PIN3);
-     PORTL &= ~(1<<PIN6);
-     PORTL &= ~(1<<PIN7);
-     PORTD &= ~(1<<PIN6);
-     PORTD &= ~(1<<PIN7);
-     
-     // flashlight off
-     relais(OFF);
-     
-     // red LED off
-     redLED(OFF);
-     
-     // d i s a b l e  watchdog!
-     watchdog(DISABLE);
-     
-     // answer
-     put_string("*sl#");
-     }
-     else
-     // READ_SENSOR_1
-     if (strcmp(stringbuffer, "*s1#") == 0)
-     {
-     // read ADC and send answer over serial port
-     sendUInt( readADC(SENSOR1) );
-     }
-     else
-     // READ_SENSOR_2
-     if (strcmp(stringbuffer, "*s2#") == 0)
-     {
-     // read ADC and send answer over serial port
-     sendUInt( readADC(SENSOR2) );
-     }
-     else
-     // READ_SENSOR_3
-     if (strcmp(stringbuffer, "*s3#") == 0)
-     {
-     // read ADC and send answer over serial port
-     sendUInt( readADC(SENSOR3) );
-     }
-     else
-     // READ_SENSOR_4
-     if (strcmp(stringbuffer, "*s4#") == 0)
-     {
-     // read ADC and send answer over serial port
-     sendUInt( readADC(SENSOR4) );
-     }
-     else
-     // READ_SENSOR_5
-     if (strcmp(stringbuffer, "*s5#") == 0)
-     {
-     // read ADC and send answer over serial port
-     sendUInt( readADC(SENSOR5) );
-     }
-     else
-     // READ_SENSOR_6
-     if (strcmp(stringbuffer, "*s6#") == 0)
-     {
-     // read ADC and send answer over serial port
-     sendUInt( readADC(SENSOR6) );
-     }
-     */    else
-      // READ_SENSOR_7 (24 V supply)
-      if (command == "*s7#")
-      {
-        /*------------------ DEBUG 2 ------------------------/
-        letter("z", LED_YELLOW);
-        //------------------ DEBUG 2 ------------------------*/
+    // write all data immediately!
+    Serial.flush();
 
-        greenLED(OFF);
-        yellowLED(OFF);
-      
-        // read the analog in value
-        // print the results to the serial monitor:
-        if (Serial.print("*") < 1)
-        {
-          /*------------------ DEBUG 2 ------------------------/
-          letter("y", LED_YELLOW);
-          //------------------ DEBUG 2 ------------------------*/
+    if (Serial.print( analogRead(SENSOR7) ) < 1)
+    {
+      /*------------------ DEBUG 2 ------------------------/
+      letter("x", LED_YELLOW);
+      //------------------ DEBUG 2 ------------------------*/
 
-          // ERROR!!
-          delay(10000);
-          return;
-        }
-        // write all data immediately!
-        Serial.flush();
+      // ERROR!!
+      delay(10000);
+      return;
+    }
+    // write all data immediately!
+    Serial.flush();
+    
+    if (Serial.print("#") < 1)
+    {
+      /*------------------ DEBUG 2 ------------------------/
+      letter("w", LED_YELLOW);
+      //------------------ DEBUG 2 ------------------------*/
 
-        if (Serial.print( analogRead(SENSOR7) ) < 1)
-        {
-          /*------------------ DEBUG 2 ------------------------/
-          letter("x", LED_YELLOW);
-          //------------------ DEBUG 2 ------------------------*/
+      // ERROR!!
+      delay(10000);
+      return;
+    }
+    // write all data immediately!
+    Serial.flush();
+    
+    /*------------------ DEBUG 2 ------------------------/
+    letter("A", LED_YELLOW);
+    //------------------ DEBUG 2 ------------------------*/
+  }
+  else
+  // READ_SENSOR_8 (12 V supply)
+  if (command == "*s8#")
+  {
+    /*------------------ DEBUG 2 ------------------------/
+    letter("u", LED_YELLOW);
+    //------------------ DEBUG 2 ------------------------*/
 
-          // ERROR!!
-          delay(10000);
-          return;
-        }
-        // write all data immediately!
-        Serial.flush();
-        
-        if (Serial.print("#") < 1)
-        {
-          /*------------------ DEBUG 2 ------------------------/
-          letter("w", LED_YELLOW);
-          //------------------ DEBUG 2 ------------------------*/
+    greenLED(OFF);
+    yellowLED(OFF);
 
-          // ERROR!!
-          delay(10000);
-          return;
-        }
-        // write all data immediately!
-        Serial.flush();
-        
-        /*------------------ DEBUG 2 ------------------------/
-        letter("A", LED_YELLOW);
-        //------------------ DEBUG 2 ------------------------*/
+    // read the analog in value
+    // print the results to the serial monitor:
+    if (Serial.print("*") < 1)
+    {
+      /*------------------ DEBUG 2 ------------------------/
+      letter("t", LED_YELLOW);
+      //------------------ DEBUG 2 ------------------------*/
+
+      // ERROR!!
+      delay(10000);
+      return;
+    }
+    // write all data immediately!
+    Serial.flush();
+
+    if (Serial.print( analogRead(SENSOR8) ) < 1)
+    {
+      /*------------------ DEBUG 2 ------------------------/
+      letter("s", LED_YELLOW);
+      //------------------ DEBUG 2 ------------------------*/
+
+      // ERROR!!
+      delay(10000);
+      return;
+    }
+    // write all data immediately!
+    Serial.flush();
+
+    if (Serial.print("#") < 1)
+    {
+      /*------------------ DEBUG 2 ------------------------/
+      letter("r", LED_YELLOW);
+      //------------------ DEBUG 2 ------------------------*/
+
+      // ERROR!!
+      delay(10000);
+      return;
+    }
+    // write all data immediately!
+    Serial.flush();
+
+    /*------------------ DEBUG 2 ------------------------/
+    letter("q", LED_YELLOW);
+    //------------------ DEBUG 2 ------------------------*/
+  }
+/*     else
+  // READ_SENSOR_16
+  // ultra sonic sensor !!
+  if (strcmp(stringbuffer, "*s16#") == 0)
+  {
+    // read ADC and send answer over serial port
+    sendUInt( ultraschall_messung() );
+  }
+  else
+  // READ 3D COMPASS CONNECTION
+  if (strcmp(stringbuffer, "*cc#") == 0)
+  {
+    // check if micromag is connected to Atmel-Board (PB6 = high)
+    if ( bit_is_set(PINB,PIN6) )
+    {
+    put_string("*cc#");
+    }
+    else
+    {
+      // not connected.
+      put_string("*er#");
+    }
+  }
+  else
+  // READ_AXIS_X
+  if (strcmp(stringbuffer, "*cx#") == 0)
+  {
+    // check if micromag is connected to Atmel-Board (PB6 = high)
+    if ( bit_is_set(PINB,PIN6) )
+    {
+      // read axis from the micromag3 sensor and send answer over serial port
+      sendUInt( readMicromag(READ_AXIS_X) );
       }
-      else
-     // READ_SENSOR_8 (12 V supply)
-      if (command == "*s8#")
-      {
-        /*------------------ DEBUG 2 ------------------------/
-        letter("u", LED_YELLOW);
-        //------------------ DEBUG 2 ------------------------*/
-
-        greenLED(OFF);
-        yellowLED(OFF);
-      
-        // read the analog in value
-        // print the results to the serial monitor:
-        if (Serial.print("*") < 1)
-        {
-          /*------------------ DEBUG 2 ------------------------/
-          letter("t", LED_YELLOW);
-          //------------------ DEBUG 2 ------------------------*/
-
-          // ERROR!!
-          delay(10000);
-          return;
-        }
-        // write all data immediately!
-        Serial.flush();
-
-        if (Serial.print( analogRead(SENSOR8) ) < 1)
-        {
-          /*------------------ DEBUG 2 ------------------------/
-          letter("s", LED_YELLOW);
-          //------------------ DEBUG 2 ------------------------*/
-
-          // ERROR!!
-          delay(10000);
-          return;
-        }
-        // write all data immediately!
-        Serial.flush();
-
-        if (Serial.print("#") < 1)
-        {
-          /*------------------ DEBUG 2 ------------------------/
-          letter("r", LED_YELLOW);
-          //------------------ DEBUG 2 ------------------------*/
-
-          // ERROR!!
-          delay(10000);
-          return;
-        }
-        // write all data immediately!
-        Serial.flush();
-
-        /*------------------ DEBUG 2 ------------------------/
-        letter("q", LED_YELLOW);
-        //------------------ DEBUG 2 ------------------------*/
+    else
+    {
+      // not connected.
+      sendUInt(0);
+    }
+  }
+  else
+  // READ_AXIS_Y
+  if (strcmp(stringbuffer, "*cy#") == 0)
+  {
+    // check if micromag is connected to Atmel-Board (PB6 = high)
+    if ( bit_is_set(PINB,PIN6) )
+    {
+      // read axis from the micromag3 sensor and send answer over serial port
+      sendUInt( readMicromag(READ_AXIS_Y) );
       }
-    /*     else
-     // READ_SENSOR_16
-     // ultra sonic sensor !!
-     if (strcmp(stringbuffer, "*s16#") == 0)
-     {
-     // read ADC and send answer over serial port
-     sendUInt( ultraschall_messung() );
-     }
-     else
-     // READ 3D COMPASS CONNECTION
-     if (strcmp(stringbuffer, "*cc#") == 0)
-     {
-     // check if micromag is connected to Atmel-Board (PB6 = high)
-     if ( bit_is_set(PINB,PIN6) )
-     {
-     put_string("*cc#");
-     }
-     else
-     {
-     // not connected.
-     put_string("*er#");
-     }
-     }
-     else
-     // READ_AXIS_X
-     if (strcmp(stringbuffer, "*cx#") == 0)
-     {
-     // check if micromag is connected to Atmel-Board (PB6 = high)
-     if ( bit_is_set(PINB,PIN6) )
-     {
-     // read axis from the micromag3 sensor and send answer over serial port
-     sendUInt( readMicromag(READ_AXIS_X) );
-     }
-     else
-     {
-     // not connected.
-     sendUInt(0);
-     }
-     }
-     else
-     // READ_AXIS_Y
-     if (strcmp(stringbuffer, "*cy#") == 0)
-     {
-     // check if micromag is connected to Atmel-Board (PB6 = high)
-     if ( bit_is_set(PINB,PIN6) )
-     {
-     // read axis from the micromag3 sensor and send answer over serial port
-     sendUInt( readMicromag(READ_AXIS_Y) );
-     }
-     else
-     {
-     // not connected.
-     sendUInt(0);
-     }
-     }
-     else
-     // READ_AXIS_Z
-     if (strcmp(stringbuffer, "*cz#") == 0)
-     {
-     // check if micromag is connected to Atmel-Board (PB6 = high)
-     if ( bit_is_set(PINB,PIN6) )
-     {
-     // read axis from the micromag3 sensor and send answer over serial port
-     sendUInt( readMicromag(READ_AXIS_Z) );
-     }
-     else
-     {
-     // not connected.
-     sendUInt(0);
-     }
-     }
-     else
-     // READ_MOTOR_SENSOR1
-     if (strcmp(stringbuffer, "*ms1#") == 0)
-     {
-     // read ADC and send answer over serial port
-     sendUInt( readADC(SENSORMOTOR1) );
-     }
-     else
-     // READ_MOTOR_SENSOR2
-     if (strcmp(stringbuffer, "*ms2#") == 0)
-     {
-     // read ADC and send answer over serial port
-     sendUInt( readADC(SENSORMOTOR2) );
-     }
-     else
-     // READ_MOTOR_DISTANCE1
-     if (strcmp(stringbuffer, "*dd1#") == 0)
-     {
-     // send driven distance of motor 1 encoder over serial port
-     sendUInt( rightDistanceCounter );
-     }
-     else
-     // READ_MOTOR_DISTANCE2
-     if (strcmp(stringbuffer, "*dd2#") == 0)
-     {
-     // send driven distance of motor 2 encoder over serial port
-     sendUInt( leftDistanceCounter );
-     }
-     else
-     // RESET_MOTOR_DISTANCE1
-     if (strcmp(stringbuffer, "*id1#") == 0)
-     {
-     // init driven distance of motor 1 (encoder)
-     rightDistanceCounter = 0;
-     rightWheelCounter = 0;
-     // answer with "ok"
-     put_string("*ok#");
-     }
-     else
-     // RESET_MOTOR_DISTANCE2
-     if (strcmp(stringbuffer, "*id2#") == 0)
-     {
-     // init driven distance of motor 2 (encoder)
-     leftDistanceCounter = 0;
-     leftWheelCounter = 0;
-     // answer with "ok"
-     put_string("*ok#");
-     }
-     else
-     // FLASHLIGHT ON
+    else
+    {
+      // not connected.
+      sendUInt(0);
+    }
+  }
+  else
+  // READ_AXIS_Z
+  if (strcmp(stringbuffer, "*cz#") == 0)
+  {
+    // check if micromag is connected to Atmel-Board (PB6 = high)
+    if ( bit_is_set(PINB,PIN6) )
+    {
+      // read axis from the micromag3 sensor and send answer over serial port
+      sendUInt( readMicromag(READ_AXIS_Z) );
+      }
+    else
+    {
+      // not connected.
+      sendUInt(0);
+    }
+  }
+  else
+  // READ_MOTOR_SENSOR1
+  if (strcmp(stringbuffer, "*ms1#") == 0)
+  {
+    // read ADC and send answer over serial port
+    sendUInt( readADC(SENSORMOTOR1) );
+  }
+  else
+  // READ_MOTOR_SENSOR2
+  if (strcmp(stringbuffer, "*ms2#") == 0)
+  {
+    // read ADC and send answer over serial port
+    sendUInt( readADC(SENSORMOTOR2) );
+  }
+  else
+  // READ_MOTOR_DISTANCE1
+  if (strcmp(stringbuffer, "*dd1#") == 0)
+  {
+    // send driven distance of motor 1 encoder over serial port
+    sendUInt( rightDistanceCounter );
+  }
+  else
+  // READ_MOTOR_DISTANCE2
+  if (strcmp(stringbuffer, "*dd2#") == 0)
+  {
+    // send driven distance of motor 2 encoder over serial port
+    sendUInt( leftDistanceCounter );
+  }
+  else
+  // RESET_MOTOR_DISTANCE1
+  if (strcmp(stringbuffer, "*id1#") == 0)
+  {
+    // init driven distance of motor 1 (encoder)
+    rightDistanceCounter = 0;
+    rightWheelCounter = 0;
+    // answer with "ok"
+    put_string("*ok#");
+  }
+  else
+  // RESET_MOTOR_DISTANCE2
+  if (strcmp(stringbuffer, "*id2#") == 0)
+  {
+    // init driven distance of motor 2 (encoder)
+    leftDistanceCounter = 0;
+    leftWheelCounter = 0;
+    // answer with "ok"
+    put_string("*ok#");
+  }
+  else
+  // FLASHLIGHT ON
      if (strcmp(stringbuffer, "*f0on#") == 0)
-     {
-     relais(ON);
-     yellowLED(ON);
+  {
+    relais(ON);
+    yellowLED(ON);
      put_string("*f0on#");
-     }
-     else
-     // FLASHLIGHT OFF
+  }
+  else
+  // FLASHLIGHT OFF
      if (strcmp(stringbuffer, "*f0of#") == 0)
-     {
-     relais(OFF);
-     yellowLED(OFF);
+  {
+    relais(OFF);
+    yellowLED(OFF);
      put_string("*f0of#");
-     }
+  }
      else
      // MOTOR1_OFF
      if (strcmp(stringbuffer, "*mp1of#") == 0)
