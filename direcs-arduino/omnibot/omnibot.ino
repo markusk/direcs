@@ -1135,7 +1135,7 @@ void loop()
 /* to be ported to Arduino
 
   // RGB LED 1
-  if (strncmp(stringbuffer, "*rgb1", 5) == 0)
+  if (command == "*rgb1", 5))
   {
     // change first five chars for upcoming string conversion
     stringbuffer[0] = '0';
@@ -1155,7 +1155,7 @@ void loop()
   }
   else
   // RGB LED 2
-  if (strncmp(stringbuffer, "*rgb2", 5) == 0)
+  if (command == "*rgb2", 5))
   {
     // change first five chars for upcoming string conversion
     stringbuffer[0] = '0';
@@ -1175,7 +1175,7 @@ void loop()
   }
   else
   // RGB LED 3
-  if (strncmp(stringbuffer, "*rgb3", 5) == 0)
+  if (command == "*rgb3", 5))
   {
     // change first five chars for upcoming string conversion
     stringbuffer[0] = '0';
@@ -1195,7 +1195,7 @@ void loop()
   }
   else
   // RGB LED 4
-  if (strncmp(stringbuffer, "*rgb4", 5) == 0)
+  if (command == "*rgb4", 5))
   {
     // change first five chars for upcoming string conversion
     stringbuffer[0] = '0';
@@ -1215,7 +1215,7 @@ void loop()
   }
   else
   // RGB LED 5
-  if (strncmp(stringbuffer, "*rgb5", 5) == 0)
+  if (command == "*rgb5", 5))
   {
     // change first five chars for upcoming string conversion
     stringbuffer[0] = '0';
@@ -1235,7 +1235,7 @@ void loop()
   }
   else
   // RGB LED 6
-  if (strncmp(stringbuffer, "*rgb6", 5) == 0)
+  if (command == "*rgb6", 5))
   {
     // change first five chars for upcoming string conversion
     stringbuffer[0] = '0';
