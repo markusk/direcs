@@ -736,8 +736,7 @@ void loop()
         // write all data immediately!
         Serial.flush();
 
-//        if (Serial.print( analogRead(SENSOR7) ) < 1)
-        if (Serial.print( 127 ) < 3)
+        if (Serial.print( analogRead(SENSOR7) ) < 1)
         {
           /*------------------ DEBUG 2 ------------------------/
           letter("x", LED_YELLOW);
@@ -793,8 +792,7 @@ void loop()
         // write all data immediately!
         Serial.flush();
 
-//        if (Serial.print( analogRead(SENSOR8) ) < 1)
-        if (Serial.print( 128 ) < 3)
+        if (Serial.print( analogRead(SENSOR8) ) < 1)
         {
           /*------------------ DEBUG 2 ------------------------/
           letter("s", LED_YELLOW);
