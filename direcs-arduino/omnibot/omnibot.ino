@@ -1,9 +1,16 @@
-// Pin 13 has an LED connected on most Arduino boards.
 // give it a name:
-int ledRed    = 13; /// @todo change name (color)
 int ledGreen  =  2;
 int ledYellow =  3;
 int relaisPin =  4;
+int motor1aPin =  5;
+int motor1bPin =  6;
+int motor2aPin =  7;
+int motor2bPin =  8;
+int motor3aPin =  9;
+int motor3bPin = 10;
+
+// Pin 13 has an LED connected on most Arduino boards.
+int ledRed    = 13; /// @todo change name (color)
 
 // test:
 const int analogInPin = A0;  // Analog input pin that the potentiometer is attached to
@@ -214,10 +221,16 @@ void setup()
   inputString.reserve(stringSize);
   command.reserve(stringSize);
 
-  // initialize the digital pin as an output.
+  // initialize some digital pins as an output.
   pinMode(ledRed, OUTPUT);
   pinMode(ledGreen, OUTPUT);
   pinMode(ledYellow, OUTPUT);
+  pinMode(motor1aPin, OUTPUT);
+  pinMode(motor1bPin, OUTPUT);
+  pinMode(motor2aPin, OUTPUT);
+  pinMode(motor2bPin, OUTPUT);
+  pinMode(motor3aPin, OUTPUT);
+  pinMode(motor3bPin, OUTPUT);
 
   // this an input
   pinMode(analogInPin, INPUT);
@@ -602,18 +615,13 @@ void loop()
     greenLED(OFF);
     yellowLED(OFF);
     
-    /* to be ported    
-
     // turn all drive motor bits off (except PWM bits)
-    PORTL &= ~(1<<PIN0);
-    PORTL &= ~(1<<PIN1);
-    PORTL &= ~(1<<PIN2);
-    PORTL &= ~(1<<PIN3);
-    PORTL &= ~(1<<PIN6);
-    PORTL &= ~(1<<PIN7);
-    PORTD &= ~(1<<PIN6);
-    PORTD &= ~(1<<PIN7);
-    */
+    digitalWrite(motor1aPin, LOW);
+    digitalWrite(motor1bPin, LOW);
+    digitalWrite(motor2aPin, LOW);
+    digitalWrite(motor2bPin, LOW);
+    digitalWrite(motor3aPin, LOW);
+    digitalWrite(motor3bPin, LOW);
      
     // flashlight off
     relais(OFF);
@@ -639,20 +647,17 @@ void loop()
      watchdog(ENABLE);
      */
   }
-  /* to be ported    
   else
   // SLEEP (and turn off watchdog)
-  if (strcmp(stringbuffer, "*sl#") == 0)
+  if (command == "*sl#")
   {
     // turn all drive motor bits off (except PWM bits)
-    PORTL &= ~(1<<PIN0);
-    PORTL &= ~(1<<PIN1);
-    PORTL &= ~(1<<PIN2);
-    PORTL &= ~(1<<PIN3);
-    PORTL &= ~(1<<PIN6);
-    PORTL &= ~(1<<PIN7);
-    PORTD &= ~(1<<PIN6);
-    PORTD &= ~(1<<PIN7);
+    digitalWrite(motor1aPin, LOW);
+    digitalWrite(motor1bPin, LOW);
+    digitalWrite(motor2aPin, LOW);
+    digitalWrite(motor2bPin, LOW);
+    digitalWrite(motor3aPin, LOW);
+    digitalWrite(motor3bPin, LOW);
    
     // flashlight off
     relais(OFF);
@@ -660,12 +665,17 @@ void loop()
     // red LED off
     redLED(OFF);
      
+    /* to be ported to Arduino
+    //
     // d i s a b l e  watchdog!
     watchdog(DISABLE);
+    */
      
     // answer
-    put_string("*sl#");
+    Serial.print("*sl#");
+    Serial.flush();
   }
+  /* to be ported    
   else
   // READ_SENSOR_1
   if (strcmp(stringbuffer, "*s1#") == 0)
