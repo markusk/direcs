@@ -1060,21 +1060,18 @@ void loop()
     digitalWrite(motor2bPin, LOW);
     Serial.print("*md2cc#");
     Serial.flush();
-  }/*
-     else
-     // MOTOR2_SPEED_SET
-     if (strncmp(stringbuffer, "*mv2", 4)
-     {
-     // change first chars for upcoming string conversion
-     stringbuffer[0] = '0';
-     stringbuffer[1] = '0';
-     stringbuffer[2] = '0';
-     stringbuffer[3] = '0';
-     // get value from string and set speed
-     setPWMwidth(2, atoi(stringbuffer));
-     // answer with "ok"
-     put_string("*mv2#");
-     }*/
+  }
+  else
+  // MOTOR2_SPEED_SET
+  if (command.startsWith("*mv2"))
+  {
+    // get the 3 digits which contain the speed
+    command = command.substring(5, 3);
+    // get value from string and set speed
+    analogWrite(motor2PWMPin, command.toInt());
+    Serial.print("*mv2#");
+    Serial.flush();
+  }
   else
   // MOTOR3_OFF
   if (command == "*mp3of#")
@@ -1101,21 +1098,18 @@ void loop()
     digitalWrite(motor3bPin, LOW);
     Serial.print("*md3cc#");
     Serial.flush();
-  }/*
-     else
-     // MOTOR3_SPEED_SET
-     if (strncmp(stringbuffer, "*mv3", 4)
-     {
-     // change first chars for upcoming string conversion
-     stringbuffer[0] = '0';
-     stringbuffer[1] = '0';
-     stringbuffer[2] = '0';
-     stringbuffer[3] = '0';
-     // get value from string and set speed
-     setPWMwidth(3, atoi(stringbuffer));
-     // answer with "ok"
-     put_string("*mv3#");
-     }*/
+  }
+  else
+  // MOTOR3_SPEED_SET
+  if (command.startsWith("*mv3"))
+  {
+    // get the 3 digits which contain the speed
+    command = command.substring(5, 3);
+    // get value from string and set speed
+    analogWrite(motor3PWMPin, command.toInt());
+    Serial.print("*mv3#");
+    Serial.flush();
+  }
   else
   // MOTOR4_OFF
   if (command == "*mp4of#")
@@ -1142,21 +1136,18 @@ void loop()
     digitalWrite(motor4bPin, LOW);
     Serial.print("*md4cc#");
     Serial.flush();
+  }
+  else
+  // MOTOR4_SPEED_SET
+  if (command.startsWith("*mv4"))
+  {
+    // get the 3 digits which contain the speed
+    command = command.substring(5, 3);
+    // get value from string and set speed
+    analogWrite(motor4PWMPin, command.toInt());
+    Serial.print("*mv4#");
+    Serial.flush();
   }/*
-     else
-     // MOTOR4_SPEED_SET
-     if (strncmp(stringbuffer, "*mv4", 4)
-     {
-     // change first chars for upcoming string conversion
-     stringbuffer[0] = '0';
-     stringbuffer[1] = '0';
-     stringbuffer[2] = '0';
-     stringbuffer[3] = '0';
-     // get value from string and set speed
-     setPWMwidth(4, atoi(stringbuffer));
-     // answer with "ok"
-     put_string("*mv4#");
-     }
      else
      // SPEED_SET_ALLMOTORS
      if (strncmp(stringbuffer, "*mv0", 4)
