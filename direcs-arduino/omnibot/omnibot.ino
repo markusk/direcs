@@ -678,42 +678,42 @@ void loop()
   /* to be ported    
   else
   // READ_SENSOR_1
-  if (strcmp(stringbuffer, "*s1#") == 0)
+  if (command == "*s1#")
   {
     // read ADC and send answer over serial port
     sendUInt( readADC(SENSOR1) );
   }
   else
   // READ_SENSOR_2
-  if (strcmp(stringbuffer, "*s2#") == 0)
+  if (command == "*s2#")
   {
     // read ADC and send answer over serial port
     sendUInt( readADC(SENSOR2) );
   }
   else
   // READ_SENSOR_3
-  if (strcmp(stringbuffer, "*s3#") == 0)
+  if (command == "*s3#")
   {
     // read ADC and send answer over serial port
     sendUInt( readADC(SENSOR3) );
   }
   else
   // READ_SENSOR_4
-  if (strcmp(stringbuffer, "*s4#") == 0)
+  if (command == "*s4#")
   {
     // read ADC and send answer over serial port
     sendUInt( readADC(SENSOR4) );
   }
   else
   // READ_SENSOR_5
-  if (strcmp(stringbuffer, "*s5#") == 0)
+  if (command == "*s5#")
   {
     // read ADC and send answer over serial port
     sendUInt( readADC(SENSOR5) );
   }
   else
   // READ_SENSOR_6
-  if (strcmp(stringbuffer, "*s6#") == 0)
+  if (command == "*s6#")
   {
     // read ADC and send answer over serial port
     sendUInt( readADC(SENSOR6) );
@@ -834,14 +834,14 @@ void loop()
 /*     else
   // READ_SENSOR_16
   // ultra sonic sensor !!
-  if (strcmp(stringbuffer, "*s16#") == 0)
+  if (command == "*s16#")
   {
     // read ADC and send answer over serial port
     sendUInt( ultraschall_messung() );
   }
   else
   // READ 3D COMPASS CONNECTION
-  if (strcmp(stringbuffer, "*cc#") == 0)
+  if (command == "*cc#")
   {
     // check if micromag is connected to Atmel-Board (PB6 = high)
     if ( bit_is_set(PINB,PIN6) )
@@ -856,7 +856,7 @@ void loop()
   }
   else
   // READ_AXIS_X
-  if (strcmp(stringbuffer, "*cx#") == 0)
+  if (command == "*cx#")
   {
     // check if micromag is connected to Atmel-Board (PB6 = high)
     if ( bit_is_set(PINB,PIN6) )
@@ -872,7 +872,7 @@ void loop()
   }
   else
   // READ_AXIS_Y
-  if (strcmp(stringbuffer, "*cy#") == 0)
+  if (command == "*cy#")
   {
     // check if micromag is connected to Atmel-Board (PB6 = high)
     if ( bit_is_set(PINB,PIN6) )
@@ -888,7 +888,7 @@ void loop()
   }
   else
   // READ_AXIS_Z
-  if (strcmp(stringbuffer, "*cz#") == 0)
+  if (command == "*cz#")
   {
     // check if micromag is connected to Atmel-Board (PB6 = high)
     if ( bit_is_set(PINB,PIN6) )
@@ -904,35 +904,35 @@ void loop()
   }
   else
   // READ_MOTOR_SENSOR1
-  if (strcmp(stringbuffer, "*ms1#") == 0)
+  if (command == "*ms1#")
   {
     // read ADC and send answer over serial port
     sendUInt( readADC(SENSORMOTOR1) );
   }
   else
   // READ_MOTOR_SENSOR2
-  if (strcmp(stringbuffer, "*ms2#") == 0)
+  if (command == "*ms2#")
   {
     // read ADC and send answer over serial port
     sendUInt( readADC(SENSORMOTOR2) );
   }
   else
   // READ_MOTOR_DISTANCE1
-  if (strcmp(stringbuffer, "*dd1#") == 0)
+  if (command == "*dd1#")
   {
     // send driven distance of motor 1 encoder over serial port
     sendUInt( rightDistanceCounter );
   }
   else
   // READ_MOTOR_DISTANCE2
-  if (strcmp(stringbuffer, "*dd2#") == 0)
+  if (command == "*dd2#")
   {
     // send driven distance of motor 2 encoder over serial port
     sendUInt( leftDistanceCounter );
   }
   else
   // RESET_MOTOR_DISTANCE1
-  if (strcmp(stringbuffer, "*id1#") == 0)
+  if (command == "*id1#")
   {
     // init driven distance of motor 1 (encoder)
     rightDistanceCounter = 0;
@@ -942,7 +942,7 @@ void loop()
   }
   else
   // RESET_MOTOR_DISTANCE2
-  if (strcmp(stringbuffer, "*id2#") == 0)
+  if (command == "*id2#")
   {
     // init driven distance of motor 2 (encoder)
     leftDistanceCounter = 0;
@@ -982,7 +982,7 @@ void loop()
      }
      else
      // MOTOR 1 CLOCKWISE = forward
-     if (strcmp(stringbuffer, "*md1cw#") == 0)
+     if (command == "*md1cw#")
      {
      // delete Motor1 A bit
      PORTL &= ~(1<<PIN0);
@@ -994,7 +994,7 @@ void loop()
      }
      else
      // MOTOR 1 COUNTERCLOCKWISE = backward
-     if (strcmp(stringbuffer, "*md1cc#") == 0)
+     if (command == "*md1cc#")
      {
      // set Motor1 A bit
      PORTL |= (1<<PIN0);
@@ -1006,7 +1006,7 @@ void loop()
      }
      else
      // MOTOR1_SPEED_SET
-     if (strncmp(stringbuffer, "*mv1", 4) == 0)
+     if (strncmp(stringbuffer, "*mv1", 4)
      {
      // change first chars for upcoming string conversion
      stringbuffer[0] = '0';
@@ -1020,7 +1020,7 @@ void loop()
      }
      else
      // MOTOR2_OFF
-     if (strcmp(stringbuffer, "*mp2of#") == 0)
+     if (command == "*mp2of#")
      {
      // delete Motor2 A bit
      PORTL &= ~(1<<PIN2);
@@ -1031,7 +1031,7 @@ void loop()
      }
      else
      // MOTOR 2 CLOCKWISE = forward
-     if (strcmp(stringbuffer, "*md2cw#") == 0)
+     if (command == "*md2cw#")
      {
      // delete Motor2 A bit
      PORTL &= ~(1<<PIN2);
@@ -1043,7 +1043,7 @@ void loop()
      }
      else
      // MOTOR 2 COUNTERCLOCKWISE = backward
-     if (strcmp(stringbuffer, "*md2cc#") == 0)
+     if (command == "*md2cc#")
      {
      // set Motor2 A bit
      PORTL |= (1<<PIN2);
@@ -1055,7 +1055,7 @@ void loop()
      }
      else
      // MOTOR2_SPEED_SET
-     if (strncmp(stringbuffer, "*mv2", 4) == 0)
+     if (strncmp(stringbuffer, "*mv2", 4)
      {
      // change first chars for upcoming string conversion
      stringbuffer[0] = '0';
@@ -1069,7 +1069,7 @@ void loop()
      }
      else
      // MOTOR3_OFF
-     if (strcmp(stringbuffer, "*mp3of#") == 0)
+     if (command == "*mp3of#")
      {
      // delete Motor3 A bit
      PORTL &= ~(1<<PIN6);
@@ -1080,7 +1080,7 @@ void loop()
      }
      else
      // MOTOR 3 CLOCKWISE = forward
-     if (strcmp(stringbuffer, "*md3cw#") == 0)
+     if (command == "*md3cw#")
      {
      // delete Motor3 A bit
      PORTL &= ~(1<<PIN6);
@@ -1092,7 +1092,7 @@ void loop()
      }
      else
      // MOTOR 3 COUNTERCLOCKWISE = backward
-     if (strcmp(stringbuffer, "*md3cc#") == 0)
+     if (command == "*md3cc#")
      {
      // set Motor3 A bit
      PORTL |= (1<<PIN6);
@@ -1104,7 +1104,7 @@ void loop()
      }
      else
      // MOTOR3_SPEED_SET
-     if (strncmp(stringbuffer, "*mv3", 4) == 0)
+     if (strncmp(stringbuffer, "*mv3", 4)
      {
      // change first chars for upcoming string conversion
      stringbuffer[0] = '0';
@@ -1118,7 +1118,7 @@ void loop()
      }
      else
      // MOTOR4_OFF
-     if (strcmp(stringbuffer, "*mp4of#") == 0)
+     if (command == "*mp4of#")
      {
      // delete Motor4 A bit
      PORTD &= ~(1<<PIN6);
@@ -1129,7 +1129,7 @@ void loop()
      }
      else
      // MOTOR 4 CLOCKWISE = forward
-     if (strcmp(stringbuffer, "*md4cw#") == 0)
+     if (command == "*md4cw#")
      {
      // delete Motor4 A bit
      PORTD &= ~(1<<PIN6);
@@ -1141,7 +1141,7 @@ void loop()
      }
      else
      // MOTOR 4 COUNTERCLOCKWISE = backward
-     if (strcmp(stringbuffer, "*md4cc#") == 0)
+     if (command == "*md4cc#")
      {
      // set Motor4 A bit
      PORTD |= (1<<PIN6);
@@ -1153,7 +1153,7 @@ void loop()
      }
      else
      // MOTOR4_SPEED_SET
-     if (strncmp(stringbuffer, "*mv4", 4) == 0)
+     if (strncmp(stringbuffer, "*mv4", 4)
      {
      // change first chars for upcoming string conversion
      stringbuffer[0] = '0';
@@ -1167,7 +1167,7 @@ void loop()
      }
      else
      // SPEED_SET_ALLMOTORS
-     if (strncmp(stringbuffer, "*mv0", 4) == 0)
+     if (strncmp(stringbuffer, "*mv0", 4)
      {
      // change first chars for upcoming string conversion
      stringbuffer[0] = '0';
@@ -1184,7 +1184,7 @@ void loop()
      }
      else
      // BOTSTOP
-     if (strcmp(stringbuffer, "*bst#") == 0)
+     if (command == "*bst#")
      {
      // MOTOR 1 OFF
      // delete Motor1 A bit
@@ -1212,7 +1212,7 @@ void loop()
      }
      else
      // BOTWAIT
-     if (strcmp(stringbuffer, "*bwa#") == 0)
+     if (command == "*bwa#")
      {
      // MOTOR 1 OFF
      // delete Motor1 A bit
@@ -1240,7 +1240,7 @@ void loop()
      }
      else
      // BOTSTART = "bot go"
-     if (strcmp(stringbuffer, "*bgo#") == 0)
+     if (command == "*bgo#")
      {
      // MOTOR 1 CLOCKWISE = forward
      // delete Motor1 A bit
@@ -1271,7 +1271,7 @@ void loop()
      }
      else
      // BOTFORWARD = "bot drive forward"
-     if (strcmp(stringbuffer, "*bdf#") == 0)
+     if (command == "*bdf#")
      {
      // MOTOR 1 CLOCKWISE = forward
      // delete Motor1 A bit
@@ -1302,7 +1302,7 @@ void loop()
      }
      else
      // BOTBACKWARD = "bot drive backward"
-     if (strcmp(stringbuffer, "*bdb#") == 0)
+     if (command == "*bdb#")
      {
      // MOTOR 1 COUNTERCLOCKWISE = backward
      // set Motor1 A bit
@@ -1333,7 +1333,7 @@ void loop()
      }
      else
      // BOTLEFT = "bot drive left"
-     if (strcmp(stringbuffer, "*bdl#") == 0)
+     if (command == "*bdl#")
      {
      // MOTOR 1 COUNTERCLOCKWISE = backward
      // set Motor1 A bit
@@ -1364,7 +1364,7 @@ void loop()
      }
      else
      // BOTRIGHT = "bot drive right"
-     if (strcmp(stringbuffer, "*bdr#") == 0)
+     if (command == "*bdr#")
      {
      // MOTOR 1 CLOCKWISE = forward
      // delete Motor1 A bit
@@ -1395,7 +1395,7 @@ void loop()
      }
      else
      // TURNLEFT = "bot turn left"
-     if (strcmp(stringbuffer, "*btl#") == 0)
+     if (command == "*btl#")
      {
      // MOTOR 1 CLOCKWISE = forward
      // delete Motor1 A bit
@@ -1426,7 +1426,7 @@ void loop()
      }
      else
      // TURNRIGHT = "bot turn right"
-     if (strcmp(stringbuffer, "*btr#") == 0)
+     if (command == "*btr#")
      {
      // MOTOR 1 COUNTERCLOCKWISE = backward
      // set Motor1 A bit
@@ -1457,7 +1457,7 @@ void loop()
      }
      else
      // SET SERVO 1
-     if (strncmp(stringbuffer, "*sv1", 4) == 0)
+     if (strncmp(stringbuffer, "*sv1", 4)
      {
      // change first chars for upcoming string conversion
      stringbuffer[0] = '0';
@@ -1489,7 +1489,7 @@ void loop()
      }
      else
      // SET SERVO 2
-     if (strncmp(stringbuffer, "*sv2", 4) == 0)
+     if (strncmp(stringbuffer, "*sv2", 4)
      {
      // change first chars for upcoming string conversion
      stringbuffer[0] = '0';
@@ -1521,7 +1521,7 @@ void loop()
      }
      else
      // SET SERVO 3
-     if (strncmp(stringbuffer, "*sv3", 4) == 0)
+     if (strncmp(stringbuffer, "*sv3", 4)
      {
      // change first chars for upcoming string conversion
      stringbuffer[0] = '0';
@@ -1553,7 +1553,7 @@ void loop()
      }
      else
      // SET SERVO 4
-     if (strncmp(stringbuffer, "*sv4", 4) == 0)
+     if (strncmp(stringbuffer, "*sv4", 4)
      {
      // change first chars for upcoming string conversion
      stringbuffer[0] = '0';
@@ -1585,7 +1585,7 @@ void loop()
      }
      else
      // SET SERVO 5
-     if (strncmp(stringbuffer, "*sv5", 4) == 0)
+     if (strncmp(stringbuffer, "*sv5", 4)
      {
      // change first chars for upcoming string conversion
      stringbuffer[0] = '0';
@@ -1617,7 +1617,7 @@ void loop()
      }
      else
      // SET SERVO 6
-     if (strncmp(stringbuffer, "*sv6", 4) == 0)
+     if (strncmp(stringbuffer, "*sv6", 4)
      {
      // change first chars for upcoming string conversion
      stringbuffer[0] = '0';
