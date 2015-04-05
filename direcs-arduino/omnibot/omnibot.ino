@@ -1,16 +1,22 @@
 // give it a name:
-int ledGreen  =   2;
-int ledYellow =   3;
-int relaisPin =   4;
-int motor1aPin =  5;
-int motor1bPin =  6;
-int motor2aPin =  7;
-int motor2bPin =  8;
-int motor3aPin =  9;
-int motor3bPin = 10;
+int ledGreen     =  2;
+int ledYellow    =  3;
+int relaisPin    =  4;
+int motor1aPin   =  5;
+int motor1bPin   =  6;
+int motor1DirPin =  7;
+int motor1PWMPin =  8;
+int motor2aPin   =  9;
+int motor2bPin   = 10;
+int motor2DirPin = 11;
+int motor2PWMPin = 12;
+int motor3aPin   = 13;
+int motor3bPin   = 14;
+int motor3DirPin = 15;
+int motor3PWMPin = 16;
 
 // Pin 13 has an LED connected on most Arduino boards.
-int ledRed    = 13; /// @todo change name (color)
+int ledRed     = 13; /// @todo change name (color)
 
 // test:
 const int analogInPin = A0;  // Analog input pin that the potentiometer is attached to
@@ -182,6 +188,10 @@ uint16_t rightDistanceCounter = 0;
 //uint8_t camTiltLSwitch = 0;
 //uint8_t camTiltRSwitch = 0;
 
+
+//-------------------------------------------------------------------------------------------------
+// string command check stuff
+//-------------------------------------------------------------------------------------------------
 int starter    = 42; // this marks the beginning of a received string. which is '*' at the moment.
 int terminator = 35; // this marks the end of a string. which is '#' at the moment.
 
@@ -191,6 +201,7 @@ int terminator = 35; // this marks the end of a string. which is '#' at the mome
 String inputString = "";         // a string to hold incoming data
 boolean stringComplete = false;  // whether the string is complete
 String command = "";
+//-------------------------------------------------------------------------------------------------
 
 
 void setup()
@@ -214,14 +225,21 @@ void setup()
   //------------------ DEBUG 2 ------------------------*/
 
 
+  //-------------------------------------------------------------------------------------------------
+  // string command check stuff
+  //-------------------------------------------------------------------------------------------------
   // initialize serial
   Serial.begin(9600);
 
   // reserve 200 bytes for the inputString
   inputString.reserve(stringSize);
   command.reserve(stringSize);
+  //-------------------------------------------------------------------------------------------------
 
+
+  //-------------------------------------------------------------------------------------------------
   // initialize some digital pins as an output.
+  //-------------------------------------------------------------------------------------------------
   pinMode(ledRed, OUTPUT);
   pinMode(ledGreen, OUTPUT);
   pinMode(ledYellow, OUTPUT);
@@ -231,6 +249,8 @@ void setup()
   pinMode(motor2bPin, OUTPUT);
   pinMode(motor3aPin, OUTPUT);
   pinMode(motor3bPin, OUTPUT);
+  //-------------------------------------------------------------------------------------------------
+
 
   // this an input
   pinMode(analogInPin, INPUT);
@@ -246,6 +266,7 @@ void setup()
 
   leftDistanceCounter = 0;
   rightDistanceCounter = 0;
+
 
   //-----------------
   // I/O definitions
@@ -297,25 +318,27 @@ void setup()
 
   // flashlight off
   relais(OFF);
+   
+  //-------------------------------------------------------------------------------------------------
+  // turn all drive motor bits off
+  //-------------------------------------------------------------------------------------------------
+  digitalWrite(motor1aPin, LOW);
+  digitalWrite(motor1bPin, LOW);
+  digitalWrite(motor1DirPin, LOW);  
+  digitalWrite(motor1PWMPin, LOW);
 
+  digitalWrite(motor2aPin, LOW);
+  digitalWrite(motor2bPin, LOW);
+  digitalWrite(motor2DirPin, LOW);  
+  digitalWrite(motor2PWMPin, LOW);
 
+  digitalWrite(motor3aPin, LOW);
+  digitalWrite(motor3bPin, LOW);
+  digitalWrite(motor3DirPin, LOW);  
+  digitalWrite(motor3PWMPin, LOW);
+   
+   
   /* omnibot to pe ported
-   
-  // turn all drive motor bits off (except PWM bits)
-  // motor 1
-  PORTL &= ~(1<<PIN0);
-  PORTL &= ~(1<<PIN1);
-  // motor 2
-  PORTL &= ~(1<<PIN2);
-  PORTL &= ~(1<<PIN3);
-  // motor 3
-  PORTL &= ~(1<<PIN6);
-  PORTL &= ~(1<<PIN7);
-  // motor 4
-  PORTD &= ~(1<<PIN6);
-  PORTD &= ~(1<<PIN7);
-   
-   
    
   //-------------------------------------------------------------
   // no interrupts please!
