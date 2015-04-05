@@ -1147,24 +1147,20 @@ void loop()
     analogWrite(motor4PWMPin, command.toInt());
     Serial.print("*mv4#");
     Serial.flush();
+  }
+  else
+  // SPEED_SET_ALLMOTORS
+  if (command == "*mv0#")
+  {
+    // get the 3 digits which contain the speed
+    command = command.substring(5, 3);
+    // get value from string and set speed
+    analogWrite(motor1PWMPin, command.toInt());
+    analogWrite(motor2PWMPin, command.toInt());
+    analogWrite(motor3PWMPin, command.toInt());
+    Serial.print("*mv0#");
+    Serial.flush();
   }/*
-     else
-     // SPEED_SET_ALLMOTORS
-     if (strncmp(stringbuffer, "*mv0", 4)
-     {
-     // change first chars for upcoming string conversion
-     stringbuffer[0] = '0';
-     stringbuffer[1] = '0';
-     stringbuffer[2] = '0';
-     stringbuffer[3] = '0';
-     // get value from string and set speed
-     setPWMwidth(1, atoi(stringbuffer));
-     setPWMwidth(2, atoi(stringbuffer));
-     setPWMwidth(3, atoi(stringbuffer));
-     setPWMwidth(4, atoi(stringbuffer));
-     // answer with "ok"
-     put_string("*mv0#");
-     }
      else
      // BOTSTOP
      if (command == "*bst#")
