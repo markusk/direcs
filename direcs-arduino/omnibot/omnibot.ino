@@ -31,7 +31,7 @@ Adafruit_RGBLCDShield lcd = Adafruit_RGBLCDShield();
 //------------------ DEBUG 1 ------------------------*/
 
 
-//------------------ DEBUG 2 ------------------------*/
+/* ------------------ DEBUG 2 ------------------------ /
 // Using Adafruit bi-color 8x8 LED matrix
 // Pins used: A4 = SDA  and  A5 = SCK
 
@@ -193,7 +193,7 @@ void setup()
   lcd.setBacklight(RED);
   //------------------ DEBUG 1 ------------------------*/
 
-  //------------------ DEBUG 2 ------------------------*/
+  /*------------------ DEBUG 2 ------------------------ /
   // Bi-color 8x8 LED display with I2C
   matrix.begin(0x70);  // pass in the address
 
@@ -461,7 +461,7 @@ void loop()
             lcd.setBacklight(YELLOW);
             //------------------ DEBUG 1 ------------------------*/
 
-            //------------------ DEBUG 2 ------------------------*/
+            /*------------------ DEBUG 2 ------------------------/
             letter("*", LED_YELLOW);
             //------------------ DEBUG 2 ------------------------*/
 
@@ -491,7 +491,7 @@ void loop()
               lcd.setBacklight(GREEN);
               //------------------ DEBUG 1 ------------------------*/
               
-              //------------------ DEBUG 2 ------------------------*/
+              /*------------------ DEBUG 2 ------------------------/
               letter("#", LED_YELLOW);
               //------------------ DEBUG 2 ------------------------*/
 
@@ -532,7 +532,7 @@ void loop()
                 lcd.setBacklight(WHITE);
                 //------------------ DEBUG ------------------------*/
 
-                //------------------ DEBUG 2 ------------------------*/
+                /*------------------ DEBUG 2 ------------------------/
                 letter((String) inChar, LED_YELLOW);
                 //------------------ DEBUG 2 ------------------------*/
                 
@@ -545,7 +545,7 @@ void loop()
                 greenLED(OFF);
                 yellowLED(OFF);
 
-                //------------------ DEBUG 2 ------------------------*/
+                /*------------------ DEBUG 2 ------------------------/
                 letter((String) inChar, LED_YELLOW);
                 //------------------ DEBUG 2 ------------------------*/
               } // any string
@@ -714,7 +714,7 @@ void loop()
       // READ_SENSOR_7 (24 V supply)
       if (command == "*s7#")
       {
-        //------------------ DEBUG 2 ------------------------*/
+        /*------------------ DEBUG 2 ------------------------/
         letter("z", LED_YELLOW);
         //------------------ DEBUG 2 ------------------------*/
 
@@ -725,7 +725,10 @@ void loop()
         // print the results to the serial monitor:
         if (Serial.print("*") < 1)
         {
+          /*------------------ DEBUG 2 ------------------------/
           letter("y", LED_YELLOW);
+          //------------------ DEBUG 2 ------------------------*/
+
           // ERROR!!
           delay(10000);
           return;
@@ -736,7 +739,10 @@ void loop()
 //        if (Serial.print( analogRead(SENSOR7) ) < 1)
         if (Serial.print( 127 ) < 3)
         {
+          /*------------------ DEBUG 2 ------------------------/
           letter("x", LED_YELLOW);
+          //------------------ DEBUG 2 ------------------------*/
+
           // ERROR!!
           delay(10000);
           return;
@@ -746,7 +752,10 @@ void loop()
         
         if (Serial.print("#") < 1)
         {
+          /*------------------ DEBUG 2 ------------------------/
           letter("w", LED_YELLOW);
+          //------------------ DEBUG 2 ------------------------*/
+
           // ERROR!!
           delay(10000);
           return;
@@ -754,7 +763,7 @@ void loop()
         // write all data immediately!
         Serial.flush();
         
-        //------------------ DEBUG 2 ------------------------*/
+        /*------------------ DEBUG 2 ------------------------/
         letter("A", LED_YELLOW);
         //------------------ DEBUG 2 ------------------------*/
       }
@@ -762,7 +771,7 @@ void loop()
      // READ_SENSOR_8 (12 V supply)
       if (command == "*s8#")
       {
-        //------------------ DEBUG 2 ------------------------*/
+        /*------------------ DEBUG 2 ------------------------/
         letter("u", LED_YELLOW);
         //------------------ DEBUG 2 ------------------------*/
 
@@ -773,7 +782,10 @@ void loop()
         // print the results to the serial monitor:
         if (Serial.print("*") < 1)
         {
+          /*------------------ DEBUG 2 ------------------------/
           letter("t", LED_YELLOW);
+          //------------------ DEBUG 2 ------------------------*/
+
           // ERROR!!
           delay(10000);
           return;
@@ -784,7 +796,10 @@ void loop()
 //        if (Serial.print( analogRead(SENSOR8) ) < 1)
         if (Serial.print( 128 ) < 3)
         {
+          /*------------------ DEBUG 2 ------------------------/
           letter("s", LED_YELLOW);
+          //------------------ DEBUG 2 ------------------------*/
+
           // ERROR!!
           delay(10000);
           return;
@@ -794,7 +809,10 @@ void loop()
 
         if (Serial.print("#") < 1)
         {
+          /*------------------ DEBUG 2 ------------------------/
           letter("r", LED_YELLOW);
+          //------------------ DEBUG 2 ------------------------*/
+
           // ERROR!!
           delay(10000);
           return;
@@ -802,7 +820,7 @@ void loop()
         // write all data immediately!
         Serial.flush();
 
-        //------------------ DEBUG 2 ------------------------*/
+        /*------------------ DEBUG 2 ------------------------/
         letter("q", LED_YELLOW);
         //------------------ DEBUG 2 ------------------------*/
       }
@@ -1735,7 +1753,7 @@ void relais(uint8_t state)
 // print a letter on the adafruit bi-color 8x8 led matrix
  void letter(String text, uint16_t color)
  {
-  //------------------ DEBUG 2 ------------------------*/
+  /*------------------ DEBUG 2 ------------------------/
   matrix.clear();
   matrix.setTextColor(color);
   matrix.setCursor(0,0);
