@@ -1164,124 +1164,70 @@ void loop()
     Serial.flush();
   }
   else
-  // RGB LED 1
-  if (command == "*rgb1", 5))
+  // RGB LED 1 red
+  if (command == "*rgb1")
   {
-    // change first five chars for upcoming string conversion
-    stringbuffer[0] = '0';
-    stringbuffer[1] = '0';
-    stringbuffer[2] = '0';
-    stringbuffer[3] = '0';
-    stringbuffer[4] = '0';
-
-    // convert to int
-    i = atoi(stringbuffer);
-
-    // set speed / PWM
-    timerUpdate(RGB1, i);
-
-    // answer with "ok"
-    put_string("*rgb1#");
+    // get the 3 digits which contain the brightness
+    command = command.substring(5, 3);
+    // get value from string and set value
+    analogWrite(RGBLED1red, command.toInt());
+    Serial.print("*rgb1#");
+    Serial.flush();
   }
   else
-  // RGB LED 2
-  if (command == "*rgb2", 5))
+  // RGB LED 1 green
+  if (command == "*rgb2")
   {
-    // change first five chars for upcoming string conversion
-    stringbuffer[0] = '0';
-    stringbuffer[1] = '0';
-    stringbuffer[2] = '0';
-    stringbuffer[3] = '0';
-    stringbuffer[4] = '0';
-
-    // convert to int
-    i = atoi(stringbuffer);
-
-    // set speed / PWM
-    timerUpdate(RGB2, i);
-
-    // answer with "ok"
-    put_string("*rgb2#");
+    // get the 3 digits which contain the brightness
+    command = command.substring(5, 3);
+    // get value from string and set value
+    analogWrite(RGBLED1green, command.toInt());
+    Serial.print("*rgb2#");
+    Serial.flush();
   }
   else
-  // RGB LED 3
-  if (command == "*rgb3", 5))
+  // RGB LED 1 blue
+  if (command == "*rgb3")
   {
-    // change first five chars for upcoming string conversion
-    stringbuffer[0] = '0';
-    stringbuffer[1] = '0';
-    stringbuffer[2] = '0';
-    stringbuffer[3] = '0';
-    stringbuffer[4] = '0';
-
-    // convert to int
-    i = atoi(stringbuffer);
-
-    // set speed / PWM
-    timerUpdate(RGB3, i);
-
-    // answer with "ok"
-    put_string("*rgb3#");
+    // get the 3 digits which contain the brightness
+    command = command.substring(5, 3);
+    // get value from string and set value
+    analogWrite(RGBLED1blue, command.toInt());
+    Serial.print("*rgb3#");
+    Serial.flush();
   }
   else
-  // RGB LED 4
-  if (command == "*rgb4", 5))
+  // RGB LED 2 red
+  if (command == "*rgb4")
   {
-    // change first five chars for upcoming string conversion
-    stringbuffer[0] = '0';
-    stringbuffer[1] = '0';
-    stringbuffer[2] = '0';
-    stringbuffer[3] = '0';
-    stringbuffer[4] = '0';
-
-    // convert to int
-    i = atoi(stringbuffer);
-
-    // set speed / PWM
-    timerUpdate(RGB4, i);
-
-    // answer with "ok"
-    put_string("*rgb4#");
+    // get the 3 digits which contain the brightness
+    command = command.substring(5, 3);
+    // get value from string and set value
+    analogWrite(RGBLED2red, command.toInt());
+    Serial.print("*rgb4#");
+    Serial.flush();
   }
   else
-  // RGB LED 5
-  if (command == "*rgb5", 5))
+  // RGB LED 2 green
+  if (command == "*rgb5")
   {
-    // change first five chars for upcoming string conversion
-    stringbuffer[0] = '0';
-    stringbuffer[1] = '0';
-    stringbuffer[2] = '0';
-    stringbuffer[3] = '0';
-    stringbuffer[4] = '0';
-
-    // convert to int
-    i = atoi(stringbuffer);
-
-    // set speed / PWM
-    timerUpdate(RGB5, i);
-
-    // answer with "ok"
-    put_string("*rgb5#");
+    // get the 3 digits which contain the brightness
+    command = command.substring(5, 3);
+    // get value from string and set value
+    analogWrite(RGBLED2green, command.toInt());
+    Serial.print("*rgb5#");
+    Serial.flush();
   }
   else
-  // RGB LED 6
-  if (command == "*rgb6", 5))
+  // RGB LED 2 blue
+  if (command == "*rgb6")
   {
-    // change first five chars for upcoming string conversion
-    stringbuffer[0] = '0';
-    stringbuffer[1] = '0';
-    stringbuffer[2] = '0';
-    stringbuffer[3] = '0';
-    stringbuffer[4] = '0';
-
-    // convert to int
-    i = atoi(stringbuffer);
-
-    // set speed / PWM
-    timerUpdate(RGB6, i);
-
-    // answer with "ok"
-    put_string("*rgb6#");
+    // get the 3 digits which contain the brightness
+    command = command.substring(5, 3);
+    // get value from string and set value
+    analogWrite(RGBLED2blue, command.toInt());
+    Serial.print("*rgb6#");
+    Serial.flush();
   }
 
   /*
