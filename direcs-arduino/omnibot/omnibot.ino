@@ -1391,34 +1391,20 @@ void loop()
     // answer with "ok"
     Serial.print("*bdr#");
     Serial.flush();
-  }
+  }*/
   else
   // TURNLEFT = "bot turn left"
   if (command == "*btl#")
   {
-    // MOTOR 1 CLOCKWISE = forward
-    // delete Motor1 A bit
-    PORTL &= ~(1<<PIN0);
-    // set Motor1 B bit
-    PORTL |= (1<<PIN1);
-
-    // MOTOR 2 COUNTERCLOCKWISE = backward
-    // set Motor2 A bit
-    PORTL |= (1<<PIN2);
-    // delete Motor2 B bit
-    PORTL &= ~(1<<PIN3);
-
-    // MOTOR 3 CLOCKWISE = forward
-    // delete Motor3 A bit
-    PORTL &= ~(1<<PIN6);
-    // set Motor3 B bit
-    PORTL |= (1<<PIN7);
-
-    // MOTOR 4 COUNTERCLOCKWISE = backward
-    // set Motor4 A bit
-    PORTD |= (1<<PIN6);
-    // delete Motor4 B bit
-    PORTD &= ~(1<<PIN7);
+    // motor 1 = right = forward = clockwise
+    digitalWrite(motor1aPin, LOW);
+    digitalWrite(motor1bPin, HIGH);
+    // motor 2 = right = forward = clockwise
+    digitalWrite(motor2aPin, LOW);
+    digitalWrite(motor2bPin, HIGH);
+    // motor 3 = right = forward = clockwise
+    digitalWrite(motor3aPin, LOW);
+    digitalWrite(motor3bPin, HIGH);
 
     // answer with "ok"
     Serial.print("*btl#");
@@ -1428,35 +1414,20 @@ void loop()
   // TURNRIGHT = "bot turn right"
   if (command == "*btr#")
   {
-    // MOTOR 1 COUNTERCLOCKWISE = backward
-    // set Motor1 A bit
-    PORTL |= (1<<PIN0);
-    // delete Motor1 B bit
-    PORTL &= ~(1<<PIN1);
-
-    // MOTOR 2 CLOCKWISE = forward
-    // delete Motor2 A bit
-    PORTL &= ~(1<<PIN2);
-    // set Motor2 B bit
-    PORTL |= (1<<PIN3);
-
-    // MOTOR 3 COUNTERCLOCKWISE = backward
-    // set Motor3 A bit
-    PORTL |= (1<<PIN6);
-    // delete Motor3 B bit
-    PORTL &= ~(1<<PIN7);
-
-    // MOTOR 4 CLOCKWISE = forward
-    // delete Motor4 A bit
-    PORTD &= ~(1<<PIN6);
-    // set Motor4 B bit
-    PORTD |= (1<<PIN7);
+    // motor 1 = left = backward = counterclockwise
+    digitalWrite(motor1aPin, HIGH);
+    digitalWrite(motor1bPin, LOW);
+    // motor 2 = left = backward = counterclockwise
+    digitalWrite(motor2aPin, HIGH);
+    digitalWrite(motor2bPin, LOW);
+    // motor 3 = left = backward = counterclockwise
+    digitalWrite(motor3aPin, HIGH);
+    digitalWrite(motor3bPin, LOW);
 
     // answer with "ok"
     Serial.print("*btr#");
     Serial.flush();
   }
-*/    // to be ported    
 
   // no valid command found (i.e. *wtf# )
   // delete command string
