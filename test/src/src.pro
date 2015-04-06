@@ -1,6 +1,6 @@
 SOURCES += test.cpp \
 	main.cpp \
-	direcsSerialQext.cpp \
+	direcsSerial.cpp \
 	inifile.cpp \
 	interfaceAvr.cpp \
 	circuit.cpp \
@@ -10,7 +10,7 @@ SOURCES += test.cpp \
 #	laserSickS300.cpp \
 #	laserThread.cpp
 HEADERS += test.h \
-	direcsSerialQext.h \
+	direcsSerial.h \
 	inifile.h \
 	interfaceAvr.h \
 	circuit.h \
@@ -23,8 +23,7 @@ TEMPLATE = app
 CONFIG += warn_on \
 	thread \
 	qt \
-	release \
-	extserialport
+	release
 TARGET = test
 DESTDIR = ../bin
 RESOURCES = application.qrc

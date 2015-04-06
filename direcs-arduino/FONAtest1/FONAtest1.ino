@@ -35,19 +35,26 @@ the commented section below at the end of the setup() function.
 // this is a large buffer for replies
 char replybuffer[255];
 
+// or comment this out & use a hardware serial port like Serial1 (see below)
 SoftwareSerial fonaSS = SoftwareSerial(FONA_TX, FONA_RX);
-Adafruit_FONA fona = Adafruit_FONA(&fonaSS, FONA_RST);
+
+Adafruit_FONA fona = Adafruit_FONA(FONA_RST);
 
 uint8_t readline(char *buff, uint8_t maxbuff, uint16_t timeout = 0);
 
 void setup() {
+  while (!Serial);
+
   Serial.begin(115200);
   Serial.println(F("FONA basic test"));
   Serial.println(F("Initializing....(May take 3 seconds)"));
 
-  
+  // make it slow so its easy to read!
+  fonaSS.begin(4800); // if you're using software serial
+  //Serial1.begin(4800); // if you're using hardware serial
+
   // See if the FONA is responding
-  if (! fona.begin(4800)) {  // make it slow so its easy to read!
+  if (! fona.begin(fonaSS)) {           // can also try fona.begin(Serial1) 
     Serial.println(F("Couldn't find FONA"));
     while (1);
   }
@@ -79,7 +86,7 @@ void printMenu(void) {
    Serial.println(F("-------------------------------------"));
    Serial.println(F("[?] Print this menu"));
    Serial.println(F("[a] read the ADC (2.8V max)"));
-   Serial.println(F("[b] read the Battery V"));
+   Serial.println(F("[b] read the Battery V and % charged"));
    Serial.println(F("[C] read the SIM CCID"));
    Serial.println(F("[U] Unlock SIM with PIN code"));
    Serial.println(F("[i] read RSSI"));
@@ -97,15 +104,20 @@ void printMenu(void) {
    Serial.println(F("[P] PWM/Buzzer out"));
    Serial.println(F("[c] make phone Call"));
    Serial.println(F("[h] Hang up phone"));
+   Serial.println(F("[p] Pick up phone"));
    Serial.println(F("[N] Number of SMSs"));
    Serial.println(F("[r] Read SMS #"));
    Serial.println(F("[R] Read All SMS"));
    Serial.println(F("[d] Delete SMS #"));
    Serial.println(F("[s] Send SMS"));
+   Serial.println(F("[y] Enable network time sync"));   
+   Serial.println(F("[Y] Enable NTP time sync (GPRS)"));   
+   Serial.println(F("[t] Get network time"));   
    Serial.println(F("[G] Enable GPRS"));
    Serial.println(F("[g] Disable GPRS"));
    Serial.println(F("[l] Query GSMLOC (GPRS)"));
    Serial.println(F("[w] Read webpage (GPRS)"));
+   Serial.println(F("[W] Post to website (GPRS)"));
    Serial.println(F("[S] create Serial passthru tunnel"));
    Serial.println(F("-------------------------------------"));
    Serial.println(F(""));
@@ -137,13 +149,21 @@ void loop() {
     }
     
     case 'b': {
-        // read the battery voltage
+        // read the battery voltage and percentage
         uint16_t vbat;
         if (! fona.getBattVoltage(&vbat)) {
           Serial.println(F("Failed to read Batt"));
         } else {
           Serial.print(F("VBat = ")); Serial.print(vbat); Serial.println(F(" mV"));
         }
+ 
+
+        if (! fona.getBattPercent(&vbat)) {
+          Serial.println(F("Failed to read Batt"));
+        } else {
+          Serial.print(F("VPct = ")); Serial.print(vbat); Serial.println(F("%"));
+        }
+ 
         break;
     }
 
@@ -371,6 +391,16 @@ void loop() {
       }
       break;     
     }
+
+    case 'p': {
+       // pick up! 
+      if (! fona.pickUp()) {
+        Serial.println(F("Failed"));
+      } else {
+        Serial.println(F("OK!"));
+      }
+      break;     
+    }
     
     /*** SMS ***/
     
@@ -390,8 +420,16 @@ void loop() {
       flushSerial();
       Serial.print(F("Read #"));
       uint8_t smsn = readnumber();
-      
       Serial.print(F("\n\rReading SMS #")); Serial.println(smsn);
+
+      // Retrieve SMS sender address/phone number.
+      if (! fona.getSMSSender(smsn, replybuffer, 250)) {
+        Serial.println("Failed!");
+        break;
+      }
+      Serial.print(F("FROM: ")); Serial.println(replybuffer);
+
+      // Retrieve SMS value.
       uint16_t smslen;
       if (! fona.readSMS(smsn, replybuffer, 250, &smslen)) { // pass in buffer and max len!
         Serial.println("Failed!");
@@ -463,6 +501,32 @@ void loop() {
       
       break;
     }
+
+    /*** Time ***/
+
+    case 'y': {
+      // enable network time sync
+      if (!fona.enableNetworkTimeSync(true))
+        Serial.println(F("Failed to enable"));
+      break;
+    }
+
+    case 'Y': {
+      // enable NTP time sync
+      if (!fona.enableNTPTimeSync(true, F("pool.ntp.org")))
+        Serial.println(F("Failed to enable"));
+      break;
+    }
+
+    case 't': {
+        // read the time
+        char buffer[23];
+
+        fona.getTime(buffer, 23);  // make sure replybuffer is at least 23 bytes!
+        Serial.print(F("Time = ")); Serial.println(buffer);
+        break;
+    }
+
     /*********************************** GPRS */
     
     case 'g': {
@@ -513,9 +577,12 @@ void loop() {
            char c = fona.read();
            
            // Serial.write is too slow, we'll write directly to Serial register!
+#if defined(__AVR_ATmega328P__) || defined(__AVR_ATmega168__)
            loop_until_bit_is_set(UCSR0A, UDRE0); /* Wait until data register empty. */
            UDR0 = c;
-           
+#else
+           Serial.write(c);
+#endif
            length--;
            if (! length) break;
          }
@@ -525,7 +592,46 @@ void loop() {
        break;
     }
     
-    
+    case 'W': {
+      // Post data to website
+      uint16_t statuscode;
+      int16_t length;
+      char url[80];
+      char data[80];
+      
+      flushSerial();
+      Serial.println(F("NOTE: in beta! Use simple websites to post!"));
+      Serial.println(F("URL to post (e.g. httpbin.org/post):"));
+      Serial.print(F("http://")); readline(url, 79);
+      Serial.println(url);
+      Serial.println(F("Data to post (e.g. \"foo\" or \"{\"simple\":\"json\"}\"):"));
+      readline(data, 79);
+      Serial.println(data);
+      
+       Serial.println(F("****"));
+       if (!fona.HTTP_POST_start(url, F("text/plain"), (uint8_t *) data, strlen(data), &statuscode, (uint16_t *)&length)) {
+         Serial.println("Failed!");
+         break;
+       }
+       while (length > 0) {
+         while (fona.available()) {
+           char c = fona.read();
+           
+#if defined(__AVR_ATmega328P__) || defined(__AVR_ATmega168__)
+           loop_until_bit_is_set(UCSR0A, UDRE0); /* Wait until data register empty. */
+           UDR0 = c;
+#else
+           Serial.write(c);
+#endif
+           
+           length--;
+           if (! length) break;
+         }
+       }
+       Serial.println(F("\n****"));
+       fona.HTTP_POST_end();
+       break;
+    }
     /*****************************************/
       
     case 'S': {

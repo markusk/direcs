@@ -23,7 +23,7 @@
 
 #include <QtGlobal> // for Q_OS_* Makro!
 
-#include "direcsSerialQext.h"
+#include "direcsSerial.h"
 
 #include <QFile>
 #include <QObject>
@@ -132,7 +132,7 @@ class InterfaceAvr : public QObject
 
 	private:
 		QString className;	/// this will contain the name of _this_ class at runtime for debug messages
-		DirecsSerialQext *serialPort;
+		DirecsSerial *serialPort;
 		QString answer; /// this will contain the event driven answer when data are received @sa receiveData Slot.
 		const int MAXCOMMANDLENGTH = 32; /// Max. length of a command from the Arduino.
 		bool commandStarted;
@@ -142,7 +142,7 @@ class InterfaceAvr : public QObject
 		static const bool ON  = true;   /// For robot is "ON"
 		static const bool OFF = false;  /// For robot is "OFF"
 
-		BaudRateType BAUDRATE = BAUD9600;	/// This is the baudrate with which the serial port will be opened. The other (not parameterized) settings are "8N1".
+		const int BAUDRATE = 9600;	/// This is the baudrate with which the serial port will be opened. The other (not parameterized) settings are "8N1".
 
 		static const char starter    = 42; /// This starts the serial string for the Atmel controller.     42  =  *
 		static const char terminator = 35; /// This terminates the serial string for the Atmel controller. 35  =  #

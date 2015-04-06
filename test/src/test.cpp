@@ -29,6 +29,11 @@
 
 test::test()
 {
+	QApplication::setOrganizationName("Markus Knapp");
+	QApplication::setOrganizationDomain("direcs.de");
+	QApplication::setApplicationName("test");
+	QApplication::setApplicationVersion("0.1a");
+
 	textEdit = new QTextEdit;
 	setCentralWidget(textEdit);
 
@@ -117,8 +122,8 @@ test::test()
 
 	// serialPortPath = "/dev/tty.SLAB_USBtoUART"; // Original driver "CP210x Macintosh OSX Driver v2." from SiLabs used.
 	// serialPortPath = "/dev/tty.usbserial-A900J1TU"; // ARM board with STM32F4 and FTDI RS232R chip
-	// serialPortPath = "/dev/tty.usbmodem1451"; // Arduino Uno    MacBook
-	serialPortPath = "/dev/tty.usbmodemfd1411"; // Arduino Uno  iMac
+	serialPortPath = "/dev/tty.usbmodem1411"; // Arduino Uno    MacBook
+	// serialPortPath = "/dev/tty.usbmodemfd1411"; // Arduino Uno  iMac
 	// serialPortPath = "/dev/tty.usbserial-AD01W5KH"; // Seeeduino Mega
 	//	serialPortPath = "/dev/tty.usbserial-A900J1TU";
 
