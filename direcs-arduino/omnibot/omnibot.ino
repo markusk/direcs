@@ -1,3 +1,6 @@
+// For Apple Remote
+#include <IRremote.h>
+
 // give it a name:
 int ledGreen     =  2;
 int ledYellow    =  3;
@@ -33,9 +36,12 @@ int RGBLED3red   = 27;
 int RGBLED3green = 28;
 int RGBLED3blue  = 29;
 
+int IR_Rcv_PIN   = 30; // pin for TSOP1736 IR sensor output
+
+
 // test:
-const int analogInPin = A0;  // Analog input pin that the potentiometer is attached to
-int sensorValue = 0;        // value read from the poti
+const int analogInPin = A0;  // Analog input pin for measuring battery voltage 1
+int sensorValue = 0;         // value read from the battery 1
 
 
 /*------------------ DEBUG 1 ------------------------
@@ -73,6 +79,42 @@ Adafruit_BicolorMatrix matrix = Adafruit_BicolorMatrix();
 //------------------ DEBUG 2 ------------------------*/
 
 
+//--------------------------------------
+// The code for the Apple IR Remote
+//--------------------------------------
+// Storage for the recorded code
+         int  codeType = -1;     // The type of code
+unsigned long codeValue;         // The code value if not raw
+unsigned int  rawCodes[RAWBUF];  // The durations if raw
+         int  codeLen;           // The length of the code
+         int toggle = 0;         // The RC5/6 toggle state
+
+// The IR reveiver object
+IRrecv irrecv(IR_Rcv_PIN);
+
+decode_results results;
+
+// These values are sent by the Apple Remote "round Donut, Aluminium"
+unsigned long oben   = 2011287637;
+unsigned long unten  = 2011279445;
+unsigned long links  = 2011238485;
+unsigned long rechts = 2011291733;
+unsigned long ok     = 2011282005;
+unsigned long menu   = 2011250773;
+unsigned long play   = 2011265621;
+unsigned long repeat = 2011242581; // Wird bei ok und play zusätzlich gesendet
+
+/*
+// These values are sent by the Apple Remote "flat Donut, Aluminium"
+ unsigned long oben   = 2011287644;
+ unsigned long unten  = 2011279452;
+ unsigned long links  = 2011238492;
+ unsigned long rechts = 2011291740;
+ unsigned long ok     = 2011282012;
+ unsigned long menu   = 2011250780;
+ unsigned long play   = 2011265628;
+ unsigned long repeat = 2011242588; // Wird bei ok und play zusätzlich gesendet
+ */
 
 
 //-------  from main.h  -------------------------------
@@ -294,8 +336,13 @@ void setup()
   //-------------------------------------------------------------------------------------------------
 
 
-  // this an input
+  //-------------------------------------------------------------------------------------------------
+  // initialize some digital pins as an output.
+  //-------------------------------------------------------------------------------------------------
   pinMode(analogInPin, INPUT);
+  pinMode(IR_Rcv_PIN, INPUT);
+  //-------------------------------------------------------------------------------------------------
+
 
   leftWheelCounter = 0;
   rightWheelCounter = 0;
