@@ -322,15 +322,15 @@ void setup()
   pinMode(motor4DirPin, OUTPUT);
   pinMode(motor4PWMPin, OUTPUT);
 
-  pinMode(RGBLED1red, OUTPUT;
+  pinMode(RGBLED1red, OUTPUT);
   pinMode(RGBLED1green, OUTPUT);
   pinMode(RGBLED1blue, OUTPUT);
 
-  pinMode(RGBLED2red, OUTPUT;
+  pinMode(RGBLED2red, OUTPUT);
   pinMode(RGBLED2green, OUTPUT);
   pinMode(RGBLED2blue, OUTPUT);
 
-  pinMode(RGBLED3red, OUTPUT;
+  pinMode(RGBLED3red, OUTPUT);
   pinMode(RGBLED3green, OUTPUT);
   pinMode(RGBLED3blue, OUTPUT);
   //-------------------------------------------------------------------------------------------------
