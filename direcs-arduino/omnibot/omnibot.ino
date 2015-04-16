@@ -519,7 +519,7 @@ void loop()
   if (irrecv.decode(&results))
   {
     // LED on
-    digitalWrite(LED_PIN, HIGH);
+    digitalWrite(ledRed, HIGH);
 
     // store result for convenience    
     storeCode(&results);
