@@ -24,7 +24,7 @@
 #include <QtGlobal> // for Q_OS_* Makro!
 
 //-------------------------------------------------------------------
-#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
+#ifdef Q_OS_LINUX // Under Linux we use the espeak lib.
 #include "speak_lib.h"
 #endif
 #include <QThread>
@@ -33,7 +33,7 @@
 
 /**
 \author Markus Knapp
-\brief Speaks a text with espeak (Linux only).
+\brief Speaks a text with espeak (Linux) or QtSpeech (Mac OS)
 
 Also removes HTML-Tags from the text to speak in case of we got the text from a text edit field.
 If a text is already spoken, this former speach is stopped and the next text is about to speak.
@@ -47,10 +47,11 @@ class SpeakThread : public QThread
 		~SpeakThread();
 		void stop();
 		virtual void run();
-		void setLanguage(QString language);
+#ifdef Q_OS_LINUX
+        void setLanguage(QString language);
 		void setVoice(unsigned char gender,unsigned char age);
 		void setRate(int value);
-
+#endif
 
 	public slots:
 		/**

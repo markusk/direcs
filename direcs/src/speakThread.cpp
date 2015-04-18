@@ -27,7 +27,7 @@ SpeakThread::SpeakThread()
 	saySomething = false;
 	mPhase = 0;
 
-#ifdef Q_OS_LINUX // supported only under linux (no MAC OS, Windoze at the moment)
+#ifdef Q_OS_LINUX
 	// Synchronous playback
 	// 0 ms length sound buffer for SynthCallBack
 	// default location for espeak-data directory
@@ -41,7 +41,7 @@ SpeakThread::SpeakThread()
 
 SpeakThread::~SpeakThread()
 {
-#ifdef Q_OS_LINUX // supported only under linux (no MAC OS, Windoze at the moment)
+#ifdef Q_OS_LINUX
 	espeak_Terminate();
 #endif
 	saySomething = false;
@@ -51,7 +51,7 @@ SpeakThread::~SpeakThread()
 
 void SpeakThread::stop()
 {
-#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
+#ifdef Q_OS_LINUX
 	// check if already speaking
 	if (espeak_IsPlaying() == 1)
 	{
@@ -75,7 +75,7 @@ void SpeakThread::run()
 		// for having more time for the other threads
 		msleep(THREADSLEEPTIME);
 
-#ifdef Q_OS_LINUX // supported only under linux (no MAC OS, Windoze at the moment)
+#ifdef Q_OS_LINUX
 		if (saySomething == true)
 		{
 			saySomething = false;
@@ -99,7 +99,7 @@ void SpeakThread::run()
 
 void SpeakThread::speak(QString text, int phase)
 {
-#ifdef Q_OS_LINUX // supported only under linux (no MAC OS, Windoze at the moment)
+#ifdef Q_OS_LINUX
 	// store the text in the class member
 	textToSpeak = text;
 
@@ -124,7 +124,7 @@ void SpeakThread::speak(QString text, int phase)
 
 void SpeakThread::setLanguage(QString language)
 {
-#ifdef Q_OS_LINUX // joystick support only under linux (no MAC OS, Windoze at the moment)
+#ifdef Q_OS_LINUX
 	espeak_SetVoiceByName(language.toAscii());
 #else
 	Q_UNUSED(language);
@@ -134,7 +134,7 @@ void SpeakThread::setLanguage(QString language)
 
 void SpeakThread::setRate(int value)
 {
-#ifdef Q_OS_LINUX // joystick support only under linux (no MAC OS, Windoze at the moment)
+#ifdef Q_OS_LINUX
 	espeak_SetParameter(espeakRATE, value, 0);
 #else
 	Q_UNUSED(value);
@@ -144,7 +144,7 @@ void SpeakThread::setRate(int value)
 
 void SpeakThread::setVoice(unsigned char gender,unsigned char age)
 {
-#ifdef Q_OS_LINUX // supported only under linux (no MAC OS, Windoze at the moment)
+#ifdef Q_OS_LINUX
 	espeak_VOICE *voice_spec=espeak_GetCurrentVoice();
 	voice_spec->gender=gender;
 	voice_spec->age = age;
