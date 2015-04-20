@@ -39,10 +39,17 @@ SpeakThread::SpeakThread()
 
 //    serialPort = new DirecsSerialQext();
 
+    // Setting the Mac voice name
+    QtSpeech::VoiceName vname;
+    vname.id = "macosx:8";
+    vname.name = "Zarvox";
+
     // creating the QtSpeech object
-    voice = new QtSpeech();
-//    voice.id = "macosx:8";
-//    voice.name = "Zarvox";
+    voice = new QtSpeech(vname);
+
+    // Choose a Mac OS voice
+//    voice->VoiceName.id = "macosx:8";
+//    voice->VoiceName.name = "Zarvox";
 #endif
 }
 
@@ -158,7 +165,7 @@ void SpeakThread::setVoice(unsigned char gender,unsigned char age)
 void setVoice(QString voicename)
 {
     // Deutsch
-    voice.id = "macosx:274733789";
+//    voice.id = "macosx:274733789";
 }
 #endif
 
