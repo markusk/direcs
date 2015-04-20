@@ -20,19 +20,6 @@
 #define QtSpeech_H
 
 #include <QObject>
-/*
-#if defined(QTSPEECH_STATIC)
-#   define QTSPEECH_API
-#elif defined(QTSPEECH_LIBRARY)
-#   define QTSPEECH_API Q_DECL_EXPORT
-#else
-#   define QTSPEECH_API Q_DECL_IMPORT
-#endif
-
-namespace QtSpeech_v1 { // API v1.0
-
-class QTSPEECH_API QtSpeech : public QObject {
-*/
 
 class QtSpeech : public QObject
 {
@@ -72,6 +59,5 @@ private:
     Private * d;
 };
 
-//}; // namespace QtSpeech_v1
 #endif // QtSpeech_H
 

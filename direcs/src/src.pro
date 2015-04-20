@@ -17,9 +17,6 @@ TEMPLATE = app
 
 DEFINES += ACTIVELASERVIEW
 
-# Using QtSpeech under Mac OS
-# include(QtSpeech.pri)
-
 unix|macx {
 	message("Processing UNIX / MAC OS scope...")
 	HEADERS +=	aboutDialog.h \
@@ -45,7 +42,6 @@ unix|macx {
 				networkThread.h \
 				obstacleCheckThread.h \
 				plotThread.h \
-#				QtSpeech \
 				QtSpeech.h \
 				QtGLContext.h \
 				rgbLed.h \
