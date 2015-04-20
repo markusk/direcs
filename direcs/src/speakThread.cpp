@@ -193,7 +193,7 @@ QString SpeakThread::removeHTML(QString string)
 
 		if (start != 1)
 		{
-			string.remove(start, string.indexOf(">")+1 - start);
+            string.remove(start, string.indexOf(">") - start);
 		}
 	} while (string.contains(">"));
 	// to the last HTML ">" found
