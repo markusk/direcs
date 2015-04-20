@@ -5417,8 +5417,10 @@ void Direcs::test()
 #ifdef Q_OS_LINUX
     speakThread->setLanguage("en");
 #endif
-	emit speak(tr("Hello world"));
-	emit speak(tr("The voltage for battery %1 is %2 Volt. For battery %3 it is %4 Volt.").arg( 1 ).arg( sensorThread->getVoltage(VOLTAGESENSOR1) ).arg( 2 ).arg( sensorThread->getVoltage(VOLTAGESENSOR2) ));
+//    emit speak(tr("Hello world"));
+    emit speak(tr("Hallo Welt!"));
+//    emit speak(tr("The voltage for battery %1 is %2 Volt. For battery %3 it is %4 Volt.").arg( 1 ).arg( sensorThread->getVoltage(VOLTAGESENSOR1) ).arg( 2 ).arg( sensorThread->getVoltage(VOLTAGESENSOR2) ));
+    emit speak(tr("Die Akkuspannung %1 beträgt %2 Volt. Akku %3 hat noch %4 Volt.").arg( 1 ).arg( sensorThread->getVoltage(VOLTAGESENSOR1) ).arg( 2 ).arg( sensorThread->getVoltage(VOLTAGESENSOR2) ));
 
 
 //	toggle = !toggle;

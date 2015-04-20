@@ -37,19 +37,13 @@ SpeakThread::SpeakThread()
 	setRate(150);
 #else
 
-//    serialPort = new DirecsSerialQext();
-
     // Setting the Mac voice name
     QtSpeech::VoiceName vname;
-    vname.id = "macosx:8";
-    vname.name = "Zarvox";
+    vname.id = "macosx:274733789";
+    vname.name = "Anna";
 
     // creating the QtSpeech object
     voice = new QtSpeech(vname);
-
-    // Choose a Mac OS voice
-//    voice->VoiceName.id = "macosx:8";
-//    voice->VoiceName.name = "Zarvox";
 #endif
 }
 
@@ -90,7 +84,6 @@ void SpeakThread::run()
 		// for having more time for the other threads
 		msleep(THREADSLEEPTIME);
 
-#ifdef Q_OS_LINUX
 		if (saySomething == true)
 		{
 			saySomething = false;
@@ -99,13 +92,17 @@ void SpeakThread::run()
 			textToSpeak = removeHTML(textToSpeak);
 
 			// speak!
-			espeak_Synth( textToSpeak.toAscii(), textToSpeak.length()+1, 0, POS_CHARACTER, 0, espeakCHARS_AUTO, NULL, NULL );
+#ifdef Q_OS_LINUX
+            espeak_Synth( textToSpeak.toAscii(), textToSpeak.length()+1, 0, POS_CHARACTER, 0, espeakCHARS_AUTO, NULL, NULL );
 			espeak_Synchronize();
 
 			// let other Slots know that we completed the sentence.
 			emit speechCompleted(mPhase);
-		}
 #endif
+#ifdef Q_OS_MAC
+            voice->say(textToSpeak);
+#endif
+        }
 
 	}
 	stopped = false;
@@ -114,7 +111,6 @@ void SpeakThread::run()
 
 void SpeakThread::speak(QString text, int phase)
 {
-#ifdef Q_OS_LINUX
 	// store the text in the class member
 	textToSpeak = text;
 
@@ -124,15 +120,13 @@ void SpeakThread::speak(QString text, int phase)
 	// enbale the run method to speak :-)
 	saySomething = true;
 
-	// check if already speaking
+#ifdef Q_OS_LINUX
+    // check if already speaking
 	if (espeak_IsPlaying() == 1)
 	{
 		// shut up
 		espeak_Cancel();
 	}
-#else
-	Q_UNUSED(text);
-	Q_UNUSED(phase);
 #endif
 }
 
