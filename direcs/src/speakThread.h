@@ -91,6 +91,7 @@ class SpeakThread : public QThread
 		bool saySomething; /// this is for the thread, which waits for something to say.
 		QString textToSpeak;
 		int mPhase;
+        QList <QString> speechQueue;
 #ifdef Q_OS_MAC
         QtSpeech *voice; // Using QtSpeech under Mac OS
 #endif

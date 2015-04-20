@@ -88,12 +88,16 @@ void SpeakThread::run()
 		// for having more time for the other threads
 		msleep(THREADSLEEPTIME);
 
-		if (saySomething == true)
+        if (speechQueue.isEmpty() == false)
 		{
-			saySomething = false;
+//			saySomething = false;
 
+            // get first element to speak
 			// remove HTML tags from string (needed for reading messages from the GUI log)
-			textToSpeak = removeHTML(textToSpeak);
+            textToSpeak = removeHTML(speechQueue.first());
+
+            // remove element from queue
+            speechQueue.removeFirst();
 
 			// speak!
 #ifdef Q_OS_LINUX
@@ -104,11 +108,14 @@ void SpeakThread::run()
 			emit speechCompleted(mPhase);
 #else
             // Tell something, asynchronous. Call slot when speech complete.
-            //
 
             // stop saying the next sentence, until the slot is called
-            stopped = true;
+//            saySomething = false;
+            qDebug() << ++n << ". Text wird jetzt gesagt:" << textToSpeak << ".";
             voice->tell(textToSpeak, this, SLOT(tellComplete()));
+
+//            qDebug() << ++n << ". Text:" << textToSpeak << ".";
+//            voice->say(textToSpeak);
 #endif
         }
 
@@ -119,15 +126,21 @@ void SpeakThread::run()
 
 void SpeakThread::speak(QString text, int phase)
 {
-	// store the text in the class member
-	textToSpeak = text;
+    // add text to queue
+    speechQueue.append(text);
 
+    qDebug() << "Element " << speechQueue.size() << ". added to Queue: " << text << ".";
+
+/*
+    // store the text in the class member
+	textToSpeak = text;
+*/
 	// store the phase locally
 	mPhase = phase;
-
+/*
 	// enbale the run method to speak :-)
 	saySomething = true;
-
+*/
 #ifdef Q_OS_LINUX
     // check if already speaking
 	if (espeak_IsPlaying() == 1)
@@ -142,8 +155,10 @@ void SpeakThread::speak(QString text, int phase)
 #ifdef Q_OS_MAC
 void SpeakThread::tellComplete()
 {
+    qDebug("tellComplete.");
+
     // continue with next sentence...
-    stopped = false;
+//    saySomething = true;
 }
 #endif
 
@@ -153,18 +168,14 @@ void SpeakThread::setLanguage(QString language)
 {
 	espeak_SetVoiceByName(language.toAscii());
 }
-#endif
 
 
-#ifdef Q_OS_LINUX
 void SpeakThread::setRate(int value)
 {
 	espeak_SetParameter(espeakRATE, value, 0);
 }
-#endif
 
 
-#ifdef Q_OS_LINUX
 void SpeakThread::setVoice(unsigned char gender,unsigned char age)
 {
     espeak_VOICE *voice_spec=espeak_GetCurrentVoice();
