@@ -55,6 +55,10 @@ SpeakThread::~SpeakThread()
 #endif
 	saySomething = false;
 	stopped = false;
+
+#ifdef Q_OS_MAC
+    delete voice;
+#endif
 }
 
 
@@ -98,9 +102,9 @@ void SpeakThread::run()
 
 			// let other Slots know that we completed the sentence.
 			emit speechCompleted(mPhase);
-#endif
-#ifdef Q_OS_MAC
-            voice->say(textToSpeak);
+#else
+            // Tell something, asynchronous
+            voice->tell(textToSpeak);
 #endif
         }
 
