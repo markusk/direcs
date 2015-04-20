@@ -24,7 +24,7 @@
 SpeakThread::SpeakThread()
 {
 	stopped = false;
-	saySomething = false;
+    currentlySpeaking = false;
 	mPhase = 0;
 
 #ifdef Q_OS_LINUX
@@ -53,7 +53,7 @@ SpeakThread::~SpeakThread()
 #ifdef Q_OS_LINUX
 	espeak_Terminate();
 #endif
-	saySomething = false;
+    currentlySpeaking = false;
 	stopped = false;
 
 #ifdef Q_OS_MAC
@@ -88,9 +88,11 @@ void SpeakThread::run()
 		// for having more time for the other threads
 		msleep(THREADSLEEPTIME);
 
-        if (speechQueue.isEmpty() == false)
+        // only speak, if there is something in the queue _and_ we are currently not speaking
+        if ((speechQueue.isEmpty() == false) && (currentlySpeaking == false))
 		{
-//			saySomething = false;
+            // now we're talking! ;-)
+            currentlySpeaking = true;
 
             // get first element to speak
 			// remove HTML tags from string (needed for reading messages from the GUI log)
@@ -108,14 +110,8 @@ void SpeakThread::run()
 			emit speechCompleted(mPhase);
 #else
             // Tell something, asynchronous. Call slot when speech complete.
-
             // stop saying the next sentence, until the slot is called
-//            saySomething = false;
-            qDebug() << ++n << ". Text wird jetzt gesagt:" << textToSpeak << ".";
             voice->tell(textToSpeak, this, SLOT(tellComplete()));
-
-//            qDebug() << ++n << ". Text:" << textToSpeak << ".";
-//            voice->say(textToSpeak);
 #endif
         }
 
@@ -129,18 +125,9 @@ void SpeakThread::speak(QString text, int phase)
     // add text to queue
     speechQueue.append(text);
 
-    qDebug() << "Element " << speechQueue.size() << ". added to Queue: " << text << ".";
-
-/*
-    // store the text in the class member
-	textToSpeak = text;
-*/
 	// store the phase locally
 	mPhase = phase;
-/*
-	// enbale the run method to speak :-)
-	saySomething = true;
-*/
+
 #ifdef Q_OS_LINUX
     // check if already speaking
 	if (espeak_IsPlaying() == 1)
@@ -155,10 +142,8 @@ void SpeakThread::speak(QString text, int phase)
 #ifdef Q_OS_MAC
 void SpeakThread::tellComplete()
 {
-    qDebug("tellComplete.");
-
     // continue with next sentence...
-//    saySomething = true;
+    currentlySpeaking = false;
 }
 #endif
 

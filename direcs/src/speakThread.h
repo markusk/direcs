@@ -88,7 +88,7 @@ class SpeakThread : public QThread
 		QString removeHTML(QString string);
 
 		volatile bool stopped;
-		bool saySomething; /// this is for the thread, which waits for something to say.
+        bool currentlySpeaking; /// this is for the thread, which indicates that we are currently speaking.
 		QString textToSpeak;
 		int mPhase;
         QList <QString> speechQueue;
