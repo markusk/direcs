@@ -25,8 +25,11 @@
 
 //-------------------------------------------------------------------
 #ifdef Q_OS_LINUX // Under Linux we use the espeak lib.
-#include "speak_lib.h"
+    #include "speak_lib.h"
+#else
+    #include <QtSpeech>
 #endif
+
 #include <QThread>
 //-------------------------------------------------------------------
 
@@ -49,13 +52,15 @@ class SpeakThread : public QThread
 		virtual void run();
 #ifdef Q_OS_LINUX
         void setLanguage(QString language);
-		void setVoice(unsigned char gender,unsigned char age);
 		void setRate(int value);
+        void setVoice(unsigned char gender,unsigned char age);
+#else
+        void setVoice(QString voicename);
 #endif
 
 	public slots:
 		/**
-		Speaks a text with espeak. All HTML-Code in the parameter (text) is also removed internally).
+        Speaks a text. All HTML-Code in the parameter (text) is also removed internally).
 		@param text is the text to speak.
 		@param phase is an optional value. This could be a special phase which could be returned when the speech ends or so.
 		*/
@@ -77,6 +82,9 @@ class SpeakThread : public QThread
 		bool saySomething; /// this is for the thread, which waits for something to say.
 		QString textToSpeak;
 		int mPhase;
+#ifdef Q_OS_MAC
+        QtSpeech::VoiceName *voice; // Using QtSpeech under Mac OS
+#endif
 
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds

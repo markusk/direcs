@@ -35,6 +35,14 @@ SpeakThread::SpeakThread()
 	espeak_Initialize(AUDIO_OUTPUT_PLAYBACK, 0, NULL,0);
 	// set speech rate down to 150 words per minute
 	setRate(150);
+#else
+
+//    serialPort = new DirecsSerialQext();
+
+    // creating the QtSpeech object
+    voice = new QtSpeech();
+//    voice.id = "macosx:8";
+//    voice.name = "Zarvox";
 #endif
 }
 
@@ -122,38 +130,37 @@ void SpeakThread::speak(QString text, int phase)
 }
 
 
+#ifdef Q_OS_LINUX
 void SpeakThread::setLanguage(QString language)
 {
-#ifdef Q_OS_LINUX
 	espeak_SetVoiceByName(language.toAscii());
-#else
-	Q_UNUSED(language);
-#endif
 }
+#endif
 
 
+#ifdef Q_OS_LINUX
 void SpeakThread::setRate(int value)
 {
-#ifdef Q_OS_LINUX
 	espeak_SetParameter(espeakRATE, value, 0);
-#else
-	Q_UNUSED(value);
-#endif
 }
+#endif
 
 
+#ifdef Q_OS_LINUX
 void SpeakThread::setVoice(unsigned char gender,unsigned char age)
 {
-#ifdef Q_OS_LINUX
-	espeak_VOICE *voice_spec=espeak_GetCurrentVoice();
-	voice_spec->gender=gender;
-	voice_spec->age = age;
-	espeak_SetVoiceByProperties(voice_spec);
-#else
-	Q_UNUSED(gender);
-	Q_UNUSED(age);
-#endif
+    espeak_VOICE *voice_spec=espeak_GetCurrentVoice();
+    voice_spec->gender=gender;
+    voice_spec->age = age;
+    espeak_SetVoiceByProperties(voice_spec);
 }
+#else
+void setVoice(QString voicename)
+{
+    // Deutsch
+    voice.id = "macosx:274733789";
+}
+#endif
 
 
 QString SpeakThread::removeHTML(QString string)

@@ -17,7 +17,8 @@ TEMPLATE = app
 
 DEFINES += ACTIVELASERVIEW
 
-include(QtSpeech.pri)
+# Using QtSpeech under Mac OS
+# include(QtSpeech.pri)
 
 unix|macx {
 	message("Processing UNIX / MAC OS scope...")
@@ -44,6 +45,8 @@ unix|macx {
 				networkThread.h \
 				obstacleCheckThread.h \
 				plotThread.h \
+				QtSpeech \
+				QtSpeech.h \
 				QtGLContext.h \
 				rgbLed.h \
 				urg_serial_utils.h \
@@ -77,6 +80,7 @@ unix|macx {
 				networkThread.cpp \
 				obstacleCheckThread.cpp \
 				plotThread.cpp \
+				QtSpeech_mac.cpp \
 				QtGLContext.cpp \
 				rgbLed.cpp \
 				urg_serial_utils.cpp \
@@ -117,6 +121,8 @@ unix|macx {
 				-lopencv_highgui \
 				-lopencv_imgproc \
 				-lphonon
+
+	LIBS *= -framework AppKit
 
 	QMAKE_CXXFLAGS_DEBUG += -pg
 	QMAKE_CXXFLAGS_RELEASE += -pg
