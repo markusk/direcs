@@ -160,9 +160,7 @@ Direcs::Direcs(bool bConsoleMode, bool bForceSmallGUI, bool bForceLargeGUI)
 	//--------------------------
 	// create all other objects
 	//--------------------------
-#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
 	speakThread = new SpeakThread();
-#endif
 
 	if (consoleMode)
 	{
@@ -488,7 +486,6 @@ void Direcs::init()
 		//----------------------------------------------------------------------------
 		// say a text
 		//----------------------------------------------------------------------------
-		#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
 		// a phase can also be emitted to the regarding slot (int parameter here)
 		connect(this, SIGNAL( speak(QString, int) ), speakThread, SLOT( speak(QString, int) ));
 
@@ -504,7 +501,6 @@ void Direcs::init()
 			speakThread->start();
 			emit message("Speak thread started.");
 		}
-		#endif
 
 		// file found-Msg
 		emit message(QString("Using ini-File \"%1\".").arg(inifile1->getInifileName()));
@@ -570,12 +566,10 @@ void Direcs::init()
 		//----------------------------------------------------------------------------
 		connect(gui, SIGNAL( demo(bool) ), this, SLOT( setDemoMode(bool) ));
 
-#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
 		//----------------------------------------------------------------------------
 		// also let the speakThread inform the nextDemoPhase Slot about that the speech was completed to enter the next demo phase
 		//----------------------------------------------------------------------------
 		connect(speakThread, SIGNAL( speechCompleted(int) ), this, SLOT( nextDemoPhase(int) ));
-#endif
 
 		//-------------------------------------------------------
 		// start the network thread (waiting for commands)
@@ -1530,7 +1524,6 @@ void Direcs::shutdown()
 	}
 
 
-#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
 	//--------------------------------
 	// quit the speakThread
 	//--------------------------------
@@ -1568,7 +1561,6 @@ void Direcs::shutdown()
 			emit message("Speak thread terminated.");
 		}
 	}
-#endif
 
 
 	//--------------------------------
@@ -1918,9 +1910,7 @@ Direcs::~Direcs()
 	delete demoThread;
 	delete timerThread;
 	delete logfile;
-	#ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
 	delete speakThread;
-	#endif
 	delete laserThread;
 	delete netThread;
 	delete joystick;
@@ -5530,7 +5520,8 @@ void Direcs::test()
 #ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
 		speakThread->setLanguage("en");
 		//speakThread->setVoice(1, 200); // 1=male, 'age'=255
-		// Say some text;
+#endif
+        // Say some text;
 		QDateTime now = QDateTime::currentDateTime();
 		emit speak(tr("Hello Markus. Today it's the %1 of %2, %3. The time is %4 %5.")
 				   .arg(now.toString("d"))
@@ -5538,7 +5529,6 @@ void Direcs::test()
 				   .arg(now.toString("yyyy"))
 				   .arg(now.toString("h"))
 				   .arg(now.toString("m")));
-#endif
 	}
 	else
 	{
@@ -5547,7 +5537,8 @@ void Direcs::test()
 
 #ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
 		speakThread->setLanguage("de");
-		//speakThread->setVoice(2, 5); // 2=female, 'age'=5
+#endif
+        //speakThread->setVoice(2, 5); // 2=female, 'age'=5
 		// Say some text;
 		QDateTime now = QDateTime::currentDateTime();
 		emit speak(tr("und das ganze geht auch auf Deutsch. Heute ist der %1te. %2, %3. Es ist jetzt %4 Uhr %5.")
@@ -5556,7 +5547,6 @@ void Direcs::test()
 				   .arg(now.toString("yyyy"))
 				   .arg(now.toString("h"))
 				   .arg(now.toString("m")));
-#endif
 	}
 		//head->look("RIGHT");
 
