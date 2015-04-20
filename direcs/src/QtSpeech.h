@@ -20,7 +20,7 @@
 #define QtSpeech_H
 
 #include <QObject>
-
+/*
 #if defined(QTSPEECH_STATIC)
 #   define QTSPEECH_API
 #elif defined(QTSPEECH_LIBRARY)
@@ -32,7 +32,12 @@
 namespace QtSpeech_v1 { // API v1.0
 
 class QTSPEECH_API QtSpeech : public QObject {
-Q_OBJECT
+*/
+
+class QtSpeech : public QObject
+{
+    Q_OBJECT
+
 public:
     // exceptions
     struct Error { QString msg; Error(QString s):msg(s) {} };
@@ -67,6 +72,6 @@ private:
     Private * d;
 };
 
-}; // namespace QtSpeech_v1
+//}; // namespace QtSpeech_v1
 #endif // QtSpeech_H
 

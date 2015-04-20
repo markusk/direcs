@@ -17,11 +17,12 @@
     Boston, MA 02110-1301 USA */
 
 #include <QtCore>
-#include <QtSpeech>
+//#include <QtSpeech>
+#include "QtSpeech.h"
 #include <ApplicationServices/ApplicationServices.h>
-
+/*
 namespace QtSpeech_v1 { // API v1.0
-
+*/
 // some defines for throwing exceptions
 #define Where QString("%1:%2:").arg(__FILE__).arg(__LINE__)
 #define SysCall(x,e) {\
@@ -230,4 +231,4 @@ void QtSpeech::timerEvent(QTimerEvent * te)
     QObject::timerEvent(te);
 }
 
-} // namespace QtSpeech_v1
+//} // namespace QtSpeech_v1

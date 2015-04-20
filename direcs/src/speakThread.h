@@ -27,7 +27,7 @@
 #ifdef Q_OS_LINUX // Under Linux we use the espeak lib.
     #include "speak_lib.h"
 #else
-    #include <QtSpeech>
+    #include "QtSpeech.h"
 #endif
 
 #include <QThread>
@@ -83,7 +83,7 @@ class SpeakThread : public QThread
 		QString textToSpeak;
 		int mPhase;
 #ifdef Q_OS_MAC
-        QtSpeech::VoiceName *voice; // Using QtSpeech under Mac OS
+        QtSpeech *voice; // Using QtSpeech under Mac OS
 #endif
 
 		// Every thread sleeps some time, for having a bit more time fo the other threads!

@@ -45,7 +45,7 @@ unix|macx {
 				networkThread.h \
 				obstacleCheckThread.h \
 				plotThread.h \
-				QtSpeech \
+#				QtSpeech \
 				QtSpeech.h \
 				QtGLContext.h \
 				rgbLed.h \
