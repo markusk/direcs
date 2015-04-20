@@ -75,6 +75,15 @@ class SpeakThread : public QThread
 		void speechCompleted(int mPhase);
 
 
+#ifdef Q_OS_MAC
+    private slots:
+        /**
+          This is called when the MAC OS speech (sentence or so) is complete.
+          */
+        void tellComplete();
+#endif
+
+
 	private:
 		QString removeHTML(QString string);
 

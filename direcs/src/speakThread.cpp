@@ -103,8 +103,12 @@ void SpeakThread::run()
 			// let other Slots know that we completed the sentence.
 			emit speechCompleted(mPhase);
 #else
-            // Tell something, asynchronous
-            voice->tell(textToSpeak);
+            // Tell something, asynchronous. Call slot when speech complete.
+            //
+
+            // stop saying the next sentence, until the slot is called
+            stopped = true;
+            voice->tell(textToSpeak, this, SLOT(tellComplete()));
 #endif
         }
 
@@ -133,6 +137,15 @@ void SpeakThread::speak(QString text, int phase)
 	}
 #endif
 }
+
+
+#ifdef Q_OS_MAC
+void SpeakThread::tellComplete()
+{
+    // continue with next sentence...
+    stopped = false;
+}
+#endif
 
 
 #ifdef Q_OS_LINUX
