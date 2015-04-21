@@ -1,6 +1,12 @@
 // For Apple Remote
 #include <IRremote.h>
 
+// For Adafruit FONA
+#include <Adafruit_FONA.h>
+
+// For serial communication to the FONA module
+#include <SoftwareSerial.h>
+
 // give it a name:
 int ledGreen     =  2;
 int ledYellow    =  3;
@@ -9,6 +15,7 @@ int ledRed     = 13; /// @todo change name (color)
 
 int relaisPin    =  4;
 
+// motor pins
 int motor1aPin   =  5;
 int motor1bPin   =  6;
 int motor1DirPin =  7;
@@ -26,6 +33,7 @@ int motor4bPin   = 18;
 int motor4DirPin = 19;
 int motor4PWMPin = 20;
 
+// RGB LED pins
 int RGBLED1red   = 21;
 int RGBLED1green = 22;
 int RGBLED1blue  = 23;
@@ -36,7 +44,13 @@ int RGBLED3red   = 27;
 int RGBLED3green = 28;
 int RGBLED3blue  = 29;
 
+// IR pins for Apple Remote
 int IR_Rcv_PIN   = 30; // pin for TSOP1736 IR sensor output
+
+// Adafruit FONA pins  @todo: update pins to a serial port or other HW port on Arduino/seeduino mega!!
+#define FONA_RX 2
+#define FONA_TX 3
+#define FONA_RST 4
 
 
 // test:
@@ -80,7 +94,7 @@ Adafruit_BicolorMatrix matrix = Adafruit_BicolorMatrix();
 
 
 //--------------------------------------
-// The code for the Apple IR Remote
+// Apple IR Remote stuff
 //--------------------------------------
 // Storage for the recorded code
          int  codeType = -1;     // The type of code
@@ -115,6 +129,22 @@ unsigned long repeat = 2011242581; // Wird bei ok und play zusätzlich gesendet
  unsigned long play   = 2011265628;
  unsigned long repeat = 2011242588; // Wird bei ok und play zusätzlich gesendet
  */
+
+
+
+//------------------------------------------------------------
+// Adafruit FONA stuff
+//------------------------------------------------------------
+//const int buttonPin = A0; // Pushbutton
+int returnValue = 0;
+
+SoftwareSerial fonaSS = SoftwareSerial(FONA_TX, FONA_RX);
+Adafruit_FONA fona = Adafruit_FONA(FONA_RST);
+
+// store the state if FONA is okay or not (init okay etc.)
+boolean FONAstate = false;
+//------------------------------------------------------------
+
 
 
 //-------  from main.h  -------------------------------
@@ -405,6 +435,56 @@ void setup()
   digitalWrite(motor4bPin, LOW);
   digitalWrite(motor4DirPin, LOW);  
   digitalWrite(motor4PWMPin, LOW);
+
+
+  //-------------------------------------------------------------------------------------------------
+  // open serial connection to FONA
+  //-------------------------------------------------------------------------------------------------
+  // make it slow so its easy to read!
+  fonaSS.begin(4800); // if you're using software serial
+  //Serial1.begin(4800); // if you're using hardware serial
+
+
+  //-------------------------------------------------------------------------------------------------
+  // See if the FONA is responding
+  //-------------------------------------------------------------------------------------------------
+  if (! fona.begin(fonaSS))           // can also try fona.begin(Serial1) 
+  {  // make it slow so its easy to read!
+
+    // ERROR. All LEDs red.
+    digitalWrite(RGBLED1red, HIGH);
+    digitalWrite(RGBLED1green, LOW);
+    digitalWrite(RGBLED1blue, LOW);
+    digitalWrite(RGBLED2red, HIGH);
+    digitalWrite(RGBLED2green, LOW);
+    digitalWrite(RGBLED2blue, LOW);
+    digitalWrite(RGBLED3red, HIGH);
+    digitalWrite(RGBLED3green, LOW);
+    digitalWrite(RGBLED3blue, LOW);
+
+    // do not continue. do we want this here?!? @todo do this via serial command with answer to Mac!
+    while (1);
+  }
+
+  //--------------------------------
+  // unlock FONA with PIN
+  //--------------------------------
+  if (unlockSIM() == -1)
+  {
+    FONAstate = false;
+    
+    // uView.println("Error PIN!"); // @todo do this via serial command with answer to Mac!
+  }
+  else
+  {
+    //---------------------
+    // PIN okay. go ahead.
+    //---------------------
+
+    FONAstate = true;
+    
+  } // PIN okay
+
 
 
   //-------------------------------------------------------------------------------------------------
@@ -1746,4 +1826,52 @@ void storeCode(decode_results *results)
     codeValue = results->value;
     codeLen = results->bits;
   }
+}
+
+
+// FONA: read the number of SMS's
+int8_t readNumSMS()
+{
+  int8_t smsnum = fona.getNumSMS();
+
+
+  if (smsnum < 0)
+  {
+    return -1;
+  }
+
+  return smsnum; 
+}
+
+
+// FONA: Unlock the SIM with a PIN code
+int unlockSIM()
+{
+  char PIN[5];
+
+
+  // PIN
+//  PIN[0] = '0';
+//  PIN[1] = '0';
+//  PIN[2] = '0';
+//  PIN[3] = '0';
+//  PIN[4] = NULL;
+
+  PIN[0] = '4';
+  PIN[1] = '7';
+  PIN[2] = '3';
+  PIN[3] = '8';
+  PIN[4] = NULL;
+
+  // unlock
+  if (! fona.unlockSIM(PIN))
+  {
+    // error
+    return -1;
+  } 
+  else
+  {
+    // ok
+    return 0;
+  }        
 }
