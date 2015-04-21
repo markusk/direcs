@@ -28,6 +28,7 @@ unix|macx {
 				direcsSerial.h \
 				direcsSerialQext.h \
 				gui.h \
+				GSMThread.h \
 				head.h \
 				inifile.h \
 				interfaceAvr.h \
@@ -61,6 +62,7 @@ unix|macx {
 				demoThread.cpp \
 				direcsSerial.cpp \
 				direcsSerialQext.cpp \
+				GSMThread.cpp \
 				gui.cpp \
 				head.cpp \
 				inifile.cpp \
