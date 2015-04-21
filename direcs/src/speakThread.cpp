@@ -24,7 +24,7 @@
 SpeakThread::SpeakThread()
 {
 	stopped = false;
-    currentlySpeaking = false;
+	currentlySpeaking = false;
 	mPhase = 0;
 
 #ifdef Q_OS_LINUX
@@ -37,13 +37,13 @@ SpeakThread::SpeakThread()
 	setRate(150);
 #else
 
-    // Setting the Mac voice name
-    QtSpeech::VoiceName vname;
-    vname.id = "macosx:274733789";
-    vname.name = "Anna";
+	// Setting the Mac voice name
+	QtSpeech::VoiceName vname;
+	vname.id = "macosx:274733789";
+	vname.name = "Anna";
 
-    // creating the QtSpeech object
-    voice = new QtSpeech(vname);
+	// creating the QtSpeech object
+	voice = new QtSpeech(vname);
 #endif
 }
 
@@ -53,11 +53,11 @@ SpeakThread::~SpeakThread()
 #ifdef Q_OS_LINUX
 	espeak_Terminate();
 #endif
-    currentlySpeaking = false;
+	currentlySpeaking = false;
 	stopped = false;
 
 #ifdef Q_OS_MAC
-    delete voice;
+	delete voice;
 #endif
 }
 
@@ -88,32 +88,32 @@ void SpeakThread::run()
 		// for having more time for the other threads
 		msleep(THREADSLEEPTIME);
 
-        // only speak, if there is something in the queue _and_ we are currently not speaking
-        if ((speechQueue.isEmpty() == false) && (currentlySpeaking == false))
+		// only speak, if there is something in the queue _and_ we are currently not speaking
+		if ((speechQueue.isEmpty() == false) && (currentlySpeaking == false))
 		{
-            // now we're talking! ;-)
-            currentlySpeaking = true;
+			// now we're talking! ;-)
+			currentlySpeaking = true;
 
-            // get first element to speak
+			// get first element to speak
 			// remove HTML tags from string (needed for reading messages from the GUI log)
-            textToSpeak = removeHTML(speechQueue.first());
+			textToSpeak = removeHTML(speechQueue.first());
 
-            // remove element from queue
-            speechQueue.removeFirst();
+			// remove element from queue
+			speechQueue.removeFirst();
 
 			// speak!
 #ifdef Q_OS_LINUX
-            espeak_Synth( textToSpeak.toAscii(), textToSpeak.length()+1, 0, POS_CHARACTER, 0, espeakCHARS_AUTO, NULL, NULL );
+			espeak_Synth( textToSpeak.toAscii(), textToSpeak.length()+1, 0, POS_CHARACTER, 0, espeakCHARS_AUTO, NULL, NULL );
 			espeak_Synchronize();
 
 			// let other Slots know that we completed the sentence.
 			emit speechCompleted(mPhase);
 #else
-            // Tell something, asynchronous. Call slot when speech complete.
-            // stop saying the next sentence, until the slot is called
-            voice->tell(textToSpeak, this, SLOT(tellComplete()));
+			// Tell something, asynchronous. Call slot when speech complete.
+			// stop saying the next sentence, until the slot is called
+			voice->tell(textToSpeak, this, SLOT(tellComplete()));
 #endif
-        }
+		}
 
 	}
 	stopped = false;
@@ -122,14 +122,14 @@ void SpeakThread::run()
 
 void SpeakThread::speak(QString text, int phase)
 {
-    // add text to queue
-    speechQueue.append(text);
+	// add text to queue
+	speechQueue.append(text);
 
 	// store the phase locally
 	mPhase = phase;
 
 #ifdef Q_OS_LINUX
-    // check if already speaking
+	// check if already speaking
 	if (espeak_IsPlaying() == 1)
 	{
 		// shut up
@@ -142,8 +142,8 @@ void SpeakThread::speak(QString text, int phase)
 #ifdef Q_OS_MAC
 void SpeakThread::tellComplete()
 {
-    // continue with next sentence...
-    currentlySpeaking = false;
+	// continue with next sentence...
+	currentlySpeaking = false;
 }
 #endif
 
@@ -163,15 +163,15 @@ void SpeakThread::setRate(int value)
 
 void SpeakThread::setVoice(unsigned char gender,unsigned char age)
 {
-    espeak_VOICE *voice_spec=espeak_GetCurrentVoice();
-    voice_spec->gender=gender;
-    voice_spec->age = age;
-    espeak_SetVoiceByProperties(voice_spec);
+	espeak_VOICE *voice_spec=espeak_GetCurrentVoice();
+	voice_spec->gender=gender;
+	voice_spec->age = age;
+	espeak_SetVoiceByProperties(voice_spec);
 }
 #else
 void setVoice(QString voicename)
 {
-    // Deutsch
+	// Deutsch
 //    voice.id = "macosx:274733789";
 }
 #endif
@@ -189,7 +189,7 @@ QString SpeakThread::removeHTML(QString string)
 
 		if (start != 1)
 		{
-            string.remove(start, string.indexOf(">") - start);
+			string.remove(start, string.indexOf(">") - start);
 		}
 	} while (string.contains(">"));
 	// to the last HTML ">" found

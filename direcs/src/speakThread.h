@@ -25,9 +25,9 @@
 
 //-------------------------------------------------------------------
 #ifdef Q_OS_LINUX // Under Linux we use the espeak lib.
-    #include "speak_lib.h"
+	#include "speak_lib.h"
 #else
-    #include "QtSpeech.h"
+	#include "QtSpeech.h"
 #endif
 
 #include <QThread>
@@ -51,16 +51,16 @@ class SpeakThread : public QThread
 		void stop();
 		virtual void run();
 #ifdef Q_OS_LINUX
-        void setLanguage(QString language);
+		void setLanguage(QString language);
 		void setRate(int value);
-        void setVoice(unsigned char gender,unsigned char age);
+		void setVoice(unsigned char gender,unsigned char age);
 #else
-        void setVoice(QString voicename);
+		void setVoice(QString voicename);
 #endif
 
 	public slots:
 		/**
-        Speaks a text. All HTML-Code in the parameter (text) is also removed internally).
+		Speaks a text. All HTML-Code in the parameter (text) is also removed internally).
 		@param text is the text to speak.
 		@param phase is an optional value. This could be a special phase which could be returned when the speech ends or so.
 		*/
@@ -76,11 +76,11 @@ class SpeakThread : public QThread
 
 
 #ifdef Q_OS_MAC
-    private slots:
-        /**
-          This is called when the MAC OS speech (sentence or so) is complete.
-          */
-        void tellComplete();
+	private slots:
+		/**
+		  This is called when the MAC OS speech (sentence or so) is complete.
+		  */
+		void tellComplete();
 #endif
 
 
@@ -88,12 +88,12 @@ class SpeakThread : public QThread
 		QString removeHTML(QString string);
 
 		volatile bool stopped;
-        bool currentlySpeaking; /// this is for the thread, which indicates that we are currently speaking.
+		bool currentlySpeaking; /// this is for the thread, which indicates that we are currently speaking.
 		QString textToSpeak;
 		int mPhase;
-        QList <QString> speechQueue;
+		QList <QString> speechQueue;
 #ifdef Q_OS_MAC
-        QtSpeech *voice; // Using QtSpeech under Mac OS
+		QtSpeech *voice; // Using QtSpeech under Mac OS
 #endif
 
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
