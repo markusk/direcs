@@ -1319,6 +1319,39 @@ void loop()
     Serial.flush();
   }
   else
+  // RGB LED 3 red
+  if (command == "*rgb7")
+  {
+    // get the 3 digits which contain the brightness
+    command = command.substring(5, 3);
+    // get value from string and set value
+    analogWrite(RGBLED3red, command.toInt());
+    Serial.print("*rgb7#");
+    Serial.flush();
+  }
+  else
+  // RGB LED 3 green
+  if (command == "*rgb8")
+  {
+    // get the 3 digits which contain the brightness
+    command = command.substring(5, 3);
+    // get value from string and set value
+    analogWrite(RGBLED3green, command.toInt());
+    Serial.print("*rgb8#");
+    Serial.flush();
+  }
+  else
+  // RGB LED 3 blue
+  if (command == "*rgb9")
+  {
+    // get the 3 digits which contain the brightness
+    command = command.substring(5, 3);
+    // get value from string and set value
+    analogWrite(RGBLED3blue, command.toInt());
+    Serial.print("*rgb9#");
+    Serial.flush();
+  }
+  else
   // BOTSTOP
   if (command == "*bst#")
   {
