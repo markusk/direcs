@@ -451,6 +451,10 @@ class GSMThread : public QThread
 		static const unsigned char READ_CONTACT2 = 71;
 		static const unsigned char READ_CONTACT3 = 72;
 		static const unsigned char READ_CONTACT4 = 73;
+		static const unsigned char SMS_COUNT  = 100;
+		static const unsigned char SMS_READ   = 101;
+		static const unsigned char SMS_SEND   = 102;
+		static const unsigned char SMS_DELETE = 103;
 
 		/**
 		This is for the @sa heartbeat signal (the GUI LED colors)
