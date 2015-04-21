@@ -408,18 +408,18 @@ void setup()
 
 
   //-------------------------------------------------------------------------------------------------
-  // turn all RGB LEDs
+  // turn on some RGB LEDs
   //-------------------------------------------------------------------------------------------------
   digitalWrite(RGBLED1red, LOW);
-  digitalWrite(RGBLED1green, LOW);
+  digitalWrite(RGBLED1green, HIGH);
   digitalWrite(RGBLED1blue, LOW);
 
   digitalWrite(RGBLED2red, LOW);
-  digitalWrite(RGBLED2green, LOW);
+  digitalWrite(RGBLED2green, HIGH);
   digitalWrite(RGBLED2blue, LOW);
 
   digitalWrite(RGBLED3red, LOW);
-  digitalWrite(RGBLED3green, LOW);
+  digitalWrite(RGBLED3green, HIGH);
   digitalWrite(RGBLED3blue, LOW);
 
       
