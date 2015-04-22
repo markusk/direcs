@@ -136,6 +136,7 @@ unsigned long repeat = 2011242581; // Wird bei ok und play zusätzlich gesendet
 // Adafruit FONA stuff
 //------------------------------------------------------------
 //const int buttonPin = A0; // Pushbutton
+int8_t smsnum = 0; // the number of available SMS's
 int returnValue = 0;
 
 SoftwareSerial fonaSS = SoftwareSerial(FONA_TX, FONA_RX);
@@ -1587,6 +1588,51 @@ void loop()
     // answer with "ok"
     Serial.print("*btr#");
     Serial.flush();
+  }
+  else
+  // SMS_COUNT / SMS_CHECK = "smsc"
+  if (command == "*smsc#")
+  {
+    // read the number of SMS's
+    smsnum = fona.getNumSMS();
+
+    // success ?
+    if (smsnum < 0)
+    {
+      // answer with "ERROR"
+      Serial.print("*err#");
+      Serial.flush();
+    }
+    else
+    {
+      if (Serial.print("*") < 1)
+      {
+        // ERROR!!
+        delay(10000);
+        return;
+      }
+      // write all data immediately!
+      Serial.flush();
+
+      // print no of SMS
+      if (Serial.print( smsnum ) < 1)
+      {
+        // ERROR!!
+        delay(10000);
+        return;
+      }
+      // write all data immediately!
+      Serial.flush();
+
+      if (Serial.print("#") < 1)
+      {
+        // ERROR!!
+        delay(10000);
+        return;
+      }
+      // write all data immediately!
+      Serial.flush();
+    } // SMS count okay
   }
 
   // no valid command found (i.e. *wtf# )
