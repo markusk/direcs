@@ -295,36 +295,6 @@ class GSMThread : public QThread
 		// Time in milliseconds
 		static const unsigned long THREADSLEEPTIME = 1000; // Default: 100 ms
 
-		// Give the infrared sensors some names
-		//
-		// DONT CHANGE THIS NUMBERS!
-		// THEY ARE ALSO USED TO ADRESS THE ARRAY "iRSensorValue[]" !!
-		//
-		static const short int SENSOR1 = 1;
-		static const short int SENSOR2 = 2;
-		static const short int SENSOR3 = 4;
-		static const short int SENSOR4 = 8;
-		static const short int SENSOR5 = 16;
-		static const short int SENSOR6 = 32;
-		static const short int SENSOR7 = 64;
-		static const short int SENSOR8 = 128;
-
-		// ultrasonic sensor
-		static const short int SENSOR16 = 256;
-
-		// 5 sensors + 1 = 16
-		// This just for convenience to call the array index by the sensor names.
-		// (wastin' some memory ;-) )
-		//
-		// #define SENSOR4 = 8
-		//
-		// For example:  iRSensorValue[SENSOR4] = 0;
-		//
-		int iRSensorValue[SENSOR8+1]; /// \todo array mit 129 Werten statt 8 für 8 Sensoren !!!
-
-		/** defines the size of the iRDistance[] array !! */
-		static const unsigned char IRSENSORARRAYSIZE = 40;
-		int iRDistance[IRSENSORARRAYSIZE];
 
 		/**
 		for storing the voltage values from the accumulators (power supply)
@@ -336,121 +306,15 @@ class GSMThread : public QThread
 
 		static const int MAXIMUMPLOTHEARTBEAT = 5; /// theoratically 5 Volt for heartbeat "high" @sa Gui::initPlot
 
-		/**
-		Defines the size of the usSensorValue[] array
-		This es equal to the number of ultrasonic sensors.
-		*/
-		static const unsigned char USSENSORARRAYSIZE = 1;
-		int usSensorValue[USSENSORARRAYSIZE];
-
-		static const short int ULTRASONICSENSOR1 = 0;
-
-		/**
-		Defines the size of the motorSensorValue[] array
-		This es equal to the number of motor sensors.
-		*/
-		static const unsigned char MOTORSENSORARRAYSIZE = 4;
-		int motorSensorValue[MOTORSENSORARRAYSIZE];
-
-		static const short int MOTORSENSOR1 = 0;
-		static const short int MOTORSENSOR2 = 1;
-		static const short int MOTORSENSOR3 = 2;
-		static const short int MOTORSENSOR4 = 3;
-
-		// defines the size of the drivenDistance[] array
-		// This es equal to the number of motors!
-		static const unsigned char DRIVENDISTANCEARRAYSIZE = 2;
-		int drivenDistance[DRIVENDISTANCEARRAYSIZE];
-
-		static const short int DRIVENDISTANCE1 = 0;
-		static const short int DRIVENDISTANCE2 = 1;
 
 		/**
 		Since a heartbeat can only high or low. we store only 1 value in this array. But we need an array for the plotThread.
 		*/
 		int heartbeatValue[1];
 
-		/**
-		Defines the conversion factor for the motor sensors to convert the sensor value in a "real world" value.
-		For example, a measured sensor value for a motor sensor is 100, this multiplied with a conversion factor 29 results in 290 mA.
-		*/
-		static const unsigned char CONVERSIONFACTORMOTORSENSOR = 29;
-
-		/**
-		Defines the conversion factor for the voltage sensors to convert the sensor value in a "real world" value.
-		For example, a measured sensor value for a voltage sensor is 685, this divided by a conversion factor 57.0 results in 12 V.
-		Lead-Gel:
-		4095 / 13.2 Volt = 310.22727272
-		4095 / 26.4 Volt = 155.11363636
-		LiPo:
-		4095 / 16.8 Volt = 243.75 (4S)
-		4095 / 25.2 Volt = 162.50 (6S)
-		*/
-		static const float CONVERSIONFACTORVOLTAGESENSOR1 = 243.75;
-		static const float CONVERSIONFACTORVOLTAGESENSOR2 = 162.50;
-
-		/**
-		The x, y, z axis value from the 3D magnetic sensor and the heading
-		 */
-		float xAxis;
-		float yAxis;
-		float zAxis;
-		float heading;
-
-		static const short int XAXIS = 0;
-		static const short int YAXIS = 1;
-		static const short int ZAXIS = 2;
-
-		static const bool ON  = true;   /** For motor or robot "ON" */
-		static const bool OFF = false;  /** For motor or robot "OFF" */
-
-		/**
-		 Give the contacts for the pan tilt cam end positions some nice names
-		 */
-		static const unsigned char CONTACT1 = 0;
-		static const unsigned char CONTACT2 = 1;
-		static const unsigned char CONTACT3 = 2;
-		static const unsigned char CONTACT4 = 3;
-
-		// The position for the contact alarm in the camera image
-		static const char LEFT   = 0;
-		static const char RIGHT  = 1;
-		static const char TOP    = 2;
-		static const char BOTTOM = 3;
-
-		static const unsigned char CONTACTARRAYSIZE = 4;
-		char contactValue[CONTACTARRAYSIZE];
-
 		//
 		// the "serial" commands for the MC
 		//
-		static const unsigned char READ_SENSOR_1  = 1;
-		static const unsigned char READ_SENSOR_2  = 2;
-		static const unsigned char READ_SENSOR_3  = 3;
-		static const unsigned char READ_SENSOR_4  = 4;
-		static const unsigned char READ_SENSOR_5  = 5;
-		static const unsigned char READ_SENSOR_6  = 6;
-		static const unsigned char READ_SENSOR_7  = 7;
-		static const unsigned char READ_SENSOR_8  = 8;
-		static const unsigned char READ_SENSOR_16 = 16;
-
-		static const unsigned char READ_MOTOR_SENSOR1 = 28;
-		static const unsigned char READ_MOTOR_SENSOR2 = 29;
-
-		static const unsigned char READ_MOTOR_DISTANCE1	= 30;
-		static const unsigned char READ_MOTOR_DISTANCE2	= 31;
-
-		static const short int RESET_MOTOR_DISTANCE1 = 32; /// \todo why int instead of char? Where else?
-		static const short int RESET_MOTOR_DISTANCE2 = 33; /// \todo why int instead of char? Where else?
-
-		static const unsigned char READ_AXIS_X = 61;
-		static const unsigned char READ_AXIS_Y = 62;
-		static const unsigned char READ_AXIS_Z = 63;
-
-		static const unsigned char READ_CONTACT1 = 70;
-		static const unsigned char READ_CONTACT2 = 71;
-		static const unsigned char READ_CONTACT3 = 72;
-		static const unsigned char READ_CONTACT4 = 73;
 		static const unsigned char SMS_COUNT  = 100;
 		static const unsigned char SMS_READ   = 101;
 		static const unsigned char SMS_SEND   = 102;
