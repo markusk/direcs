@@ -925,21 +925,10 @@ void loop()
   // READ_SENSOR_7 (24 V supply)
   if (command == "*s7#")
   {
-    /*------------------ DEBUG 2 ------------------------/
-    letter("z", LED_YELLOW);
-    //------------------ DEBUG 2 ------------------------*/
-
-    greenLED(OFF);
-    yellowLED(OFF);
-
     // read the analog in value
     // print the results to the serial monitor:
     if (Serial.print("*") < 1)
     {
-      /*------------------ DEBUG 2 ------------------------/
-      letter("y", LED_YELLOW);
-      //------------------ DEBUG 2 ------------------------*/
-
       // ERROR!!
       delay(10000);
       return;
@@ -949,10 +938,6 @@ void loop()
 
     if (Serial.print( analogRead(SENSOR7) ) < 1)
     {
-      /*------------------ DEBUG 2 ------------------------/
-      letter("x", LED_YELLOW);
-      //------------------ DEBUG 2 ------------------------*/
-
       // ERROR!!
       delay(10000);
       return;
@@ -962,40 +947,21 @@ void loop()
     
     if (Serial.print("#") < 1)
     {
-      /*------------------ DEBUG 2 ------------------------/
-      letter("w", LED_YELLOW);
-      //------------------ DEBUG 2 ------------------------*/
-
       // ERROR!!
       delay(10000);
       return;
     }
     // write all data immediately!
     Serial.flush();
-    
-    /*------------------ DEBUG 2 ------------------------/
-    letter("A", LED_YELLOW);
-    //------------------ DEBUG 2 ------------------------*/
   }
   else
   // READ_SENSOR_8 (12 V supply)
   if (command == "*s8#")
   {
-    /*------------------ DEBUG 2 ------------------------/
-    letter("u", LED_YELLOW);
-    //------------------ DEBUG 2 ------------------------*/
-
-    greenLED(OFF);
-    yellowLED(OFF);
-
     // read the analog in value
     // print the results to the serial monitor:
     if (Serial.print("*") < 1)
     {
-      /*------------------ DEBUG 2 ------------------------/
-      letter("t", LED_YELLOW);
-      //------------------ DEBUG 2 ------------------------*/
-
       // ERROR!!
       delay(10000);
       return;
@@ -1005,10 +971,6 @@ void loop()
 
     if (Serial.print( analogRead(SENSOR8) ) < 1)
     {
-      /*------------------ DEBUG 2 ------------------------/
-      letter("s", LED_YELLOW);
-      //------------------ DEBUG 2 ------------------------*/
-
       // ERROR!!
       delay(10000);
       return;
@@ -1018,20 +980,12 @@ void loop()
 
     if (Serial.print("#") < 1)
     {
-      /*------------------ DEBUG 2 ------------------------/
-      letter("r", LED_YELLOW);
-      //------------------ DEBUG 2 ------------------------*/
-
       // ERROR!!
       delay(10000);
       return;
     }
     // write all data immediately!
     Serial.flush();
-
-    /*------------------ DEBUG 2 ------------------------/
-    letter("q", LED_YELLOW);
-    //------------------ DEBUG 2 ------------------------*/
   }
 /*     else
   // READ_SENSOR_16
