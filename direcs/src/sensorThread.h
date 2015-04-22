@@ -208,7 +208,7 @@ class SensorThread : public QThread
 
 		/**
 		Emits a emergency signal for letting other modules know that we have a massive sensor error. So in that case an emergency stop or so could be initiated.
-		@param errorlevel needs to be defined. Temporariliy we use -2 in case of error in this thread.
+		@param errorlevel needs to be defined. Temporariliy we use -2 in case of error in this thread. -3 is for the GSM thread.
 		*/
 		void systemerror(int errorlevel);
 

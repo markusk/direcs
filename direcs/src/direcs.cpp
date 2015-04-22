@@ -5309,6 +5309,14 @@ void Direcs::systemerrorcatcher(int errorlevel)
 		// force shutdown and do no circuit inits etc, when exiting direcs
 		forceShutdown = true;
 		break;
+
+		case -3: // error with GSM thread -> error in atmel read / write port!
+			emit message("Error with GSM thread.");
+			logfile->appendLog("Error with GSM thread.");
+
+			// force shutdown and do no circuit inits etc, when exiting direcs
+			forceShutdown = true;
+			break;
 	}
 }
 
@@ -5415,13 +5423,13 @@ void Direcs::test()
 
 
 #ifdef Q_OS_LINUX
-    speakThread->setLanguage("en");
+	speakThread->setLanguage("en");
 #endif
 //    emit speak(tr("Hello world"));
-    emit speak(tr("Hallo Welt!"));
+	emit speak(tr("Hallo Welt!"));
 //    emit speak(tr("The voltage for battery %1 is %2 Volt. For battery %3 it is %4 Volt.").arg( 1 ).arg( sensorThread->getVoltage(VOLTAGESENSOR1) ).arg( 2 ).arg( sensorThread->getVoltage(VOLTAGESENSOR2) ));
-    emit speak(tr("Die Akkuspannung %1 ist %2 Volt. Akku %3 hat noch %4 Volt.").arg( 1 ).arg( sensorThread->getVoltage(VOLTAGESENSOR1) ).arg( 2 ).arg( sensorThread->getVoltage(VOLTAGESENSOR2) ));
-    emit speak(tr("Alles klar, los geht's!"));
+	emit speak(tr("Die Akkuspannung %1 ist %2 Volt. Akku %3 hat noch %4 Volt.").arg( 1 ).arg( sensorThread->getVoltage(VOLTAGESENSOR1) ).arg( 2 ).arg( sensorThread->getVoltage(VOLTAGESENSOR2) ));
+	emit speak(tr("Alles klar, los geht's!"));
 
 //	toggle = !toggle;
 /*
@@ -5523,7 +5531,7 @@ void Direcs::test()
 		speakThread->setLanguage("en");
 		//speakThread->setVoice(1, 200); // 1=male, 'age'=255
 #endif
-        // Say some text;
+		// Say some text;
 		QDateTime now = QDateTime::currentDateTime();
 		emit speak(tr("Hello Markus. Today it's the %1 of %2, %3. The time is %4 %5.")
 				   .arg(now.toString("d"))
@@ -5540,7 +5548,7 @@ void Direcs::test()
 #ifdef Q_OS_LINUX // currently supported only under linux (no MAC OS at the moment)
 		speakThread->setLanguage("de");
 #endif
-        //speakThread->setVoice(2, 5); // 2=female, 'age'=5
+		//speakThread->setVoice(2, 5); // 2=female, 'age'=5
 		// Say some text;
 		QDateTime now = QDateTime::currentDateTime();
 		emit speak(tr("und das ganze geht auch auf Deutsch. Heute ist der %1te. %2, %3. Es ist jetzt %4 Uhr %5.")
