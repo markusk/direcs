@@ -234,11 +234,10 @@ class GSMThread : public QThread
 		float convertToVolt(int sensor);
 
 		/**
-		Reads an infrared sensor value from the microcontroller
-		@param sensor is the sensor number (SENSOR1 to SENSOR6)
-		@return true on success, false on error
+		Checks how many SMS are available.
+		@return the amount of available SMS, or -1 in case of error
 		*/
-		bool readInfraredSensor(short int sensor);
+		int countSMS();
 
 		/**
 		Reads an ultrasonic sensor value from the microcontroller

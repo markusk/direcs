@@ -1747,3 +1747,8 @@ int GSMThread::getHeartbeatValue()
 {
 	return heartbeatValue[0];
 }
+
+
+bool checkForSMS()
+{
+}
