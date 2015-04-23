@@ -1557,6 +1557,9 @@ void loop()
     // See if the FONA is responding    
     if (! fona.begin(fonaSS))           // can also try fona.begin(Serial1) 
     {
+      // store state
+      FONAstate = false;
+
       // all LEDs red
       allLEDsRed();
 
@@ -1572,6 +1575,9 @@ void loop()
     }
     else
     {
+      // store state
+      FONAstate = true;
+
       // answer "ok"
       if (Serial.print("*gsmi#") < 6)
       {
