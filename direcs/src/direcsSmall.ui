@@ -277,6 +277,120 @@
         <layout class="QHBoxLayout" name="horizontalLayout">
          <item>
           <layout class="QGridLayout" name="gridLayout_6">
+           <item row="4" column="1">
+            <widget class="QLabel" name="label_6">
+             <property name="font">
+              <font>
+               <pointsize>18</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Network</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="0">
+            <widget class="QLabel" name="lblLEDMasterSlave">
+             <property name="pixmap">
+              <pixmap resource="../direcs.qrc">:/images/images/led_gray.gif</pixmap>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="0">
+            <widget class="QLabel" name="lblLEDNetwork">
+             <property name="pixmap">
+              <pixmap resource="../direcs.qrc">:/images/images/led_gray.gif</pixmap>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="1">
+            <widget class="QLabel" name="lblMasterSlave">
+             <property name="font">
+              <font>
+               <pointsize>18</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Slave</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="lblLEDCamera">
+             <property name="pixmap">
+              <pixmap resource="../direcs.qrc">:/images/images/led_gray.gif</pixmap>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="lblLEDLaser">
+             <property name="pixmap">
+              <pixmap resource="../direcs.qrc">:/images/images/led_gray.gif</pixmap>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="QLabel" name="lblLEDCompass">
+             <property name="pixmap">
+              <pixmap resource="../direcs.qrc">:/images/images/led_gray.gif</pixmap>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QLabel" name="label_8">
+             <property name="font">
+              <font>
+               <pointsize>18</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Laser</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QLabel" name="label_7">
+             <property name="font">
+              <font>
+               <pointsize>18</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Compass</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QLabel" name="label_9">
+             <property name="font">
+              <font>
+               <pointsize>18</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Camera</string>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="1">
+            <widget class="QLabel" name="label_10">
+             <property name="font">
+              <font>
+               <pointsize>18</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Joystick</string>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="0">
+            <widget class="QLabel" name="lblLEDJoystick">
+             <property name="pixmap">
+              <pixmap resource="../direcs.qrc">:/images/images/led_gray.gif</pixmap>
+             </property>
+            </widget>
+           </item>
            <item row="0" column="0">
             <widget class="QLabel" name="lblLEDHeartbeat">
              <property name="pixmap">
@@ -296,115 +410,20 @@
              </property>
             </widget>
            </item>
-           <item row="3" column="0">
-            <widget class="QLabel" name="lblLEDCompass">
-             <property name="pixmap">
-              <pixmap resource="../direcs.qrc">:/images/images/led_gray.gif</pixmap>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="1">
-            <widget class="QLabel" name="label_7">
+           <item row="7" column="1">
+            <widget class="QLabel" name="label_12">
              <property name="font">
               <font>
                <pointsize>18</pointsize>
               </font>
              </property>
              <property name="text">
-              <string>Compass</string>
+              <string>GSM</string>
              </property>
             </widget>
            </item>
-           <item row="6" column="0">
-            <widget class="QLabel" name="lblLEDJoystick">
-             <property name="pixmap">
-              <pixmap resource="../direcs.qrc">:/images/images/led_gray.gif</pixmap>
-             </property>
-            </widget>
-           </item>
-           <item row="6" column="1">
-            <widget class="QLabel" name="label_10">
-             <property name="font">
-              <font>
-               <pointsize>18</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Joystick</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="lblLEDLaser">
-             <property name="pixmap">
-              <pixmap resource="../direcs.qrc">:/images/images/led_gray.gif</pixmap>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QLabel" name="label_8">
-             <property name="font">
-              <font>
-               <pointsize>18</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Laser</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="lblLEDCamera">
-             <property name="pixmap">
-              <pixmap resource="../direcs.qrc">:/images/images/led_gray.gif</pixmap>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="1">
-            <widget class="QLabel" name="label_9">
-             <property name="font">
-              <font>
-               <pointsize>18</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Camera</string>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="0">
-            <widget class="QLabel" name="lblLEDNetwork">
-             <property name="pixmap">
-              <pixmap resource="../direcs.qrc">:/images/images/led_gray.gif</pixmap>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="1">
-            <widget class="QLabel" name="label_6">
-             <property name="font">
-              <font>
-               <pointsize>18</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Network</string>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="1">
-            <widget class="QLabel" name="lblMasterSlave">
-             <property name="font">
-              <font>
-               <pointsize>18</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Slave</string>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="0">
-            <widget class="QLabel" name="lblLEDMasterSlave">
+           <item row="7" column="0">
+            <widget class="QLabel" name="lblLEDGSM">
              <property name="pixmap">
               <pixmap resource="../direcs.qrc">:/images/images/led_gray.gif</pixmap>
              </property>

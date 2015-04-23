@@ -401,6 +401,12 @@ class Gui : public QMainWindow
 		void setLEDLaser(unsigned char state);
 
 		/**
+		Turns the GSM GUI LED red, green or off.
+		@param state can be RED, GREEN or OFF.
+		*/
+		void setLEDGSM(unsigned char state);
+
+		/**
 		Changes the text of the netowrk master/slave label
 		@param text is the etxt to be shown (normally 'Master' or 'Slave)
 		*/
