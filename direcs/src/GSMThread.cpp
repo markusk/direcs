@@ -52,7 +52,8 @@ GSMThread::GSMThread(InterfaceAvr *i, QMutex *m)
 	//heartbeatValue[0] = 0;
 
 	robotState = ON; // Wer're thinking positive. The robot is ON untill whe know nothing other. :-)
-	GSMState   = ON; // Same applies here
+
+	GSMState   = OFF; // will be set to ON, once the init function ran successful
 }
 
 

@@ -1263,6 +1263,18 @@ void Direcs::setRobotState(bool state)
 
 			// whenever there is a material error, react!
 			connect(gsmThread, SIGNAL( systemerror(int) ), this, SLOT( systemerrorcatcher(int) ) );
+
+			//----------------------
+			// init the GSM module
+			//----------------------
+			emit splashMessage("Initialising GSM module...");
+			emit message("Initialising GSM module...", false);
+
+			if (gsmThread->init() == true)
+			{
+				emit splashMessage("GSM module initialised.");
+				emit message("GSM module initialised.");
+			}
 		}
 
 #ifndef BUILDFORROBOT
