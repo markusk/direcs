@@ -231,12 +231,14 @@ boolean FONAstate = false;
 // #define BOTDIAGONAL_BACKWARD_LEFT
 // #define BOTDIAGONAL_BACKWARD_RIGHT
 
-// Commands for interaction with the GSM FONA module
-#define SMS_COUNT  = 100;
-#define SMS_READ   = 101;
-#define SMS_SEND   = 102;
-#define SMS_DELETE = 103;
+/* Commands for interaction with the GSM FONA module
+  gsmi  = init GSM module
 
+  smsc  = count available SMS
+  smsr  = read SMS #
+  smss  = send SMS
+  smsd  = delete SMS #
+*/
 
 // these numbers represent the pins on the Arduino !!
 // for the infrared sensors and the motor sensors
