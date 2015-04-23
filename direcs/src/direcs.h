@@ -58,7 +58,6 @@
 
 #include "circuit.h"
 #include "interfaceAvr.h"
-//#include "heartbeat.h"
 #include "sensorThread.h"
 #include "motor.h"
 #include "servo.h"
@@ -377,7 +376,6 @@ class Direcs : public QObject
 #endif
 		Circuit *circuit1;
 		InterfaceAvr *interface1;
-		/// \todo Heartbeat *heartbeat;
 		SensorThread *sensorThread;
 		GSMThread *gsmThread;
 		Motor *motors;

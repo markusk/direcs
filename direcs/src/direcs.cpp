@@ -183,7 +183,6 @@ Direcs::Direcs(bool bConsoleMode, bool bForceSmallGUI, bool bForceLargeGUI)
 	mutex = new QMutex();
 	interface1 = new InterfaceAvr();
 	circuit1 = new Circuit(interface1, mutex);
-///	\todo heartbeat = new Heartbeat(interface1, mutex);
 	motors = new Motor(interface1, mutex);
 	sensorThread = new SensorThread(interface1, mutex);
 	servos = new Servo(interface1, mutex);
@@ -388,7 +387,6 @@ void Direcs::init()
 	connect(interface1,	SIGNAL( robotState(bool) ), circuit1,		SLOT( setRobotState(bool) ));
 	connect(interface1,	SIGNAL( robotState(bool) ), motors,			SLOT( setRobotState(bool) ));
 	connect(interface1,	SIGNAL( robotState(bool) ), sensorThread,	SLOT( setRobotState(bool) ));
-//	connect(interface1,	SIGNAL( robotState(bool) ), heartbeat,		SLOT( setRobotState(bool) ));
 	connect(interface1,	SIGNAL( robotState(bool) ), rgbLeds,		SLOT( setRobotState(bool) ));
 	connect(interface1,	SIGNAL( robotState(bool) ), gsmThread,		SLOT( setRobotState(bool) ));
 
@@ -406,7 +404,6 @@ void Direcs::init()
 	// also set the robot to OFF, when there are problems with the circuit
 	connect(circuit1,	SIGNAL( robotState(bool) ), motors,			SLOT( setRobotState(bool) ));
 	connect(circuit1,	SIGNAL( robotState(bool) ), sensorThread,	SLOT( setRobotState(bool) ));
-//	connect(circuit1,	SIGNAL( robotState(bool) ), heartbeat,		SLOT( setRobotState(bool) ));
 	connect(circuit1,	SIGNAL( robotState(bool) ), rgbLeds,		SLOT( setRobotState(bool) ));
 	connect(circuit1,	SIGNAL( robotState(bool) ), gsmThread,		SLOT( setRobotState(bool) ));
 //	connect(circuit1,	SIGNAL( robotState(bool) ), this,			SLOT( setRobotState(bool) ));
@@ -1234,9 +1231,6 @@ void Direcs::setRobotState(bool state)
 		emit message("RGB LEDs set to default brightness");
 */
 
-		/// \todo start heartbeat thread and see, whats going on there! Also to do: define atmel code for an "heartbeat answer / action" !!!!!
-		/// currently done by sensor thread a bit...
-
 		//-----------------------------------------------------------
 		// start the sensor thread for reading the sensors)
 		//-----------------------------------------------------------
@@ -1297,7 +1291,6 @@ void Direcs::setRobotState(bool state)
 	{
 		logfile->appendLog("Robot is OFF! Please turn it ON!");
 		emit message("<font color=\"#FF0000\">The robot is OFF! Please turn it ON!</font>");
-		emit message("Heartbeat thread NOT started!");
 		emit message("Sensor thread NOT started!");
 		emit message("Plot thread NOT started!");
 	} // state = false
@@ -1949,7 +1942,6 @@ Direcs::~Direcs()
 	delete rgbLeds;
 	delete motors;
 	delete sensorThread;
-	// \todo delete heartbeat;
 	delete circuit1;
 	delete interface1;
 	if (!consoleMode)
