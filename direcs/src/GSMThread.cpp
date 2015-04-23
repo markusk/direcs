@@ -22,6 +22,18 @@
 
 GSMThread::GSMThread(InterfaceAvr *i, QMutex *m)
 {
+	/*--------------------------------------------------------------
+	// Serial commands used in this modue
+	//--------------------------------------------------------------
+	gsmi	=	init GSM module
+
+	smsc	=	count available SMS
+	smsr	=	read SMS #
+	smss	=	send SMS
+	smsd	=	delete SMS #
+	//------------------------------------------------------------*/
+
+
 	// get the name of this class (this is for debugging messages)
 	className = this->staticMetaObject.className();
 
@@ -39,7 +51,7 @@ GSMThread::GSMThread(InterfaceAvr *i, QMutex *m)
 	//heartbeatValue[0] = 0;
 
 	robotState = ON; // Wer're thinking positive. The robot is ON untill whe know nothing other. :-)
-	GSMState = true; // Same applies here
+	GSMState   = ON; // Same applies here
 }
 
 
@@ -78,7 +90,7 @@ void GSMThread::run()
 		// let the thread sleep some time for having more time for the other threads
 		msleep(THREADSLEEPTIME);
 
-		if ( (GSMState == ON) && (simulationMode == false) )
+		if ( (robotState == ON) && (GSMState == ON) && (simulationMode == false) )
 		{
 			// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
 			mutex->lock();
@@ -208,6 +220,35 @@ int GSMThread::getHeartbeatValue()
 }
 
 
+bool GSMThread::init()
+{
+	int value = 0;
+	QString answer = "error";
+
+
+	// Initialise the GSM module
+	// "gsmi"
+	if (interface1->sendString("gsmi", className) == true)
+	{
+		// check if the robot answers with answer. e.g. "*42#"
+		if (interface1->receiveString(answer, className) == true)
+		{
+			if (answer == "gsmi")
+			{
+				GSMState = ON;
+				return true;
+			}
+		}
+	}
+
+	// error
+	emit message("ERROR initialising GSM module.");
+	GSMState = OFF;
+
+	return false;
+}
+
+
 int GSMThread::countSMS()
 {
 	int value = 0;
@@ -232,6 +273,9 @@ int GSMThread::countSMS()
 	}
 
 	// error
+	emit message("GSM: Error reading available SMS");
 	availableSMS = -1;
+	GSMState = OFF;
+
 	return -1;
 }

@@ -454,27 +454,6 @@ void setup()
   //Serial1.begin(4800); // if you're using hardware serial
 
 
-  //-------------------------------------------------------------------------------------------------
-  // See if the FONA is responding
-  //-------------------------------------------------------------------------------------------------
-  if (! fona.begin(fonaSS))           // can also try fona.begin(Serial1) 
-  {  // make it slow so its easy to read!
-
-    // ERROR. All LEDs red.
-    digitalWrite(RGBLED1red, HIGH);
-    digitalWrite(RGBLED1green, LOW);
-    digitalWrite(RGBLED1blue, LOW);
-    digitalWrite(RGBLED2red, HIGH);
-    digitalWrite(RGBLED2green, LOW);
-    digitalWrite(RGBLED2blue, LOW);
-    digitalWrite(RGBLED3red, HIGH);
-    digitalWrite(RGBLED3green, LOW);
-    digitalWrite(RGBLED3blue, LOW);
-
-    // do not continue. do we want this here?!? @todo do this via serial command with answer to Mac!
-    while (1);
-  }
-
   //--------------------------------
   // unlock FONA with PIN
   //--------------------------------
@@ -1571,6 +1550,40 @@ void loop()
     Serial.flush();
   }
   else
+  // init GSM (FONA)
+  // gsmi
+  if (command == "*gsmi#")
+  {
+    // See if the FONA is responding    
+    if (! fona.begin(fonaSS))           // can also try fona.begin(Serial1) 
+    {
+      // all LEDs red
+      allLEDsRed();
+
+      // answer "ok"
+      if (Serial.print("*err#") < 6)
+      {
+        // ERROR!!
+        delay(10000);
+        return;
+      }
+      // write all data immediately!
+      Serial.flush();
+    }
+    else
+    {
+      // answer "ok"
+      if (Serial.print("*gsmi#") < 6)
+      {
+        // ERROR!!
+        delay(10000);
+        return;
+      }
+      // write all data immediately!
+      Serial.flush();
+    }
+  } // gsmi
+  else
   // SMS_COUNT / SMS_CHECK = "smsc"
   if (command == "*smsc#")
   {
@@ -1613,8 +1626,8 @@ void loop()
       }
       // write all data immediately!
       Serial.flush();
-    } // SMS count okay
-  }
+    } // okay
+  } // smsc
 
   // no valid command found (i.e. *wtf# )
   // delete command string

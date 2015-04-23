@@ -66,6 +66,12 @@ class GSMThread : public QThread
 
 	public slots:
 		/**
+		 * @brief Initialises the GSM module
+		 * @return true on success
+		 */
+		bool init();
+
+		/**
 		This slot enables or disables the simulation mode.
 		In the simulation mode all sensor values are set to a fixed value. No real sensor values are read from the robot, when set to true.
 		@param state can be true or false.
@@ -152,14 +158,6 @@ class GSMThread : public QThread
 		Since a heartbeat can only high or low. we store only 1 value in this array. But we need an array for the plotThread.
 		*/
 		//int heartbeatValue[1];
-
-		//
-		// the "serial" commands for the MC
-		//
-		static const unsigned char SMS_COUNT  = 100;
-		static const unsigned char SMS_READ   = 101;
-		static const unsigned char SMS_SEND   = 102;
-		static const unsigned char SMS_DELETE = 103;
 
 		/**
 		This is for the @sa heartbeat signal (the GUI LED colors)
