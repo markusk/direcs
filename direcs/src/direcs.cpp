@@ -133,14 +133,14 @@ Direcs::Direcs(bool bConsoleMode, bool bForceSmallGUI, bool bForceLargeGUI)
 
 	logfile->appendLog(QString("The hostname of this machine is %1").arg(hostname));
 
-	if (hostname.contains("robot"))
+	if (hostname.contains("robot") || hostname.contains("MacBook-Air"))
 	{
-		logfile->appendLog("Hostname contains 'robot'. We will use the small robot GUI.");
+		logfile->appendLog("Hostname contains 'robot' or 'MacBook-Air'. We will use the small robot GUI.");
 		useSmallGUI = true;
 	}
 	else
 	{
-		logfile->appendLog("Hostname does not contain 'robot'. We will use the large GUI.");
+		logfile->appendLog("Hostname does not contain 'robot' or 'MacBook-Air'. We will use the large GUI.");
 		useSmallGUI = false;
 	}
 
