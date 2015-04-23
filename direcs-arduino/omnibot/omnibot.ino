@@ -497,18 +497,7 @@ void setup()
   //-------------------------------------------------------------------------------------------------
   // turn on some RGB LEDs
   //-------------------------------------------------------------------------------------------------
-  digitalWrite(RGBLED1red, LOW);
-  digitalWrite(RGBLED1green, HIGH);
-  digitalWrite(RGBLED1blue, LOW);
-
-  digitalWrite(RGBLED2red, LOW);
-  digitalWrite(RGBLED2green, HIGH);
-  digitalWrite(RGBLED2blue, LOW);
-
-  digitalWrite(RGBLED3red, LOW);
-  digitalWrite(RGBLED3green, HIGH);
-  digitalWrite(RGBLED3blue, LOW);
-
+  allLEDsGreen();
       
   /* omnibot to pe ported
    
@@ -826,17 +815,7 @@ void loop()
     digitalWrite(motor3bPin, LOW);
 
     // RGB LEDs off
-    digitalWrite(RGBLED1red, LOW);
-    digitalWrite(RGBLED1green, LOW);
-    digitalWrite(RGBLED1blue, LOW);
-
-    digitalWrite(RGBLED2red, LOW);
-    digitalWrite(RGBLED2green, LOW);
-    digitalWrite(RGBLED2blue, LOW);
-
-    digitalWrite(RGBLED3red, LOW);
-    digitalWrite(RGBLED3green, LOW);
-    digitalWrite(RGBLED3blue, LOW);
+    allLEDsWhite();
      
     // flashlight off
     relais(OFF);
@@ -1717,6 +1696,76 @@ void greenLED(uint8_t state)
     // green LED off
     digitalWrite(ledGreen, LOW);
   }
+}
+
+
+void allLEDsRed()
+{
+  digitalWrite(RGBLED1red, HIGH);
+  digitalWrite(RGBLED1green, LOW);
+  digitalWrite(RGBLED1blue, LOW);
+  digitalWrite(RGBLED2red, HIGH);
+  digitalWrite(RGBLED2green, LOW);
+  digitalWrite(RGBLED2blue, LOW);
+  digitalWrite(RGBLED3red, HIGH);
+  digitalWrite(RGBLED3green, LOW);
+  digitalWrite(RGBLED3blue, LOW);
+}
+
+
+void allLEDsGreen()
+{
+  digitalWrite(RGBLED1red, LOW);
+  digitalWrite(RGBLED1green, HIGH);
+  digitalWrite(RGBLED1blue, LOW);
+  digitalWrite(RGBLED2red, LOW);
+  digitalWrite(RGBLED2green, HIGH);
+  digitalWrite(RGBLED2blue, LOW);
+  digitalWrite(RGBLED3red, LOW);
+  digitalWrite(RGBLED3green, HIGH);
+  digitalWrite(RGBLED3blue, LOW);
+}
+
+
+void allLEDsBlue()
+{
+  digitalWrite(RGBLED1red, LOW);
+  digitalWrite(RGBLED1green, LOW);
+  digitalWrite(RGBLED1blue, HIGH);
+  digitalWrite(RGBLED2red, LOW);
+  digitalWrite(RGBLED2green, LOW);
+  digitalWrite(RGBLED2blue, HIGH);
+  digitalWrite(RGBLED3red, LOW);
+  digitalWrite(RGBLED3green, LOW);
+  digitalWrite(RGBLED3blue, HIGH);
+}
+
+
+void allLEDsWhite()
+{
+  digitalWrite(RGBLED1red, HIGH);
+  digitalWrite(RGBLED1green, HIGH);
+  digitalWrite(RGBLED1blue, HIGH);
+  digitalWrite(RGBLED2red, HIGH);
+  digitalWrite(RGBLED2green, HIGH);
+  digitalWrite(RGBLED2blue, HIGH);
+  digitalWrite(RGBLED3red, HIGH);
+  digitalWrite(RGBLED3green, HIGH);
+  digitalWrite(RGBLED3blue, HIGH);
+}
+
+
+void allLEDsOff()
+{
+  digitalWrite(RGBLED1red, LOW);
+  digitalWrite(RGBLED1green, LOW);
+  digitalWrite(RGBLED1blue, LOW);
+  digitalWrite(RGBLED2red, LOW);
+  digitalWrite(RGBLED2green, LOW);
+  digitalWrite(RGBLED2blue, LOW);
+  digitalWrite(RGBLED3red, LOW);
+  digitalWrite(RGBLED3green, LOW);
+  digitalWrite(RGBLED3blue, LOW);
 }
 
 
