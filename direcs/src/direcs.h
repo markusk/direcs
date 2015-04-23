@@ -74,6 +74,7 @@
 #include "speakThread.h"
 #include "timerThread.h"
 #include "demoThread.h"
+#include "GSMThread.h"
 
 
 //-------------------------------------------------------------------
@@ -378,6 +379,7 @@ class Direcs : public QObject
 		InterfaceAvr *interface1;
 		/// \todo Heartbeat *heartbeat;
 		SensorThread *sensorThread;
+		GSMThread *gsmThread;
 		Motor *motors;
 		RgbLed *rgbLeds;
 		Servo *servos;

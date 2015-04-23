@@ -217,6 +217,8 @@ Direcs::Direcs(bool bConsoleMode, bool bForceSmallGUI, bool bForceLargeGUI)
 	mediaObject = new Phonon::MediaObject();
 
 	demoThread = new DemoThread();
+
+	gsmThread = new GSMThread(interface1, mutex);
 }
 
 
