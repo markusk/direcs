@@ -454,32 +454,12 @@ void setup()
   //Serial1.begin(4800); // if you're using hardware serial
 
 
-  //--------------------------------
-  // unlock FONA with PIN
-  //--------------------------------
-  if (unlockSIM() == -1)
-  {
-    FONAstate = false;
-    
-    // uView.println("Error PIN!"); // @todo do this via serial command with answer to Mac!
-  }
-  else
-  {
-    //---------------------
-    // PIN okay. go ahead.
-    //---------------------
-
-    FONAstate = true;
-    
-  } // PIN okay
-
-
 
   //-------------------------------------------------------------------------------------------------
-  // turn on some RGB LEDs
+  // setup complete - all LEDs  g r e e n
   //-------------------------------------------------------------------------------------------------
   allLEDsGreen();
-      
+
   /* omnibot to pe ported
    
   //-------------------------------------------------------------
@@ -556,6 +536,12 @@ void setup()
 
   // Start the IR receiver
   irrecv.enableIRIn();
+
+
+  //-------------------------------------------------------------------------------------------------
+  // setup complete - all LEDs  g r e e n
+  //-------------------------------------------------------------------------------------------------
+  allLEDsGreen();
 }
 
 
@@ -1550,8 +1536,7 @@ void loop()
     Serial.flush();
   }
   else
-  // init GSM (FONA)
-  // gsmi
+  // GSM init (FONA) = "gsmi"
   if (command == "*gsmi#")
   {
     // See if the FONA is responding    
@@ -1589,6 +1574,48 @@ void loop()
       Serial.flush();
     }
   } // gsmi
+  else
+  // GSM PIN unlock (FONA) =  "gsmp"
+  if (command == "*gsmp#")
+  {
+    if (unlockSIM() == -1)
+    {
+      // ERROR
+
+      // store state
+      FONAstate = false;
+
+      // all LEDs red
+      allLEDsRed();
+
+      // answer "ok"
+      if (Serial.print("*err#") < 6)
+      {
+        // ERROR!!
+        delay(10000);
+        return;
+      }
+      // write all data immediately!
+      Serial.flush();
+    }
+    else
+    {
+      // OKAY
+
+      // store state
+      FONAstate = true;      
+
+      // answer "ok"
+      if (Serial.print("*gsmp#") < 6)
+      {
+        // ERROR!!
+        delay(10000);
+        return;
+      }
+      // write all data immediately!
+      Serial.flush();
+    } // PIN okay
+  } // gsmp
   else
   // SMS_COUNT / SMS_CHECK = "smsc"
   if (command == "*smsc#")
