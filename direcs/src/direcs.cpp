@@ -389,7 +389,8 @@ void Direcs::init()
 	connect(interface1,	SIGNAL( robotState(bool) ), motors,			SLOT( setRobotState(bool) ));
 	connect(interface1,	SIGNAL( robotState(bool) ), sensorThread,	SLOT( setRobotState(bool) ));
 //	connect(interface1,	SIGNAL( robotState(bool) ), heartbeat,		SLOT( setRobotState(bool) ));
-	connect(interface1,	SIGNAL( robotState(bool) ), rgbLeds,			SLOT( setRobotState(bool) ));
+	connect(interface1,	SIGNAL( robotState(bool) ), rgbLeds,		SLOT( setRobotState(bool) ));
+	connect(interface1,	SIGNAL( robotState(bool) ), gsmThread,		SLOT( setRobotState(bool) ));
 
 	// let the tiemr thread know, so it does not call arduino init via signal
 	connect(interface1, SIGNAL( robotState(bool) ), timerThread,		SLOT( setRobotState(bool) ));
@@ -406,7 +407,8 @@ void Direcs::init()
 	connect(circuit1,	SIGNAL( robotState(bool) ), motors,			SLOT( setRobotState(bool) ));
 	connect(circuit1,	SIGNAL( robotState(bool) ), sensorThread,	SLOT( setRobotState(bool) ));
 //	connect(circuit1,	SIGNAL( robotState(bool) ), heartbeat,		SLOT( setRobotState(bool) ));
-	connect(circuit1,	SIGNAL( robotState(bool) ), rgbLeds,			SLOT( setRobotState(bool) ));
+	connect(circuit1,	SIGNAL( robotState(bool) ), rgbLeds,		SLOT( setRobotState(bool) ));
+	connect(circuit1,	SIGNAL( robotState(bool) ), gsmThread,		SLOT( setRobotState(bool) ));
 //	connect(circuit1,	SIGNAL( robotState(bool) ), this,			SLOT( setRobotState(bool) ));
 	if (!consoleMode)
 	{
@@ -543,6 +545,7 @@ void Direcs::init()
 			connect(obstCheckThread, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
 			connect(timerThread, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
 			connect(demoThread, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
+			connect(gsmThread, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
 		}
 		else
 		{
@@ -559,6 +562,7 @@ void Direcs::init()
 		connect(obstCheckThread,   SIGNAL(message(QString)), logfile, SLOT(appendLog(QString)));
 		connect(timerThread,       SIGNAL(message(QString)), logfile, SLOT(appendLog(QString)));
 		connect(demoThread,       SIGNAL(message(QString)), logfile, SLOT(appendLog(QString)));
+		connect(gsmThread,       SIGNAL(message(QString)), logfile, SLOT(appendLog(QString)));
 
 		/// \todo check if this is okay for the logfile writer in case of error TO FAST for logfile!!!
 		//		connect(joystick, SIGNAL(message(QString)), logfile, SLOT(appendLog(QString)));
