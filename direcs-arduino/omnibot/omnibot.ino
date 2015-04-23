@@ -233,6 +233,7 @@ boolean FONAstate = false;
 
 /* Commands for interaction with the GSM FONA module
   gsmi  = init GSM module
+  gsmp  = unlock GSM module with PIN
 
   smsc  = count available SMS
   smsr  = read SMS #

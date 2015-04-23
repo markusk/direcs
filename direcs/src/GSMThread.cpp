@@ -26,6 +26,7 @@ GSMThread::GSMThread(InterfaceAvr *i, QMutex *m)
 	// Serial commands used in this modue
 	//--------------------------------------------------------------
 	gsmi	=	init GSM module
+	gsmp	=	unlock GSM module with PIN
 
 	smsc	=	count available SMS
 	smsr	=	read SMS #
@@ -222,7 +223,6 @@ int GSMThread::getHeartbeatValue()
 
 bool GSMThread::init()
 {
-	int value = 0;
 	QString answer = "error";
 
 
@@ -236,13 +236,45 @@ bool GSMThread::init()
 			if (answer == "gsmi")
 			{
 				GSMState = ON;
-				return true;
+
+				// unlock PIN
+				if (unlockPIN() == true)
+				{
+					return true;
+				}
 			}
 		}
 	}
 
 	// error
 	emit message("ERROR initialising GSM module.");
+	GSMState = OFF;
+
+	return false;
+}
+
+
+bool GSMThread::unlockPIN()
+{
+	QString answer = "error";
+
+
+	// Unlocks the SIM PIN
+	// "gsmp"
+	if (interface1->sendString("gsmp", className) == true)
+	{
+		// check if the robot answers with answer. e.g. "*42#"
+		if (interface1->receiveString(answer, className) == true)
+		{
+			if (answer == "gsmp")
+			{
+				GSMState = ON;
+			}
+		}
+	}
+
+	// error
+	emit message("ERROR unlocking GSM SIM PIN.");
 	GSMState = OFF;
 
 	return false;

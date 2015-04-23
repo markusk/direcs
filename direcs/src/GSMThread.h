@@ -137,6 +137,12 @@ class GSMThread : public QThread
 		*/
 		int countSMS();
 
+		/**
+		 * @brief Unlocks the SIM PIN on the GSM module
+		 * @return true on success
+		 */
+		bool unlockPIN();
+
 
 		QString className;	/// this will contain the name of _this_ class at runtime for debug messages
 		mutable QMutex *mutex; // make this class thread-safe
