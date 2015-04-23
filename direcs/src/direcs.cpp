@@ -1268,6 +1268,11 @@ void Direcs::setRobotState(bool state)
 			{
 				emit splashMessage("GSM module initialised.");
 				emit message("GSM module initialised.");
+				gui->setLEDGSM(LED_GREEN);
+			}
+			else
+			{
+				gui->setLEDGSM(LED_RED);
 			}
 		}
 
