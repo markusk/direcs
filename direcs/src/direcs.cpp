@@ -623,10 +623,12 @@ void Direcs::init()
 
 			if (!consoleMode)
 			{
-				// set GUI LED for compass module
-				// has to be OFF, since the Atmel circuit is OFF
+				// set GUI LED for compass module and GSM
+				// have to be OFF, since the Atmel circuit is OFF
 				gui->setLEDCompass(LEDOFF);
 				gui->disableCompass();
+
+				gui->setLEDGSM(LEDOFF);
 			}
 		}
 		else
@@ -1249,6 +1251,20 @@ void Direcs::setRobotState(bool state)
 			connect(sensorThread, SIGNAL( systemerror(int) ), this, SLOT( systemerrorcatcher(int) ) );
 		}
 
+		//-----------------------------------------------------------
+		// start the GSM thread
+		//-----------------------------------------------------------
+		if (gsmThread->isRunning() == false)
+		{
+			emit splashMessage("Starting GSM thread...");
+			emit message("Starting GSM thread...", false);
+			gsmThread->start();
+			emit message("GSM thread started.");
+
+			// whenever there is a material error, react!
+			connect(gsmThread, SIGNAL( systemerror(int) ), this, SLOT( systemerrorcatcher(int) ) );
+		}
+
 #ifndef BUILDFORROBOT
 		if (!consoleMode)
 		{
@@ -1716,6 +1732,46 @@ void Direcs::shutdown()
 		}
 	}
 #endif
+
+
+	//--------------------------
+	// quit the GSM thread
+	//--------------------------
+	//qDebug("Starting to stop the GSM thread NOW!");
+	if (gsmThread->isRunning() == true)
+	{
+		emit message("Stopping GSM thread...");
+		emit splashMessage("Stopping GSM thread...");
+
+		// my own stop routine :-)
+		gsmThread->stop();
+
+		// slowing thread down
+		gsmThread->setPriority(QThread::IdlePriority);
+		gsmThread->quit();
+
+		//-------------------------------------------
+		// start measuring time for timeout ckecking
+		//-------------------------------------------
+		QTime t;
+		t.start();
+		do
+		{
+		} while ((gsmThread->isFinished() == false) && (t.elapsed() <= 2000));
+
+		if (gsmThread->isFinished() == true)
+		{
+			emit message("GSM thread stopped.");
+		}
+		else
+		{
+			emit message("ERROR: Terminating GSM thread because it doesn't answer...");
+			emit splashMessage("Terminating GSM thread because it doesn't answer...");
+			gsmThread->terminate();
+			gsmThread->wait(1000);
+			emit message("GSM thread terminated.");
+		}
+	}
 
 
 	//--------------------------
