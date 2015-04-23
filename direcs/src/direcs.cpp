@@ -1234,19 +1234,6 @@ void Direcs::setRobotState(bool state)
 
 		/// \todo start heartbeat thread and see, whats going on there! Also to do: define atmel code for an "heartbeat answer / action" !!!!!
 		/// currently done by sensor thread a bit...
-/*
-		//-----------------------------------------------------------
-		// start the heartbeat thread
-		//-----------------------------------------------------------
-		if (heartbeat->isRunning() == false)
-		{
-			emit splashMessage("Starting heartbeat thread...");
-
-			emit message("Starting heartbeat thread...", false);
-			heartbeat->start();
-			emit message("Heartbeat thread started.");
-		}
-*/
 
 		//-----------------------------------------------------------
 		// start the sensor thread for reading the sensors)
@@ -1769,46 +1756,6 @@ void Direcs::shutdown()
 			emit message("Sensor thread terminated.");
 		}
 	}
-
-
-/*
-	//--------------------------
-	/// \todo quit the heartbeat thread
-	//--------------------------
-	if (heartbeat->isRunning() == true)
-	{
-		emit message("Stopping heartbeat thread...");
-
-		// my own stop routine :-)
-		heartbeat->stop();
-
-		// slowing thread down
-		heartbeat->setPriority(QThread::IdlePriority);
-		heartbeat->quit();
-
-		//-------------------------------------------
-		// start measuring time for timeout ckecking
-		//-------------------------------------------
-		QTime t;
-		t.start();
-		do
-		{
-		} while ((heartbeat->isFinished() == false) && (t.elapsed() <= 2000));
-
-		if (heartbeat->isFinished() == true)
-		{
-			emit message("Heartbeat thread stopped.");
-		}
-		else
-		{
-			emit message("ERROR: Terminating heartbeat thread because it doesn't answer...");
-			emit splashMessage("Terminating heartbeat thread because it doesn't answer...");
-			heartbeat->terminate();
-			heartbeat->wait(1000);
-			emit message("Heartbeat thread terminated.");
-		}
-	}
-*/
 
 
 	//--------------------------------
