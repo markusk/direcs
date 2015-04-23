@@ -24,10 +24,10 @@ int main(int argc, char ** argv)
 	QCoreApplication a(argc, argv);
 	QString text; // the text to speak
 
-	/*
+
 	foreach(QtSpeech::VoiceName v, QtSpeech::voices())
 		qDebug() << "id:" << v.id << "name:" << v.name;
-	*/
+
 
 	//--------------------------
 	// use system default voice
@@ -67,23 +67,25 @@ int main(int argc, char ** argv)
 	id: "macosx:268828893" name: "Yannick"
 	*/
 	//
-	QtSpeech::VoiceName voice;
-	voice.id = "macosx:8";
-	voice.name = "Markus";
+    QtSpeech::VoiceName voice;
+/*
+    voice.id = "macosx:8";
+    voice.name = "Zarvox";
 	QtSpeech speech1(voice);
 	text = "Oh my god! I am a fucking lonesome robot but I do not have a robot girl. I am so depressed.";
 
 	qDebug() << "About to say synchrounously" << text << "using voice:" << speech1.name().name;
 	speech1.say(text);
 	//return 0;
-
+*/
 
 	//
 	// Deutsch
-	voice.id = "macosx:268828893";
-	voice.name = "Yannick";
+    voice.id = "macosx:274733789";
+//    voice.name = "Anna";
 	QtSpeech speech2(voice);
 	text = "Das ist ja wohl endlich mal eine coole Sprachausgabe, oder was? Robotik-Labor, der Pott-Kast rund um Robotik-Themen. www.robotiklabor.de. Heisser Scheiss, was?";
+    text = "Die Welt ist fertig. Endlich fertig.";
 
 	qDebug() << "About to say asynchrounously" << text << "using voice:" << speech2.name().name;
 	speech2.tell(text, &a, SLOT(quit()));
