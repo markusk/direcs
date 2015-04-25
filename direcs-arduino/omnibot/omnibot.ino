@@ -8,44 +8,44 @@
 #include <SoftwareSerial.h>
 
 // give it a name:
-int ledGreen     =  2;
-int ledYellow    =  3;
+#define ledGreen      2
+#define ledYellow     3
 // Pin 13 has an LED connected on most Arduino boards.
-int ledRed     = 13; /// @todo change name (color)
+#define ledRed     13 /// @todo change name (color)
 
-int relaisPin    =  4;
+#define relaisPin     4
 
 // motor pins
-int motor1aPin   =  5;
-int motor1bPin   =  6;
-int motor1DirPin =  7;
-int motor1PWMPin =  8;
-int motor2aPin   =  9;
-int motor2bPin   = 10;
-int motor2DirPin = 11;
-int motor2PWMPin = 12;
-int motor3aPin   = 13;
-int motor3bPin   = 14;
-int motor3DirPin = 15;
-int motor3PWMPin = 16;
-int motor4aPin   = 17;
-int motor4bPin   = 18;
-int motor4DirPin = 19;
-int motor4PWMPin = 20;
+#define motor1aPin    5
+#define motor1bPin    6
+#define motor1DirPin  7
+#define motor1PWMPin  8
+#define motor2aPin    9
+#define motor2bPin   10
+#define motor2DirPin 11
+#define motor2PWMPin 12
+#define motor3aPin   13
+#define motor3bPin   14
+#define motor3DirPin 15
+#define motor3PWMPin 16
+#define motor4aPin   17
+#define motor4bPin   18
+#define motor4DirPin 19
+#define motor4PWMPin 20
 
 // RGB LED pins
-int RGBLED1red   = 21;
-int RGBLED1green = 22;
-int RGBLED1blue  = 23;
-int RGBLED2red   = 24;
-int RGBLED2green = 25;
-int RGBLED2blue  = 26;
-int RGBLED3red   = 27;
-int RGBLED3green = 28;
-int RGBLED3blue  = 29;
+#define RGBLED1red   21
+#define RGBLED1green 22
+#define RGBLED1blue  23
+#define RGBLED2red   24
+#define RGBLED2green 25
+#define RGBLED2blue  26
+#define RGBLED3red   27
+#define RGBLED3green 28
+#define RGBLED3blue  29
 
 // IR pins for Apple Remote
-int IR_Rcv_PIN   = 30; // pin for TSOP1736 IR sensor output
+#define IR_Rcv_PIN   30 // pin for TSOP1736 IR sensor output
 
 // Adafruit FONA pins  @todo: update pins to a serial port or other HW port on Arduino/seeduino mega!!
 #define FONA_RX 2
@@ -54,7 +54,7 @@ int IR_Rcv_PIN   = 30; // pin for TSOP1736 IR sensor output
 
 
 // test:
-const int analogInPin = A0;  // Analog input pin for measuring battery voltage 1
+#define analogInPin A0  // Analog input pin for measuring battery voltage 1
 int sensorValue = 0;         // value read from the battery 1
 
 
