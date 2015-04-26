@@ -47,9 +47,9 @@
 // IR pins for Apple Remote
 #define IR_Rcv_PIN   30 // pin for TSOP1736 IR sensor output
 
-// Adafruit FONA pins  @todo: update pins to a serial port or other HW port on Arduino/seeduino mega!!
-#define FONA_RX 2
-#define FONA_TX 3
+// Adafruit FONA pins (GSM)  @todo: update pins to a serial port or other HW port on Arduino/seeduino mega!!
+#define FONA_RX 9
+#define FONA_TX 10
 #define FONA_RST 4
 
 
