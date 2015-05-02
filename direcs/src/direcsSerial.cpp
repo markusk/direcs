@@ -241,7 +241,7 @@ int DirecsSerial::readData(unsigned char *buf, int nChars, QString callingClassN
 	{
 		// wait up to 0,25 seconds (250000 microseconds)
 		// Timeout is not changed by select(), and may be reused on subsequent calls, however it is good style to re-initialize it before each invocation of select().
-		t.tv_sec  = 1;
+		t.tv_sec  = 0;
 		t.tv_usec = READ_TIMEOUT_ATMEL; // 0,25 seconds
 
 		// watch serial port to see when it has input
