@@ -83,7 +83,7 @@ bool InterfaceAvr::sendChar(unsigned char character, QString callingClassName)
 
 
 	// send one byte to the serial port with direcsSerial
-	emit message( QString("Sending '%1'.").arg(character) ); // this makes the program to slow and than to crash!!
+	// emit message( QString("Sending '%1'.").arg(character) ); // this makes the program to slow and than to crash!!
 	result = serialPort->writeData(&character, callingClassName);
 
 	if (result < 0)

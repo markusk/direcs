@@ -184,9 +184,6 @@ void SensorThread::run()
 			// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
 			mutex->lock();
 
-//			emit message(QString("%1. reading s7").arg(testCounter));
-//			testCounter++;
-
 			//-----------------
 			// voltage sensors
 			//-----------------
@@ -204,9 +201,6 @@ void SensorThread::run()
 			// send value over the network
 			// *0v42# means voltagesensor1 with 42 V (the digits after the decimal points are ignored here!)
 			emit sendNetworkString( QString("*%1v%2#").arg(VOLTAGESENSOR1).arg( (int) voltageSensorValue[VOLTAGESENSOR1]));
-
-//			emit message(QString("%1. reading s8").arg(testCounter));
-
 
 			if (readVoltageSensor(VOLTAGESENSOR2) == false) // sensor 7 is the former infrared sensor 7 ! This is now the 24 V battery!
 			{
@@ -1354,7 +1348,6 @@ bool SensorThread::readVoltageSensor(short int sensor)
 				// check if the robot answers with answer. e.g. "*42#"
 				if (interface1->receiveString(answer, className) == true)
 				{
-emit message(QString("receiveString: %1.").arg(answer));
 					// convert to int
 					if (interface1->convertStringToInt(answer, value))
 					{
@@ -1366,7 +1359,6 @@ emit message(QString("receiveString: %1.").arg(answer));
 			}
 
 			// error
-emit message("ERROR VOLTAGESENSOR1");
 			voltageSensorValue[VOLTAGESENSOR1] = 0;
 			return false;
 			break;
@@ -1377,7 +1369,6 @@ emit message("ERROR VOLTAGESENSOR1");
 				// check if the robot answers with answer. e.g. "*42#"
 				if (interface1->receiveString(answer, className) == true)
 				{
-emit message(QString("receiveString: %1.").arg(answer));
 					// convert to int
 					if (interface1->convertStringToInt(answer, value))
 					{
@@ -1389,7 +1380,6 @@ emit message(QString("receiveString: %1.").arg(answer));
 			}
 
 			// error
-emit message("ERROR VOLTAGESENSOR2");
 			voltageSensorValue[VOLTAGESENSOR2] = 0;
 			return false;
 			break;
