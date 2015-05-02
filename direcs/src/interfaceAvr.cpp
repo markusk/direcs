@@ -26,7 +26,7 @@ InterfaceAvr::InterfaceAvr()
 	className = this->staticMetaObject.className();
 
 	// creating the serial port object
-	serialPort = new DirecsSerialQext();
+	serialPort = new DirecsSerial();
 
 	// let the error messages from the direcsSerial object be transferred to the GUI
 	// (connect the signal from the interface class to the signal from this class)
@@ -58,7 +58,7 @@ bool InterfaceAvr::openComPort(QString comPort)
 
 
 	// serial port config and flush also done in openAtmelPort!
-	if (serialPort->openPort(comPort, BAUDRATE ) == false)
+	if (serialPort->openPort(ba.data(), BAUDRATE ) == false)
 	{
 		// this tells other classes that the robot is OFF!
 		emit robotState(false);
@@ -83,10 +83,10 @@ bool InterfaceAvr::sendChar(unsigned char character, QString callingClassName)
 
 
 	// send one byte to the serial port with direcsSerial
-	//emit emitMessage( QString("Sending '%1'.").arg(character) ); // this makes the program to slow and than to crash!!
-	result = serialPort->writeData((int) character, callingClassName); /// @todo convert character to int before!!
+	emit message( QString("Sending '%1'.").arg(character) ); // this makes the program to slow and than to crash!!
+	result = serialPort->writeData(&character, callingClassName);
 
-	if (result == -1)
+	if (result < 0)
 	{
 // 		receiveErrorCounter++;
 		emit message( QString("<font color=\"#FF0000\">ERROR '%1' (InterfaceAvr::sendChar)!<font>").arg(strerror(result)) );
@@ -106,12 +106,16 @@ bool InterfaceAvr::sendChar(unsigned char character, QString callingClassName)
 
 bool InterfaceAvr::receiveChar(char *character, QString callingClassName)
 {
+	// no longer supported since Arduino!!
+	return false;
+
+	/*
 	int result = 0;
 
 
 	// reading one char with direcsSerial
 	// Must return 1 (1 character succussfull read)!
-	result = serialPort->readData(character, 1, callingClassName);
+	result = serialPort->readData(character, callingClassName);
 
 	if (result != 1)
 	{
@@ -122,6 +126,7 @@ bool InterfaceAvr::receiveChar(char *character, QString callingClassName)
 
 	// emit emitMessage( QString("Received '%1'.").arg(result) ); // this makes the program to slow and than to crash!!
 	return true;
+*/
 }
 
 
@@ -129,6 +134,7 @@ bool InterfaceAvr::sendString(QString string, QString callingClassName)
 {
 //	QString debugstring;
 
+//	emit message(">>> sendString");
 
 	// send starter
 	if (sendChar(starter, callingClassName) == true)
@@ -140,7 +146,6 @@ bool InterfaceAvr::sendString(QString string, QString callingClassName)
 			// char by char
 			if (sendChar(string.at(i).toAscii(), callingClassName) == false)
 			{
-emit message("sendString ERROR 1");
 				return false;
 			}
 //			debugstring.append(string.at(i));
@@ -156,7 +161,6 @@ emit message("sendString ERROR 1");
 		}
 	}
 
-emit message("sendString ERROR 2");
 	return false;
 }
 
@@ -164,21 +168,14 @@ emit message("sendString ERROR 2");
 bool InterfaceAvr::receiveString(QString &string, QString callingClassName)
 {
 	int result = 0;
-	char character;
+	unsigned char character;
 	QByteArray ba;
 
-
-	// init byte array
-	ba.clear();
 
 	do
 	{
 		// reading one char. Must return 1 (one character succussfull read).
 		result = serialPort->readData(&character, 1, callingClassName);
-
-		// show in GUI / log to file (debugging)
-		// emit message(QString("character from readData: %1").arg(character));
-
 
 		if (result == 1)
 		{
@@ -191,17 +188,12 @@ bool InterfaceAvr::receiveString(QString &string, QString callingClassName)
 	if (result != 1)
 	{
 		// ERROR (error message already emitted from readAtmelPort!)
-		// show in GUI / log to file (debugging)
-		emit message(QString("ERROR at receiveString called from %1").arg(callingClassName));
-
+		qDebug() << "error at receiveString called from" << callingClassName;
 		return false;
 	}
 
 	// copy chars to QString to pointer to return the QString
 	string = QString::fromUtf8(ba.data(), ba.length());
-
-	// show in GUI / log to file (debugging)
-	// emit message(QString("QByteArray: %1").arg(string));
 
 	// check result!
 	if ((string.startsWith(starter)) && (string.endsWith(terminator)))
@@ -216,7 +208,11 @@ bool InterfaceAvr::receiveString(QString &string, QString callingClassName)
 
 bool InterfaceAvr::receiveInt(int *value, QString callingClassName)
 {
-// 	static int receiveErrorCounter = 0;
+	// no longer supported since Arduino!!
+	return false;
+
+	/*
+	// 	static int receiveErrorCounter = 0;
 	char character = 0;
 	int intValue = 0;
 
@@ -267,6 +263,7 @@ bool InterfaceAvr::receiveInt(int *value, QString callingClassName)
 
 	// emit emitMessage( QString("Received int '%1'.").arg(*value) ); // this makes the program to slow and than to crash!!
 	return true;
+	*/
 }
 
 

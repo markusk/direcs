@@ -10,8 +10,7 @@ RESOURCES = ../direcs.qrc
 
 CONFIG += warn_on \
 	thread \
-	qt \
-	extserialport
+	qt
 
 TEMPLATE = app
 
@@ -26,7 +25,6 @@ unix|macx {
 				consoleGui.h \
 				demoThread.h \
 				direcsSerial.h \
-				direcsSerialQext.h \
 				gui.h \
 				GSMThread.h \
 				head.h \
@@ -61,7 +59,6 @@ unix|macx {
 				consoleGui.cpp \
 				demoThread.cpp \
 				direcsSerial.cpp \
-				direcsSerialQext.cpp \
 				GSMThread.cpp \
 				gui.cpp \
 				head.cpp \
