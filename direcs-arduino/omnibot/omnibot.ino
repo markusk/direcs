@@ -454,6 +454,20 @@ void setup()
   fonaSS.begin(4800); // if you're using software serial
   //Serial1.begin(4800); // if you're using hardware serial
 
+  // See if the FONA is responding (this is the former "gsmi" command)
+  if (! fona.begin(fonaSS))           // can also try fona.begin(Serial1) 
+  {
+    // store state
+    FONAstate = false;
+
+    // all LEDs red
+    allLEDsRed();
+  }
+  else
+  {
+    // store state
+    FONAstate = true;
+  }
 
 
   //-------------------------------------------------------------------------------------------------
@@ -1540,16 +1554,10 @@ void loop()
   // GSM init (FONA) = "gsmi"
   if (command == "*gsmi#")
   {
-    // See if the FONA is responding    
-    if (! fona.begin(fonaSS))           // can also try fona.begin(Serial1) 
+    // FONA init in setup() okay?    
+    if (FONAstate == false)
     {
-      // store state
-      FONAstate = false;
-
-      // all LEDs red
-      allLEDsRed();
-
-      // answer "ok"
+      // answer "error"
       if (Serial.print("*err#") < 6)
       {
         // ERROR!!
@@ -1561,9 +1569,6 @@ void loop()
     }
     else
     {
-      // store state
-      FONAstate = true;
-
       // answer "ok"
       if (Serial.print("*gsmi#") < 6)
       {
