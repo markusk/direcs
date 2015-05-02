@@ -8,44 +8,44 @@
 #include <SoftwareSerial.h>
 
 // give it a name:
-#define ledGreen      2
-#define ledYellow     3
+#define ledGreen     13 /// @todo change name (color)
+#define ledYellow    13 /// @todo change name (color)
 // Pin 13 has an LED connected on most Arduino boards.
 #define ledRed     13 /// @todo change name (color)
 
-#define relaisPin     4
+#define relaisPin    13 /// @todo change name (color)
 
 // motor pins
-#define motor1aPin    5
-#define motor1bPin    6
-#define motor1DirPin  7
-#define motor1PWMPin  8
-#define motor2aPin    9
-#define motor2bPin   10
-#define motor2DirPin 11
-#define motor2PWMPin 12
+#define motor1aPin   13
+#define motor1bPin   13
+#define motor1DirPin 13
+#define motor1PWMPin 13
+#define motor2aPin   13
+#define motor2bPin   13
+#define motor2DirPin 13
+#define motor2PWMPin 13
 #define motor3aPin   13
-#define motor3bPin   14
-#define motor3DirPin 15
-#define motor3PWMPin 16
-#define motor4aPin   17
-#define motor4bPin   18
-#define motor4DirPin 19
-#define motor4PWMPin 20
+#define motor3bPin   13
+#define motor3DirPin 13
+#define motor3PWMPin 13
+#define motor4aPin   13
+#define motor4bPin   13
+#define motor4DirPin 13
+#define motor4PWMPin 13
 
 // RGB LED pins
-#define RGBLED1red   21
-#define RGBLED1green 22
-#define RGBLED1blue  23
-#define RGBLED2red   24
-#define RGBLED2green 25
-#define RGBLED2blue  26
-#define RGBLED3red   27
-#define RGBLED3green 28
-#define RGBLED3blue  29
+#define RGBLED1red   13
+#define RGBLED1green 13
+#define RGBLED1blue  13
+#define RGBLED2red   13
+#define RGBLED2green 13
+#define RGBLED2blue  13
+#define RGBLED3red   13
+#define RGBLED3green 13
+#define RGBLED3blue  13
 
 // IR pins for Apple Remote
-#define IR_Rcv_PIN   30 // pin for TSOP1736 IR sensor output
+#define IR_Rcv_PIN   13 // pin for TSOP1736 IR sensor output
 
 // Adafruit FONA pins (GSM)  @todo: update pins to a serial port or other HW port on Arduino/seeduino mega!!
 #define FONA_RX 9
@@ -325,7 +325,7 @@ void setup()
   //-------------------------------------------------------------------------------------------------
   // string command check stuff
   //-------------------------------------------------------------------------------------------------
-  // initialize serial
+  // initialize serial communication on the USB port
   Serial.begin(9600);
 
   // reserve 200 bytes for the inputString
