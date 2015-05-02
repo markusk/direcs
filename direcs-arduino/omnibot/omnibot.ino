@@ -604,6 +604,7 @@ void loop()
 
   do
   {
+    // do we have something on the USB port?
     if (Serial.available())
     {
       // get the new byte
