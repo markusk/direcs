@@ -234,7 +234,7 @@ bool GSMThread::init()
 		// check if the robot answers with answer. e.g. "*42#"
 		if (interface1->receiveString(answer, className) == true)
 		{
-			if (answer == "gsmi")
+			if (answer == "*gsmi#")
 			{
 				GSMState = ON;
 
@@ -267,9 +267,11 @@ bool GSMThread::unlockPIN()
 		// check if the robot answers with answer. e.g. "*42#"
 		if (interface1->receiveString(answer, className) == true)
 		{
-			if (answer == "gsmp")
+			if (answer == "*gsmp#")
 			{
 				GSMState = ON;
+				emit message("GSM SIM unlocked.");
+				return true;
 			}
 		}
 	}

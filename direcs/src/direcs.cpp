@@ -1250,13 +1250,13 @@ void Direcs::setRobotState(bool state)
 		//-----------------------------------------------------------
 		if (gsmThread->isRunning() == false)
 		{
+			// whenever there is a material error, react!
+			connect(gsmThread, SIGNAL( systemerror(int) ), this, SLOT( systemerrorcatcher(int) ) );
+
 			emit splashMessage("Starting GSM thread...");
 			emit message("Starting GSM thread...", false);
 			gsmThread->start();
 			emit message("GSM thread started.");
-
-			// whenever there is a material error, react!
-			connect(gsmThread, SIGNAL( systemerror(int) ), this, SLOT( systemerrorcatcher(int) ) );
 
 			//----------------------
 			// init the GSM module

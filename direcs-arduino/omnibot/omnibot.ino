@@ -1559,7 +1559,7 @@ void loop()
     if (FONAstate == false)
     {
       // answer "error"
-      if (Serial.print("*err#") < 6)
+      if (Serial.print("*err#") < 5)
       {
         // ERROR!!
         delay(10000);
@@ -1596,7 +1596,7 @@ void loop()
       allLEDsRed();
 
       // answer "ok"
-      if (Serial.print("*err#") < 6)
+      if (Serial.print("*err#") < 5)
       {
         // ERROR!!
         delay(10000);
