@@ -169,9 +169,10 @@ class Direcs : public QObject
 
 		/**
 		 * @brief Takes the available SMS and sends them to the @SpeakThread
-		 * @param number
+		 * @param number takes the amound of available SMS
+		 * @param text takes the text of the SMS
 		 */
-		void SMSTracking(int number);
+		void SMSTracking(int number, QString text);
 
 		/**
 		Enables or disables the face tracking. When activated, a face will be tracked by the camera.

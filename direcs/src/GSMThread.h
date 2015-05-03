@@ -140,8 +140,9 @@ class GSMThread : public QThread
 		/**
 		This signal is emitted when SMS are available (>0).
 		@param the number of available SMS
+		@param text contains the text of the SMS
 		*/
-		void SMSavailable(int noSMS);
+		void SMSavailable(int noSMS, QString text);
 
 		/**
 		Emits a string to the GUI log / console.

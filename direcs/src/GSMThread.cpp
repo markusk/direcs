@@ -128,7 +128,7 @@ void GSMThread::run()
 					else
 					{
 						// emit the no. of available SMS
-						emit SMSavailable(availableSMS);
+						emit SMSavailable(availableSMS, "test");
 					}
 					// send value over the network
 					// *0s42# means 42 SMS available from GSM module 0 (yes, i know, we have only one...)

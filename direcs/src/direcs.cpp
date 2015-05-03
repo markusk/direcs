@@ -1288,7 +1288,7 @@ void Direcs::setRobotState(bool state)
 				connect(gsmThread, SIGNAL(SMSavailable(int)), gui, SLOT(showSMSavailable(int)));
 
 				// "new SMS" handling
-				connect(gsmThread, SIGNAL(SMSavailable(int)), this, SLOT(SMSTracking(int)));
+				connect(gsmThread, SIGNAL(SMSavailable(int, QString)), this, SLOT(SMSTracking(int, QString)));
 			}
 		}
 
@@ -2424,7 +2424,7 @@ void Direcs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 }
 
 
-void Direcs::SMSTracking(int number)
+void Direcs::SMSTracking(int number, QString text)
 {
 	static int lastAmountSMS = 0;
 	static bool firstCount = true;
@@ -2451,8 +2451,13 @@ void Direcs::SMSTracking(int number)
 		lastAmountSMS = number;
 
 		emit message("New SMS received.");
+		emit message(QString("SMS: %1").arg(text));
 
+		// Announce it
 		emit speak("Oh, eine neue Nachricht!");
+
+		// Read it
+		emit speak(text);
 	}
 }
 
