@@ -977,7 +977,6 @@ void Direcs::init()
 				//gui->disableCamera();
 				emit message("No Kinect detected.");
 			}
-		}
 
 		if (!consoleMode)
 		{
