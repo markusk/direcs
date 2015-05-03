@@ -967,16 +967,16 @@ void Direcs::init()
 			//
 			// Camera in config disabled
 			//
-				emit splashMessage("Kinect DISABLED.");
-				emit message("Kinect camera DISABLED.", false);
+			emit splashMessage("Kinect DISABLED.");
+			emit message("Kinect camera DISABLED.", false);
 
-				// show kinect camera state in gui
-				gui->setLEDCamera(RED);
-				gui->hideCameraControls();
+			// show kinect camera state in gui
+			gui->setLEDCamera(RED);
+			gui->hideCameraControls();
 
-				//gui->disableCamera();
-				emit message("No Kinect detected.");
-			}
+			//gui->disableCamera();
+			emit message("No Kinect detected.");
+		}
 
 		if (!consoleMode)
 		{
@@ -1286,6 +1286,9 @@ void Direcs::setRobotState(bool state)
 
 				// show SMS available in the GUI
 				connect(gsmThread, SIGNAL(SMSavailable(int)), gui, SLOT(showSMSavailable(int)));
+
+				// "new SMS" handling
+				connect(gsmThread, SIGNAL(SMSavailable(int)), this, SLOT(SMSTracking(int)));
 			}
 		}
 
@@ -2418,6 +2421,32 @@ void Direcs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 		}
 	}
 */
+}
+
+
+void Direcs::SMSTracking(int number)
+{
+	static int lastAmountSMS = 0;
+	static bool firstCount = false;
+
+
+	// Yes there is a NEW SMS
+	if (number > lastAmountSMS)
+	{
+		// do nothing on the very first SMS count
+		// could be the case, that there are already old SMS on the SIM
+		if (firstCount)
+		{
+			firstCount = false;
+		}
+
+		// store the new amount
+		lastAmountSMS = number;
+
+		emit message("New SMS received.");
+
+		emit speak("Oh, eine neue SMS!");
+	}
 }
 
 
@@ -5455,7 +5484,7 @@ void Direcs::test()
 
 //	static bool toggle = false;
 
-
+/*
 #ifdef Q_OS_LINUX
 	speakThread->setLanguage("en");
 #endif
@@ -5464,6 +5493,7 @@ void Direcs::test()
 //    emit speak(tr("The voltage for battery %1 is %2 Volt. For battery %3 it is %4 Volt.").arg( 1 ).arg( sensorThread->getVoltage(VOLTAGESENSOR1) ).arg( 2 ).arg( sensorThread->getVoltage(VOLTAGESENSOR2) ));
 	emit speak(tr("Die Akkuspannung %1 ist %2 Volt. Akku %3 hat noch %4 Volt.").arg( 1 ).arg( sensorThread->getVoltage(VOLTAGESENSOR1) ).arg( 2 ).arg( sensorThread->getVoltage(VOLTAGESENSOR2) ));
 	emit speak(tr("Alles klar, los geht's!"));
+*/
 
 //	toggle = !toggle;
 /*
