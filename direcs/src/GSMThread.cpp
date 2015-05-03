@@ -84,21 +84,19 @@ void GSMThread::run()
 
 		if ( (robotState == ON) && (GSMState == ON) && (simulationMode == false) )
 		{
-			// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
-			mutex->lock();
-
 			//-----------------
 			// get GSM status
 			//-----------------
 			if (getStatus() == false)
 			{
 				emit message(QString("<font color=\"#FF0000\">ERROR getting GSM state. Stopping %1!</font>").arg(className));
-				// Unlock the mutex.
-				mutex->unlock();
+
 				// stop this thread
 				stop();
+
 				// inform other modules
 				emit systemerror(-3);
+
 				return;
 			}
 			else
@@ -116,28 +114,24 @@ void GSMThread::run()
 						//
 						// disabled: we continue, since this is not critical
 						//
-/*						emit message(QString("<font color=\"#FF0000\">ERROR counting SMS. Stopping %1!</font>").arg(className)); */
-						// Unlock the mutex.
-						 mutex->unlock();
-/*						 // stop this thread
+/*						emit message(QString("<font color=\"#FF0000\">ERROR counting SMS. Stopping %1!</font>").arg(className));
+
+						 // stop this thread
 						 stop();
+
 						 // inform other modules
 						 emit systemerror(-3);
+
 						 return;
 */					}
 					else
 					{
-						// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
-						mutex->lock();
-
 						// get last SMS (text)
 //						if (readLastSMS(smsText) == true)
 						{
 							// emit the no. of available SMS
 							emit SMSavailable(availableSMS, smsText);
 						}
-						// Unlock the mutex.
-						mutex->unlock();
 					}
 					// send value over the network
 					// *0s42# means 42 SMS available from GSM module 0 (yes, i know, we have only one...)
@@ -171,9 +165,6 @@ void GSMThread::run()
 			heartbeatToggle = !heartbeatToggle;
 			//====================================================================
 */
-
-			// Unlock the mutex.
-			mutex->unlock();
 
 		} // simulation = false
 
@@ -259,6 +250,10 @@ bool GSMThread::init()
 
 	// Initialise the GSM module
 	// "gsmi"
+
+	// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
+	mutex->lock();
+
 	if (interface1->sendString("gsmi", className) == true)
 	{
 		// check if the robot answers with answer. e.g. "*42#"
@@ -271,7 +266,10 @@ bool GSMThread::init()
 				// unlock PIN
 				if (unlockPIN() == true)
 				{
-					return true;
+					// Unlock the mutex.
+					mutex->unlock();
+
+					 return true;
 				}
 			}
 		}
@@ -282,7 +280,10 @@ bool GSMThread::init()
 	emit GSMStatus(RED);
 	GSMState = OFF;
 
-	return false;
+	// Unlock the mutex.
+	mutex->unlock();
+
+	 return false;
 }
 
 
@@ -293,6 +294,10 @@ bool GSMThread::unlockPIN()
 
 	// Unlocks the SIM PIN
 	// "gsmp"
+
+	// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
+	mutex->lock();
+
 	if (interface1->sendString("gsmp", className) == true)
 	{
 		// check if the robot answers with answer. e.g. "*42#"
@@ -303,7 +308,11 @@ bool GSMThread::unlockPIN()
 				GSMState = ON;
 				emit GSMStatus(YELLOW);
 				emit message("GSM SIM unlocked.");
-				return true;
+
+				// Unlock the mutex.
+				mutex->unlock();
+
+				 return true;
 			}
 		}
 	}
@@ -311,6 +320,9 @@ bool GSMThread::unlockPIN()
 	// error
 	emit message("ERROR unlocking GSM SIM PIN.");
 	GSMState = OFF;
+
+	// Unlock the mutex.
+	mutex->unlock();
 
 	return false;
 }
@@ -324,6 +336,10 @@ bool GSMThread::getStatus()
 
 	// get GSM network status
 	// "gsms"
+
+	// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
+	mutex->lock();
+
 	if (interface1->sendString("gsms", className) == true)
 	{
 		// check if the robot answers with answer. e.g. "*42#"
@@ -335,6 +351,10 @@ bool GSMThread::getStatus()
 				// store measured value
 				networkState = value;
 				// emit message(QString("GSM network status: %1.").arg(networkState));
+
+				// Unlock the mutex.
+				mutex->unlock();
+
 				return true;
 			}
 		}
@@ -346,6 +366,9 @@ bool GSMThread::getStatus()
 
 	// disable thread
 	GSMState = OFF;
+
+	// Unlock the mutex.
+	mutex->unlock();
 
 	return false;
 }
@@ -359,6 +382,10 @@ int GSMThread::countSMS()
 
 	// check for/count no of available SMS
 	// "smsc"
+
+	// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
+	mutex->lock();
+
 	if (interface1->sendString("smsc", className) == true)
 	{
 		// check if the robot answers with answer. e.g. "*42#"
@@ -369,6 +396,10 @@ int GSMThread::countSMS()
 			{
 				// store measured value
 				availableSMS = value;
+
+				// Unlock the mutex.
+				mutex->unlock();
+
 				return availableSMS;
 			}
 		}
@@ -381,6 +412,9 @@ int GSMThread::countSMS()
 	// we do not disable the whole thread, when we cannot read SMS!
 	//	GSMState = OFF;
 
+	// Unlock the mutex.
+	mutex->unlock();
+
 	return -1;
 }
 
@@ -388,6 +422,10 @@ int GSMThread::countSMS()
 bool GSMThread::readLastSMS(QString &text)
 {
 	// "smsl"
+
+	// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
+	mutex->lock();
+
 	if (interface1->sendString("smsl", className) == true)
 	{
 		// check if the robot answers with answer. e.g. "**hello##" >>> exception: GSM module answers with additional * and #. <<<
@@ -403,5 +441,9 @@ bool GSMThread::readLastSMS(QString &text)
 
 	// error
 	emit message("GSM: Error reading last SMS (text).");
+
+	// Unlock the mutex.
+	mutex->unlock();
+
 	return false;
 }
