@@ -22,19 +22,6 @@
 
 GSMThread::GSMThread(InterfaceAvr *i, QMutex *m)
 {
-	/*--------------------------------------------------------------
-	// Serial commands used in this modue
-	//--------------------------------------------------------------
-	gsmi	=	init GSM module
-	gsmp	=	unlock GSM module with PIN
-
-	smsc	=	count available SMS
-	smsr	=	read SMS #
-	smss	=	send SMS
-	smsd	=	delete SMS #
-	//------------------------------------------------------------*/
-
-
 	// get the name of this class (this is for debugging messages)
 	className = this->staticMetaObject.className();
 
@@ -54,6 +41,8 @@ GSMThread::GSMThread(InterfaceAvr *i, QMutex *m)
 	robotState = ON; // Wer're thinking positive. The robot is ON untill whe know nothing other. :-)
 
 	GSMState   = OFF; // will be set to ON, once the init function ran successful
+
+	networkState = GSM_Not_Registered; // we are not registered on the GSM network
 }
 
 
@@ -97,6 +86,25 @@ void GSMThread::run()
 			// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
 			mutex->lock();
 
+
+			//-----------------
+			// get GSM status
+			//-----------------
+			if (getStatus() == false)
+			{
+				emit message(QString("<font color=\"#FF0000\">ERROR getting GSM state. Stopping %1!</font>").arg(className));
+				// Unlock the mutex.
+				mutex->unlock();
+				// stop this thread
+				stop();
+				// inform other modules
+				emit systemerror(-3);
+				return;
+			}
+
+			// We have GSM
+			if ((networkState == GSM_Registered_Home) || (networkState == GSM_Registered_Roaming))
+			{
 			//-----------------
 			// count SMS
 			//-----------------
@@ -115,6 +123,7 @@ void GSMThread::run()
 			// *0s42# means 42 SMS available from GSM module 0 (yes, i know, we have only one...)
 			emit sendNetworkString( QString("*0s%1#").arg(availableSMS) );
 
+			}
 
 
 /*			//====================================================================
@@ -180,6 +189,10 @@ int GSMThread::getSMSavailable()
 }
 
 
+int GSMThread::getGSMStatus()
+{
+	return networkState;
+}
 
 
 void GSMThread::setSimulationMode(bool state)
@@ -279,6 +292,46 @@ bool GSMThread::unlockPIN()
 	// error
 	emit message("ERROR unlocking GSM SIM PIN.");
 	GSMState = OFF;
+
+	return false;
+}
+
+
+bool GSMThread::getStatus()
+{
+	int value = 0;
+	QString answer = "error";
+
+
+	// get GSM network status
+	// "gsms"
+	if (interface1->sendString("gsms", className) == true)
+	{
+		// check if the robot answers with answer. e.g. "*42#"
+		if (interface1->receiveString(answer, className) == true)
+		{
+			// convert to int
+			if (interface1->convertStringToInt(answer, value))
+			{
+				// store measured value
+				networkState = value;
+				emit message(QString("GSM network status: %1.").arg(networkState));
+				return true;
+			}
+			/*
+			if (n == 0) Serial.println(F("Not registered"));
+			if (n == 1) Serial.println(F("Registered (home)"));
+			if (n == 2) Serial.println(F("Not registered (searching)"));
+			if (n == 3) Serial.println(F("Denied"));
+			if (n == 4) Serial.println(F("Unknown"));
+			if (n == 5) Serial.println(F("Registered roaming"));
+			*/
+		}
+	}
+
+	// error
+	emit message("ERROR getting GSM network status.");
+	networkState = 0;
 
 	return false;
 }

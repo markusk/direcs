@@ -5425,6 +5425,9 @@ void Direcs::resetMotorSpeed()
 
 void Direcs::test()
 {
+
+	gsmThread->getGSMStatus();
+
 /*
 	#ifdef Q_OS_LINUX
 	Phonon::MediaObject *music = Phonon::createPlayer(Phonon::MusicCategory, Phonon::MediaSource("../../../../dr.mp3"));

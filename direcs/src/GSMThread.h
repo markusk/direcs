@@ -34,6 +34,18 @@
 
 The GSMThread class is a thread, responsible for getting all data from and to the GSM module.
 Currently it checks if new SMS are received and emits a signal. This thread can also delete SMS on the GSM module.
+
+
+The following commands are currently implemented (same on Arduino side):
+
+gsmi	=	init GSM module
+gsmp	=	unlock GSM module with PIN
+gsms	=	(get) GSM status
+
+smsc	=	count available SMS
+smsr	=	read SMS #
+smss	=	send SMS
+smsd	=	delete SMS #
 */
 class GSMThread : public QThread
 {
@@ -57,6 +69,18 @@ class GSMThread : public QThread
 		 * @return the no of available SMS's
 		 */
 		int getSMSavailable();
+
+		/**
+		 * @return the GSM status
+		 *
+		 * 0 = Not registered
+		 * 1 = Registered (home)
+		 * 2 = Not registered (searching)
+		 * 3 = Denied
+		 * 4 = Unknown
+		 * 5 = Registered roaming
+		 */
+		int getGSMStatus();
 
 		/**
 		@return The heartbeat value which should look like high=5 or low=0 Volt.
@@ -132,9 +156,9 @@ class GSMThread : public QThread
 
 	private:
 		/**
-		Checks how many SMS are available.
-		@return the amount of available SMS, or -1 in case of error
-		*/
+		 * @brief Checks how many SMS are available.
+		 * @return the amount of available SMS, or -1 in case of error
+		 */
 		int countSMS();
 
 		/**
@@ -142,6 +166,19 @@ class GSMThread : public QThread
 		 * @return true on success
 		 */
 		bool unlockPIN();
+
+		/**
+		 * @brief Gets the GSM status and stores it locally.
+		 * @return true on success
+		 *
+		 * 0 = Not registered
+		 * 1 = Registered (home)
+		 * 2 = Not registered (searching)
+		 * 3 = Denied
+		 * 4 = Unknown
+		 * 5 = Registered roaming
+		 */
+		bool getStatus();
 
 
 		QString className;	/// this will contain the name of _this_ class at runtime for debug messages
@@ -151,6 +188,7 @@ class GSMThread : public QThread
 		bool simulationMode;
 		bool robotState; // stores the robot state within this class
 		bool GSMState; // stores the GSM module state within this class
+		int networkState; // stores the state of the GSM network
 
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
@@ -174,6 +212,13 @@ class GSMThread : public QThread
 
 		static const bool ON  = true;
 		static const bool OFF = false;
+
+		static const int GSM_Not_Registered = 0;
+		static const int GSM_Registered_Home = 1;
+		static const int GSM_Not_Registered_Searching = 2;
+		static const int GSM_Denied = 3;
+		static const int GSM_Unknown = 4;
+		static const int GSM_Registered_Roaming = 5;
 };
 
 #endif
