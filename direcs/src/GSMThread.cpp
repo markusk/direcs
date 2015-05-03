@@ -103,26 +103,28 @@ void GSMThread::run()
 			}
 			else
 			{
-			// We have GSM
-			if ((networkState == GSM_Registered_Home) || (networkState == GSM_Registered_Roaming))
-			{
-			//-----------------
-			// count SMS
-			//-----------------
+				// We have GSM
+				if ((networkState == GSM_Registered_Home) || (networkState == GSM_Registered_Roaming))
+				{
+					emit GSMStatus(GREEN);
+
+					//-----------------
+					// count SMS
+					//-----------------
 					if (countSMS() == -1)
-			{
+					{
 /*						emit message(QString("<font color=\"#FF0000\">ERROR counting SMS. Stopping %1!</font>").arg(className));
-				// Unlock the mutex.
-				 mutex->unlock();
-				 // stop this thread
-				 stop();
-				 // inform other modules
-				 emit systemerror(-3);
-				 return;
+						// Unlock the mutex.
+						 mutex->unlock();
+						 // stop this thread
+						 stop();
+						 // inform other modules
+						 emit systemerror(-3);
+						 return;
 */					}
-			// send value over the network
-			// *0s42# means 42 SMS available from GSM module 0 (yes, i know, we have only one...)
-			emit sendNetworkString( QString("*0s%1#").arg(availableSMS) );
+					// send value over the network
+					// *0s42# means 42 SMS available from GSM module 0 (yes, i know, we have only one...)
+					emit sendNetworkString( QString("*0s%1#").arg(availableSMS) );
 				}
 			}
 
@@ -263,6 +265,7 @@ bool GSMThread::init()
 
 	// error
 	emit message("ERROR initialising GSM module.");
+	emit GSMStatus(RED);
 	GSMState = OFF;
 
 	return false;
@@ -284,6 +287,7 @@ bool GSMThread::unlockPIN()
 			if (answer == "*gsmp#")
 			{
 				GSMState = ON;
+				emit GSMStatus(YELLOW);
 				emit message("GSM SIM unlocked.");
 				return true;
 			}
@@ -316,17 +320,9 @@ bool GSMThread::getStatus()
 			{
 				// store measured value
 				networkState = value;
-				emit message(QString("GSM network status: %1.").arg(networkState));
+				// emit message(QString("GSM network status: %1.").arg(networkState));
 				return true;
 			}
-			/*
-			if (n == 0) Serial.println(F("Not registered"));
-			if (n == 1) Serial.println(F("Registered (home)"));
-			if (n == 2) Serial.println(F("Not registered (searching)"));
-			if (n == 3) Serial.println(F("Denied"));
-			if (n == 4) Serial.println(F("Unknown"));
-			if (n == 5) Serial.println(F("Registered roaming"));
-			*/
 		}
 	}
 

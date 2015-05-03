@@ -131,6 +131,12 @@ class GSMThread : public QThread
 		void sendNetworkString(QString text);
 
 		/**
+		Emits the current GSM status (i.e. to the GUI GSM LED)
+		@sa Gui::setLEDGSM()
+		*/
+		void GSMStatus(unsigned char status);
+
+		/**
 		This signal is emitted every \todo seconds, when a specific value from the microcontroller was received.
 		@sa Gui::setLEDHeartbeat()
 		@sa Logfile::writeHeartbeat()
@@ -209,6 +215,9 @@ class GSMThread : public QThread
 		static const unsigned char LEDOFF	= 0;
 		static const unsigned char RED		= 1;
 		static const unsigned char GREEN	= 2;
+		static const unsigned char BLUE	    = 3;
+		static const unsigned char WHITE	= 4;
+		static const unsigned char YELLOW	= 5;
 
 		static const bool ON  = true;
 		static const bool OFF = false;

@@ -1265,6 +1265,9 @@ void Direcs::setRobotState(bool state)
 			// whenever there is a material error, react!
 			connect(gsmThread, SIGNAL( systemerror(int) ), this, SLOT( systemerrorcatcher(int) ) );
 
+			// show GSM status in the GUI
+			connect(gsmThread, SIGNAL(GSMStatus(unsigned char)), gui, SLOT(setLEDGSM(unsigned char)));
+
 			emit splashMessage("Starting GSM thread...");
 			emit message("Starting GSM thread...", false);
 			gsmThread->start();
@@ -1280,11 +1283,6 @@ void Direcs::setRobotState(bool state)
 			{
 				emit splashMessage("GSM module initialised.");
 				emit message("GSM module initialised.");
-				gui->setLEDGSM(GREEN);
-			}
-			else
-			{
-				gui->setLEDGSM(RED);
 			}
 		}
 

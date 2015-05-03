@@ -603,6 +603,7 @@ class Direcs : public QObject
 		static const unsigned char GREEN	= 2;
 		static const unsigned char BLUE	    = 3;
 		static const unsigned char WHITE	= 4;
+		static const unsigned char YELLOW	= 5;
 };
 
 #endif
