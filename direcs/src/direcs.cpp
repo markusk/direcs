@@ -2427,25 +2427,32 @@ void Direcs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 void Direcs::SMSTracking(int number)
 {
 	static int lastAmountSMS = 0;
-	static bool firstCount = false;
+	static bool firstCount = true;
+
+
+	// do nothing on the very first SMS count
+	// could be the case, that there are already old SMS on the SIM
+	if (firstCount)
+	{
+		firstCount = false;
+
+		// store the new amount
+		lastAmountSMS = number;
+
+		// do nothing
+		return;
+	}
 
 
 	// Yes there is a NEW SMS
 	if (number > lastAmountSMS)
 	{
-		// do nothing on the very first SMS count
-		// could be the case, that there are already old SMS on the SIM
-		if (firstCount)
-		{
-			firstCount = false;
-		}
-
 		// store the new amount
 		lastAmountSMS = number;
 
 		emit message("New SMS received.");
 
-		emit speak("Oh, eine neue SMS!");
+		emit speak("Oh, eine neue Nachricht!");
 	}
 }
 
