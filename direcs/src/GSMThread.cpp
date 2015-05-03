@@ -133,7 +133,7 @@ void GSMThread::run()
 						// get last SMS (text)
 //						if (readLastSMS(smsText) == true)
 						{
-						// emit the no. of available SMS
+							// emit the no. of available SMS
 							emit SMSavailable(availableSMS, smsText);
 						}
 						// Unlock the mutex.
