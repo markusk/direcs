@@ -4467,6 +4467,16 @@ void Gui::setLEDGSM(unsigned char state)
 {
 	switch (state)
 	{
+		case YELLOW:
+			if (useLargeGUI)
+			{
+				ui.lblLEDGSM->setPixmap(QPixmap(":/images/images/led_yellow.gif"));
+			}
+			else
+			{
+				uiSmall.lblLEDGSM->setPixmap(QPixmap(":/images/images/led_yellow.gif"));
+			}
+			break;
 		case RED:
 			if (useLargeGUI)
 			{
