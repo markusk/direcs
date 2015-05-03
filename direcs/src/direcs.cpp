@@ -951,9 +951,22 @@ void Direcs::init()
 			}
 			else
 			{
-				emit splashMessage("Kinect not found.");
-				emit message("Kinect camera not found.", false);
+				emit splashMessage("Camera DISABLED.");
+				emit message("Camera DISABLED.", false);
 
+				// show kinect camera state in gui
+				gui->setLEDCamera(RED);
+				gui->hideCameraControls();
+
+				//gui->disableCamera();
+				emit message("No Kinect detected.");
+			}
+		}
+		else
+		{
+			//
+			// Camera in config disabled
+			//
 				emit splashMessage("Kinect DISABLED.");
 				emit message("Kinect camera DISABLED.", false);
 
