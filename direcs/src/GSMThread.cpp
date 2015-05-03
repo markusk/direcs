@@ -101,16 +101,17 @@ void GSMThread::run()
 				emit systemerror(-3);
 				return;
 			}
-
+			else
+			{
 			// We have GSM
 			if ((networkState == GSM_Registered_Home) || (networkState == GSM_Registered_Roaming))
 			{
 			//-----------------
 			// count SMS
 			//-----------------
-			if (countSMS() == false)
+					if (countSMS() == -1)
 			{
-				emit message(QString("<font color=\"#FF0000\">ERROR counting SMS. Stopping %1!</font>").arg(className));
+/*						emit message(QString("<font color=\"#FF0000\">ERROR counting SMS. Stopping %1!</font>").arg(className));
 				// Unlock the mutex.
 				 mutex->unlock();
 				 // stop this thread
@@ -118,11 +119,11 @@ void GSMThread::run()
 				 // inform other modules
 				 emit systemerror(-3);
 				 return;
-			}
+*/					}
 			// send value over the network
 			// *0s42# means 42 SMS available from GSM module 0 (yes, i know, we have only one...)
 			emit sendNetworkString( QString("*0s%1#").arg(availableSMS) );
-
+				}
 			}
 
 
@@ -363,7 +364,9 @@ int GSMThread::countSMS()
 	// error
 	emit message("GSM: Error reading available SMS");
 	availableSMS = -1;
-	GSMState = OFF;
+
+	// we do not disable the whole thread, when we cannot read SMS!
+	//	GSMState = OFF;
 
 	return -1;
 }
