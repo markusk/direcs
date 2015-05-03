@@ -334,6 +334,9 @@ bool GSMThread::getStatus()
 	emit message("ERROR getting GSM network status.");
 	networkState = 0;
 
+	// disable thread
+	GSMState = OFF;
+
 	return false;
 }
 
