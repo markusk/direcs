@@ -113,6 +113,9 @@ void GSMThread::run()
 					//-----------------
 					if (countSMS() == -1)
 					{
+						//
+						// disabled: we continue, since this is not critical
+						//
 /*						emit message(QString("<font color=\"#FF0000\">ERROR counting SMS. Stopping %1!</font>").arg(className));
 						// Unlock the mutex.
 						 mutex->unlock();
@@ -122,6 +125,11 @@ void GSMThread::run()
 						 emit systemerror(-3);
 						 return;
 */					}
+					else
+					{
+						// emit the no. of available SMS
+						emit SMSavailable(availableSMS);
+					}
 					// send value over the network
 					// *0s42# means 42 SMS available from GSM module 0 (yes, i know, we have only one...)
 					emit sendNetworkString( QString("*0s%1#").arg(availableSMS) );
@@ -178,9 +186,6 @@ void GSMThread::run()
 			heartbeatToggle = !heartbeatToggle;
 */
 		}
-
-		//  e m i t  Signal
-		emit GSMDataComplete();
 	}
 	stopped = false;
 }

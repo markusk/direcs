@@ -4196,6 +4196,11 @@ void Gui::showCompassData(float x, float y, float z, float heading)
 */
 }
 
+void Gui::showSMSavailable(int number)
+{
+	ui.lblSMSnumber->setText(QString("%1").arg(number));
+}
+
 
 void Gui::setLEDHeartbeat(unsigned char state)
 {

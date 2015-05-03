@@ -120,12 +120,6 @@ class GSMThread : public QThread
 
 	signals:
 		/**
-		This signal is emitted when all sensors were read.
-		@sa Direcs::showSensorData()
-		*/
-		void GSMDataComplete();
-
-		/**
 		Sends a string over the network.
 		*/
 		void sendNetworkString(QString text);
@@ -142,6 +136,12 @@ class GSMThread : public QThread
 		@sa Logfile::writeHeartbeat()
 		*/
 		void heartbeat(unsigned char state);
+
+		/**
+		This signal is emitted when SMS are available (>0).
+		@param the number of available SMS
+		*/
+		void SMSavailable(int noSMS);
 
 		/**
 		Emits a string to the GUI log / console.

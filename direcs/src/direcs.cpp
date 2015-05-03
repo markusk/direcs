@@ -1283,6 +1283,9 @@ void Direcs::setRobotState(bool state)
 			{
 				emit splashMessage("GSM module initialised.");
 				emit message("GSM module initialised.");
+
+				// show SMS available in the GUI
+				connect(gsmThread, SIGNAL(SMSavailable(int)), gui, SLOT(showSMSavailable(int)));
 			}
 		}
 

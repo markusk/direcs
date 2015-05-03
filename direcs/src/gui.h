@@ -359,6 +359,12 @@ class Gui : public QMainWindow
 		void showCompassData(float x, float y, float z, float heading);
 
 		/**
+		 * @brief Shows the number of available SMS.
+		 * @param number
+		 */
+		void showSMSavailable(int number);
+
+		/**
 		Turns the heartbeat/state GUI LED red, green or off.
 		@param state can be RED, GREEN or OFF.
 		*/
