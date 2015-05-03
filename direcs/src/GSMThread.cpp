@@ -73,6 +73,7 @@ void GSMThread::stop()
 void GSMThread::run()
 {
 	//bool heartbeatToggle = false;
+	QString smsText = "error";
 
 
 	//  start "threading"...
@@ -85,7 +86,6 @@ void GSMThread::run()
 		{
 			// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
 			mutex->lock();
-
 
 			//-----------------
 			// get GSM status
@@ -116,10 +116,10 @@ void GSMThread::run()
 						//
 						// disabled: we continue, since this is not critical
 						//
-/*						emit message(QString("<font color=\"#FF0000\">ERROR counting SMS. Stopping %1!</font>").arg(className));
+/*						emit message(QString("<font color=\"#FF0000\">ERROR counting SMS. Stopping %1!</font>").arg(className)); */
 						// Unlock the mutex.
 						 mutex->unlock();
-						 // stop this thread
+/*						 // stop this thread
 						 stop();
 						 // inform other modules
 						 emit systemerror(-3);
@@ -127,8 +127,17 @@ void GSMThread::run()
 */					}
 					else
 					{
+						// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
+						mutex->lock();
+
+						// get last SMS (text)
+//						if (readLastSMS(smsText) == true)
+						{
 						// emit the no. of available SMS
-						emit SMSavailable(availableSMS, "test");
+							emit SMSavailable(availableSMS, smsText);
+						}
+						// Unlock the mutex.
+						mutex->unlock();
 					}
 					// send value over the network
 					// *0s42# means 42 SMS available from GSM module 0 (yes, i know, we have only one...)
@@ -373,4 +382,26 @@ int GSMThread::countSMS()
 	//	GSMState = OFF;
 
 	return -1;
+}
+
+
+bool GSMThread::readLastSMS(QString &text)
+{
+	// "smsl"
+	if (interface1->sendString("smsl", className) == true)
+	{
+		// check if the robot answers with answer. e.g. "**hello##" >>> exception: GSM module answers with additional * and #. <<<
+		if (interface1->receiveString(text, className) == true)
+		{
+			if (text != "*err#")
+			{
+				emit message(QString("SMS: %1").arg(text));
+				return true;
+			}
+		}
+	}
+
+	// error
+	emit message("GSM: Error reading last SMS (text).");
+	return false;
 }

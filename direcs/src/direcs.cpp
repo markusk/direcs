@@ -1285,7 +1285,7 @@ void Direcs::setRobotState(bool state)
 				emit message("GSM module initialised.");
 
 				// show SMS available in the GUI
-				connect(gsmThread, SIGNAL(SMSavailable(int)), gui, SLOT(showSMSavailable(int)));
+				connect(gsmThread, SIGNAL(SMSavailable(int, QString)), gui, SLOT(showSMSavailable(int)));
 
 				// "new SMS" handling
 				connect(gsmThread, SIGNAL(SMSavailable(int, QString)), this, SLOT(SMSTracking(int, QString)));
@@ -2457,7 +2457,7 @@ void Direcs::SMSTracking(int number, QString text)
 		emit speak("Oh, eine neue Nachricht!");
 
 		// Read it
-		emit speak(text);
+		emit speak(QString("Sie lautet: %1").arg(text));
 	}
 }
 

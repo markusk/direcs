@@ -43,6 +43,7 @@ gsmp	=	unlock GSM module with PIN
 gsms	=	(get) GSM status
 
 smsc	=	count available SMS
+smsl	=	read Last SMS
 smsr	=	read SMS #
 smss	=	send SMS
 smsd	=	delete SMS #
@@ -69,6 +70,13 @@ class GSMThread : public QThread
 		 * @return the no of available SMS's
 		 */
 		int getSMSavailable();
+
+		/**
+		 * @brief Reads the last SMS
+		 * @param returns the text of the SMS (body)
+		 * @return true on success
+		 */
+		bool readLastSMS(QString &text);
 
 		/**
 		 * @return the GSM status
