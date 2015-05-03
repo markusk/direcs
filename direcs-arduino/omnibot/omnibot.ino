@@ -138,6 +138,8 @@ unsigned long repeat = 2011242581; // Wird bei ok und play zusätzlich gesendet
 //const int buttonPin = A0; // Pushbutton
 int8_t smsnum = 0; // the number of available SMS's
 int returnValue = 0;
+// this is a large buffer for replies (SMS)
+char replybuffer[160]; // < < < < max 160 character length ! ! !!
 
 SoftwareSerial fonaSS = SoftwareSerial(FONA_TX, FONA_RX);
 Adafruit_FONA fona = Adafruit_FONA(FONA_RST);
@@ -237,6 +239,7 @@ boolean FONAstate = false;
   gsms  = (get) GSM status
 
   smsc  = count available SMS
+  smsl  = read Last SMS
   smsr  = read SMS #
   smss  = send SMS
   smsd  = delete SMS #
@@ -1662,7 +1665,7 @@ void loop()
   // SMS_COUNT / SMS_CHECK = "smsc"
   if (command == "*smsc#")
   {
-    // read the number of SMS's
+    // read and store(!) the number of SMS's
     smsnum = fona.getNumSMS();
 
     // success ?
@@ -1703,6 +1706,52 @@ void loop()
       Serial.flush();
     } // okay
   } // smsc
+  else
+  // read Last SMS = "smsl"
+  if (command == "*smsl#")
+  {
+    // Retrieve content of SMS No. "smsnum"
+    uint16_t smslength;
+
+    // pass in buffer and max len (255)!
+    if (! fona.readSMS(smsnum, replybuffer, 250, &smslength))
+    {
+      // answer with "ERROR"
+      Serial.print("*err#");
+      Serial.flush();
+    }
+    else
+    {
+      // success
+      if (Serial.print("**") < 2) // Expeption: starts with **, not *
+      {
+        // ERROR!!
+        delay(10000);
+        return;
+      }
+      // write all data immediately!
+      Serial.flush();
+
+      // print SMS content
+      if (Serial.print( replybuffer ) < 1)
+      {
+        // ERROR!!
+        delay(10000);
+        return;
+      }
+      // write all data immediately!
+      Serial.flush();
+
+      if (Serial.print("##") < 2) // Expeption: starts with **, not *
+      {
+        // ERROR!!
+        delay(10000);
+        return;
+      }
+      // write all data immediately!
+      Serial.flush();
+    } // okay
+  } // smsl
 
   // no valid command found (i.e. *wtf# )
   // delete command string
