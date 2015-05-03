@@ -234,6 +234,7 @@ boolean FONAstate = false;
 /* Commands for interaction with the GSM FONA module
   gsmi  = init GSM module
   gsmp  = unlock GSM module with PIN
+  gsms  = (get) GSM status
 
   smsc  = count available SMS
   smsr  = read SMS #
@@ -1623,6 +1624,40 @@ void loop()
       Serial.flush();
     } // PIN okay
   } // gsmp
+  // (get) GSM status (FONA) = "gsms"
+  if (command == "*gsms#")
+  {
+    // read the network/cellular status
+    uint8_t networkStatus = fona.getNetworkStatus();
+
+    if (Serial.print("*") < 1)
+    {
+      // ERROR!!
+      delay(10000);
+      return;
+    }
+    // write all data immediately!
+    Serial.flush();
+
+    // print network status
+    if (Serial.print( networkStatus ) < 1)
+    {
+      // ERROR!!
+      delay(10000);
+      return;
+    }
+    // write all data immediately!
+    Serial.flush();
+
+    if (Serial.print("#") < 1)
+    {
+      // ERROR!!
+      delay(10000);
+      return;
+    }
+    // write all data immediately!
+    Serial.flush();
+  } // gsms
   else
   // SMS_COUNT / SMS_CHECK = "smsc"
   if (command == "*smsc#")
