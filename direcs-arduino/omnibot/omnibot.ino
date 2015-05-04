@@ -1723,7 +1723,7 @@ void loop()
     else
     {
       // success
-      if (Serial.print("**") < 2) // Expeption: starts with **, not *
+      if (Serial.print("*") < 1)
       {
         // ERROR!!
         delay(10000);
@@ -1742,7 +1742,7 @@ void loop()
       // write all data immediately!
       Serial.flush();
 
-      if (Serial.print("##") < 2) // Expeption: starts with **, not *
+      if (Serial.print("#") < 1)
       {
         // ERROR!!
         delay(10000);
