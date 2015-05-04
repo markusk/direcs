@@ -263,6 +263,9 @@ bool GSMThread::init()
 				{
 					emit message("Waiting for GSM...");
 
+					// update GUI (show LED status from call before)
+					QCoreApplication::processEvents();
+
 					do
 					{
 						//-----------------
@@ -271,11 +274,11 @@ bool GSMThread::init()
 						if (getStatus() == false)
 						{
 						}
-					} while (((networkState != GSM_Registered_Home) && (networkState != GSM_Registered_Roaming))); // wait for reception...   < < < < < < <  forever!!
+					} while (((networkState != GSM_Registered_Home) && (networkState != GSM_Registered_Roaming))); // wait for reception...   < < < < < < <  forever!!  Add timeout measurement!!!
 
 					// we have GSM!  :-)
 					emit GSMStatus(GREEN);
-/*
+
 					// Check very first SMS amount available
 					// could be the case, that there are already old SMS on the SIM
 					if (firstSMSCount)
@@ -288,14 +291,14 @@ bool GSMThread::init()
 							// store the new amount
 							lastAmountSMS = availableSMS;
 
-							emit message(QString("%1 SMS already on SIM.").arg(availableSMS));
-*/
+							// emit message(QString("%1 SMS already on SIM.").arg(availableSMS));
+
 							return true;
 						}
 					}
-/*				}
+				}
 			}
-*/		}
+		}
 	}
 
 	// error
