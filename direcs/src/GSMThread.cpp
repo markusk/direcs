@@ -113,7 +113,7 @@ void GSMThread::run()
 				if ((networkState == GSM_Registered_Home) || (networkState == GSM_Registered_Roaming))
 				{
 					emit GSMStatus(GREEN);
-/*
+
 					//-----------------
 					// count SMS
 					//-----------------
@@ -125,13 +125,24 @@ void GSMThread::run()
 					}
 					else
 					{
-*/						// send value over the network
-						// *0s42# means 42 SMS available from GSM module 0 (yes, i know, we have only one...)
-						emit sendNetworkString( QString("*0s%1#").arg(availableSMS) );
+						// Do we have a *new* SMS?
+						if (availableSMS > lastAmountSMS)
+						{
+							// store the new amount
+							lastAmountSMS = availableSMS;
 
-						// emit the no. of available SMS
-						emit SMSavailable(availableSMS, smsText); // < < < < < change this to only emit on NEW SMS!
-//					}
+							// read SMS from GSM module
+//							if (readLastSMS(smsText) == true)
+							{
+								// emit the no. and text of SMS
+								emit SMSavailable(availableSMS, smsText);
+
+								// send value over the network
+								// *0s42# means 42 SMS available from GSM module 0 (yes, i know, we have only one...)
+								emit sendNetworkString( QString("*0s%1#").arg(availableSMS) );
+							}
+						}
+					}
 				}
 			}
 
@@ -396,7 +407,7 @@ int GSMThread::countSMS()
 				// store measured value
 				availableSMS = value;
 
-				emit message(QString("%1 SMS available.").arg(availableSMS));
+				// emit message(QString("%1 SMS available.").arg(availableSMS));
 
 				return availableSMS;
 			}
@@ -416,19 +427,28 @@ int GSMThread::countSMS()
 
 bool GSMThread::readLastSMS(QString &text)
 {
+	QString answer = "error";
+
+
 	emit message(QString("TEST1: %1").arg(text));
+
+	mutex->lock();
 
 	// "smsl"
 	if (interface1->sendString("smsl", className) == true)
 	{
 		// check if the robot answers with answer. e.g. "*hello#"
-		if (interface1->receiveString(text, className) == true)
+		if (interface1->receiveString(answer, className) == true)
 		{
-			emit message(QString("TEST2: %1").arg(text));
+			emit message(QString("TEST2: %1").arg(answer));
 
-			if (text != "*err#")
+			if (answer != "*err#")
 			{
+				text = answer;
 				emit message(QString("SMS: %1").arg(text));
+
+				mutex->unlock();
+
 				return true;
 			}
 		}
@@ -436,6 +456,8 @@ bool GSMThread::readLastSMS(QString &text)
 
 	// error
 	emit message("GSM: Error reading last SMS (text).");
+
+	mutex->unlock();
 
 	return false;
 }

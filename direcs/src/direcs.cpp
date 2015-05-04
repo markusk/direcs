@@ -542,7 +542,7 @@ void Direcs::init()
 			connect(obstCheckThread, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
 			connect(timerThread, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
 			connect(demoThread, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
-			connect(gsmThread, SIGNAL(message(QString)), gui, SLOT(appendLog(QString)));
+			connect(gsmThread, SIGNAL(message(QString, bool, bool, bool)), gui, SLOT(appendLog(QString, bool, bool, bool)));
 		}
 		else
 		{
@@ -1223,8 +1223,11 @@ void Direcs::setRobotState(bool state)
 				connect(gsmThread, SIGNAL(SMSavailable(int, QString)), this, SLOT(SMSTracking(int, QString)));
 
 				emit splashMessage("Starting GSM thread...");
-				emit message("Starting GSM thread...", false);
+				emit message("Starting GSM thread...");
+
+				// NOW start the run() method inside!
 				gsmThread->start();
+
 				emit message("GSM thread started.");
 			}
 		}
@@ -2426,39 +2429,14 @@ void Direcs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 
 void Direcs::SMSTracking(int number, QString text)
 {
-	static int lastAmountSMS = 0;
-	static bool firstCount = true;
+	emit message("New SMS received.");
+	emit message(QString("SMS # %1: %2").arg(number).arg(text));
 
+	// Announce it
+	emit speak("Oh, eine neue Nachricht!");
 
-	// do nothing on the very first SMS count
-	// could be the case, that there are already old SMS on the SIM
-	if (firstCount)
-	{
-		firstCount = false;
-
-		// store the new amount
-		lastAmountSMS = number;
-
-		// do nothing
-		return;
-	}
-
-
-	// Yes there is a NEW SMS
-	if (number > lastAmountSMS)
-	{
-		// store the new amount
-		lastAmountSMS = number;
-
-		emit message("New SMS received.");
-		emit message(QString("SMS # %1: %2").arg(number).arg(text));
-
-		// Announce it
-		emit speak("Oh, eine neue Nachricht!");
-
-		// Read it
-		emit speak(QString("Sie lautet: %1").arg(text));
-	}
+	// Read it
+	emit speak(QString("Sie lautet: %1").arg(text));
 }
 
 
@@ -5467,8 +5445,11 @@ void Direcs::resetMotorSpeed()
 
 void Direcs::test()
 {
+	QString text;
 
-	gsmThread->getGSMStatus();
+
+	gsmThread->readLastSMS(text);
+	emit message(QString("SMS-Test: %1").arg(text));
 
 /*
 	#ifdef Q_OS_LINUX
