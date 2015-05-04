@@ -210,6 +210,8 @@ class GSMThread : public QThread
 		static const unsigned long THREADSLEEPTIME = 500; // Default: 100 ms?!?
 
 		int availableSMS; /// contains the no of available SMS
+		int lastAmountSMS;
+		bool firstSMSCount;
 
 		static const int MAXIMUMPLOTHEARTBEAT = 5; /// theoratically 5 Volt for heartbeat "high" @sa Gui::initPlot
 

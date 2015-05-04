@@ -1194,6 +1194,41 @@ void Direcs::setRobotState(bool state)
 	{
 		emit message("Robot is <font color=\"#00FF00\">ON</font> and answers.");
 
+		//-----------------------------------------------------------
+		// start the GSM thread
+		//-----------------------------------------------------------
+		if (gsmThread->isRunning() == false)
+		{
+			// whenever there is a material error, react!
+			connect(gsmThread, SIGNAL( systemerror(int) ), this, SLOT( systemerrorcatcher(int) ) );
+
+			// show GSM status in the GUI
+			connect(gsmThread, SIGNAL(GSMStatus(unsigned char)), gui, SLOT(setLEDGSM(unsigned char)));
+
+			//----------------------
+			// init the GSM module
+			//----------------------
+			emit splashMessage("Initialising GSM module...");
+			emit message("Initialising GSM module...", false);
+
+			if (gsmThread->init() == true)
+			{
+				emit splashMessage("GSM module initialised.");
+				emit message("GSM module initialised.");
+
+				// show SMS available in the GUI
+				connect(gsmThread, SIGNAL(SMSavailable(int, QString)), gui, SLOT(showSMSavailable(int)));
+
+				// "new SMS" handling
+				connect(gsmThread, SIGNAL(SMSavailable(int, QString)), this, SLOT(SMSTracking(int, QString)));
+
+				emit splashMessage("Starting GSM thread...");
+				emit message("Starting GSM thread...", false);
+				gsmThread->start();
+				emit message("GSM thread started.");
+			}
+		}
+
 /*
 		// check compass module
 		if (circuit1->initCompass() == true)
@@ -1255,41 +1290,6 @@ void Direcs::setRobotState(bool state)
 
 			// whenever there is a material error, react!
 			connect(sensorThread, SIGNAL( systemerror(int) ), this, SLOT( systemerrorcatcher(int) ) );
-		}
-
-		//-----------------------------------------------------------
-		// start the GSM thread
-		//-----------------------------------------------------------
-		if (gsmThread->isRunning() == false)
-		{
-			// whenever there is a material error, react!
-			connect(gsmThread, SIGNAL( systemerror(int) ), this, SLOT( systemerrorcatcher(int) ) );
-
-			// show GSM status in the GUI
-			connect(gsmThread, SIGNAL(GSMStatus(unsigned char)), gui, SLOT(setLEDGSM(unsigned char)));
-
-			emit splashMessage("Starting GSM thread...");
-			emit message("Starting GSM thread...", false);
-			gsmThread->start();
-			emit message("GSM thread started.");
-
-			//----------------------
-			// init the GSM module
-			//----------------------
-			emit splashMessage("Initialising GSM module...");
-			emit message("Initialising GSM module...", false);
-
-			if (gsmThread->init() == true)
-			{
-				emit splashMessage("GSM module initialised.");
-				emit message("GSM module initialised.");
-
-				// show SMS available in the GUI
-				connect(gsmThread, SIGNAL(SMSavailable(int, QString)), gui, SLOT(showSMSavailable(int)));
-
-				// "new SMS" handling
-				connect(gsmThread, SIGNAL(SMSavailable(int, QString)), this, SLOT(SMSTracking(int, QString)));
-			}
 		}
 
 #ifndef BUILDFORROBOT
@@ -2451,7 +2451,7 @@ void Direcs::SMSTracking(int number, QString text)
 		lastAmountSMS = number;
 
 		emit message("New SMS received.");
-		emit message(QString("SMS: %1").arg(text));
+		emit message(QString("SMS # %1: %2").arg(number).arg(text));
 
 		// Announce it
 		emit speak("Oh, eine neue Nachricht!");

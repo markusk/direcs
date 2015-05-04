@@ -34,6 +34,8 @@ GSMThread::GSMThread(InterfaceAvr *i, QMutex *m)
 
 	// reset no of SMS available
 	availableSMS = 0;
+	lastAmountSMS = 0;
+	firstSMSCount = true;
 
 	// for storing a virtual heartbeat value (high=5V)
 	//heartbeatValue[0] = 0;
@@ -111,7 +113,7 @@ void GSMThread::run()
 				if ((networkState == GSM_Registered_Home) || (networkState == GSM_Registered_Roaming))
 				{
 					emit GSMStatus(GREEN);
-
+/*
 					//-----------------
 					// count SMS
 					//-----------------
@@ -120,31 +122,16 @@ void GSMThread::run()
 						//
 						// disabled: we continue, since this is not critical
 						//
-/*						emit message(QString("<font color=\"#FF0000\">ERROR counting SMS. Stopping %1!</font>").arg(className));
-
-						// Unlock the mutex.
-						mutex->unlock();
-
-						// stop this thread
-						stop();
-
-						// inform other modules
-						emit systemerror(-3);
-
-						return;
-*/					}
+					}
 					else
 					{
-						// get last SMS (text)
-//						if (readLastSMS(smsText) == true)
-						{
-							// emit the no. of available SMS
-							emit SMSavailable(availableSMS, smsText);
-						}
-					}
-					// send value over the network
-					// *0s42# means 42 SMS available from GSM module 0 (yes, i know, we have only one...)
-					emit sendNetworkString( QString("*0s%1#").arg(availableSMS) );
+*/						// send value over the network
+						// *0s42# means 42 SMS available from GSM module 0 (yes, i know, we have only one...)
+						emit sendNetworkString( QString("*0s%1#").arg(availableSMS) );
+
+						// emit the no. of available SMS
+						emit SMSavailable(availableSMS, smsText); // < < < < < change this to only emit on NEW SMS!
+//					}
 				}
 			}
 
@@ -274,10 +261,41 @@ bool GSMThread::init()
 				// unlock PIN
 				if (unlockPIN() == true)
 				{
-					 return true;
-				}
+					emit message("Waiting for GSM...");
+
+					do
+					{
+						//-----------------
+						// get GSM status
+						//-----------------
+						if (getStatus() == false)
+						{
+						}
+					} while (((networkState != GSM_Registered_Home) && (networkState != GSM_Registered_Roaming))); // wait for reception...   < < < < < < <  forever!!
+
+					// we have GSM!  :-)
+					emit GSMStatus(GREEN);
+/*
+					// Check very first SMS amount available
+					// could be the case, that there are already old SMS on the SIM
+					if (firstSMSCount)
+					{
+						firstSMSCount = false;
+
+						// count SMS from GSM module
+						if (countSMS() != -1)
+						{
+							// store the new amount
+							lastAmountSMS = availableSMS;
+
+							emit message(QString("%1 SMS already on SIM.").arg(availableSMS));
+*/
+							return true;
+						}
+					}
+/*				}
 			}
-		}
+*/		}
 	}
 
 	// error
@@ -375,6 +393,8 @@ int GSMThread::countSMS()
 				// store measured value
 				availableSMS = value;
 
+				emit message(QString("%1 SMS available.").arg(availableSMS));
+
 				return availableSMS;
 			}
 		}
@@ -393,12 +413,16 @@ int GSMThread::countSMS()
 
 bool GSMThread::readLastSMS(QString &text)
 {
+	emit message(QString("TEST1: %1").arg(text));
+
 	// "smsl"
 	if (interface1->sendString("smsl", className) == true)
 	{
-		// check if the robot answers with answer. e.g. "**hello##" >>> exception: GSM module answers with additional * and #. <<<
+		// check if the robot answers with answer. e.g. "*hello#"
 		if (interface1->receiveString(text, className) == true)
 		{
+			emit message(QString("TEST2: %1").arg(text));
+
 			if (text != "*err#")
 			{
 				emit message(QString("SMS: %1").arg(text));
