@@ -951,11 +951,8 @@ void Direcs::init()
 			}
 			else
 			{
-				emit splashMessage("Kinect not found.");
-				emit message("Kinect camera not found.", false);
-
-				emit splashMessage("Kinect DISABLED.");
-				emit message("Kinect camera DISABLED.", false);
+				emit splashMessage("Camera DISABLED.");
+				emit message("Camera DISABLED.", false);
 
 				// show kinect camera state in gui
 				gui->setLEDCamera(RED);
@@ -964,6 +961,21 @@ void Direcs::init()
 				//gui->disableCamera();
 				emit message("No Kinect detected.");
 			}
+		}
+		else
+		{
+			//
+			// Camera in config disabled
+			//
+			emit splashMessage("Kinect DISABLED.");
+			emit message("Kinect camera DISABLED.", false);
+
+			// show kinect camera state in gui
+			gui->setLEDCamera(RED);
+			gui->hideCameraControls();
+
+			//gui->disableCamera();
+			emit message("No Kinect detected.");
 		}
 
 		if (!consoleMode)
@@ -1250,13 +1262,16 @@ void Direcs::setRobotState(bool state)
 		//-----------------------------------------------------------
 		if (gsmThread->isRunning() == false)
 		{
+			// whenever there is a material error, react!
+			connect(gsmThread, SIGNAL( systemerror(int) ), this, SLOT( systemerrorcatcher(int) ) );
+
+			// show GSM status in the GUI
+			connect(gsmThread, SIGNAL(GSMStatus(unsigned char)), gui, SLOT(setLEDGSM(unsigned char)));
+
 			emit splashMessage("Starting GSM thread...");
 			emit message("Starting GSM thread...", false);
 			gsmThread->start();
 			emit message("GSM thread started.");
-
-			// whenever there is a material error, react!
-			connect(gsmThread, SIGNAL( systemerror(int) ), this, SLOT( systemerrorcatcher(int) ) );
 
 			//----------------------
 			// init the GSM module
@@ -1268,11 +1283,12 @@ void Direcs::setRobotState(bool state)
 			{
 				emit splashMessage("GSM module initialised.");
 				emit message("GSM module initialised.");
-				gui->setLEDGSM(LED_GREEN);
-			}
-			else
-			{
-				gui->setLEDGSM(LED_RED);
+
+				// show SMS available in the GUI
+				connect(gsmThread, SIGNAL(SMSavailable(int, QString)), gui, SLOT(showSMSavailable(int)));
+
+				// "new SMS" handling
+				connect(gsmThread, SIGNAL(SMSavailable(int, QString)), this, SLOT(SMSTracking(int, QString)));
 			}
 		}
 
@@ -2405,6 +2421,44 @@ void Direcs::faceTracking(int faces, int faceX, int faceY, int faceRadius)
 		}
 	}
 */
+}
+
+
+void Direcs::SMSTracking(int number, QString text)
+{
+	static int lastAmountSMS = 0;
+	static bool firstCount = true;
+
+
+	// do nothing on the very first SMS count
+	// could be the case, that there are already old SMS on the SIM
+	if (firstCount)
+	{
+		firstCount = false;
+
+		// store the new amount
+		lastAmountSMS = number;
+
+		// do nothing
+		return;
+	}
+
+
+	// Yes there is a NEW SMS
+	if (number > lastAmountSMS)
+	{
+		// store the new amount
+		lastAmountSMS = number;
+
+		emit message("New SMS received.");
+		emit message(QString("SMS: %1").arg(text));
+
+		// Announce it
+		emit speak("Oh, eine neue Nachricht!");
+
+		// Read it
+		emit speak(QString("Sie lautet: %1").arg(text));
+	}
 }
 
 
@@ -5413,6 +5467,9 @@ void Direcs::resetMotorSpeed()
 
 void Direcs::test()
 {
+
+	gsmThread->getGSMStatus();
+
 /*
 	#ifdef Q_OS_LINUX
 	Phonon::MediaObject *music = Phonon::createPlayer(Phonon::MusicCategory, Phonon::MediaSource("../../../../dr.mp3"));
@@ -5439,7 +5496,7 @@ void Direcs::test()
 
 //	static bool toggle = false;
 
-
+/*
 #ifdef Q_OS_LINUX
 	speakThread->setLanguage("en");
 #endif
@@ -5448,6 +5505,7 @@ void Direcs::test()
 //    emit speak(tr("The voltage for battery %1 is %2 Volt. For battery %3 it is %4 Volt.").arg( 1 ).arg( sensorThread->getVoltage(VOLTAGESENSOR1) ).arg( 2 ).arg( sensorThread->getVoltage(VOLTAGESENSOR2) ));
 	emit speak(tr("Die Akkuspannung %1 ist %2 Volt. Akku %3 hat noch %4 Volt.").arg( 1 ).arg( sensorThread->getVoltage(VOLTAGESENSOR1) ).arg( 2 ).arg( sensorThread->getVoltage(VOLTAGESENSOR2) ));
 	emit speak(tr("Alles klar, los geht's!"));
+*/
 
 //	toggle = !toggle;
 /*

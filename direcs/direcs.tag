@@ -113,6 +113,7 @@
     <includes id="speakThread_8h" name="speakThread.h" local="yes" imported="no">speakThread.h</includes>
     <includes id="timerThread_8h" name="timerThread.h" local="yes" imported="no">timerThread.h</includes>
     <includes id="demoThread_8h" name="demoThread.h" local="yes" imported="no">demoThread.h</includes>
+    <includes id="GSMThread_8h" name="GSMThread.h" local="yes" imported="no">GSMThread.h</includes>
     <class kind="struct">CleanExit</class>
     <class kind="class">Direcs</class>
   </compound>
@@ -163,6 +164,19 @@
     <class kind="class">GLWidget</class>
   </compound>
   <compound kind="file">
+    <name>GSMThread.cpp</name>
+    <path>/Users/markus/develop/direcs/direcs/src/</path>
+    <filename>GSMThread_8cpp</filename>
+    <includes id="GSMThread_8h" name="GSMThread.h" local="yes" imported="no">GSMThread.h</includes>
+  </compound>
+  <compound kind="file">
+    <name>GSMThread.h</name>
+    <path>/Users/markus/develop/direcs/direcs/src/</path>
+    <filename>GSMThread_8h</filename>
+    <includes id="interfaceAvr_8h" name="interfaceAvr.h" local="yes" imported="no">interfaceAvr.h</includes>
+    <class kind="class">GSMThread</class>
+  </compound>
+  <compound kind="file">
     <name>gui.cpp</name>
     <path>/Users/markus/develop/direcs/direcs/src/</path>
     <filename>gui_8cpp</filename>
@@ -189,19 +203,6 @@
     <filename>head_8h</filename>
     <includes id="servo_8h" name="servo.h" local="yes" imported="no">servo.h</includes>
     <class kind="class">Head</class>
-  </compound>
-  <compound kind="file">
-    <name>heartbeat.cpp</name>
-    <path>/Users/markus/develop/direcs/direcs/src/</path>
-    <filename>heartbeat_8cpp</filename>
-    <includes id="heartbeat_8h" name="heartbeat.h" local="yes" imported="no">heartbeat.h</includes>
-  </compound>
-  <compound kind="file">
-    <name>heartbeat.h</name>
-    <path>/Users/markus/develop/direcs/direcs/src/</path>
-    <filename>heartbeat_8h</filename>
-    <includes id="interfaceAvr_8h" name="interfaceAvr.h" local="yes" imported="no">interfaceAvr.h</includes>
-    <class kind="class">Heartbeat</class>
   </compound>
   <compound kind="file">
     <name>inifile.cpp</name>
@@ -831,6 +832,20 @@
     </member>
   </compound>
   <compound kind="file">
+    <name>laserHokuyoURGsimple.cpp</name>
+    <path>/Users/markus/develop/direcs/direcs/src/</path>
+    <filename>laserHokuyoURGsimple_8cpp</filename>
+    <includes id="laserHokuyoURGsimple_8h" name="laserHokuyoURGsimple.h" local="yes" imported="no">laserHokuyoURGsimple.h</includes>
+  </compound>
+  <compound kind="file">
+    <name>laserHokuyoURGsimple.h</name>
+    <path>/Users/markus/develop/direcs/direcs/src/</path>
+    <filename>laserHokuyoURGsimple_8h</filename>
+    <includes id="direcsSerial_8h" name="direcsSerial.h" local="yes" imported="no">direcsSerial.h</includes>
+    <includes id="urg__serial__utils_8h" name="urg_serial_utils.h" local="yes" imported="no">urg_serial_utils.h</includes>
+    <class kind="class">HokuyoURGsimple</class>
+  </compound>
+  <compound kind="file">
     <name>laserScene.cpp</name>
     <path>/Users/markus/develop/direcs/direcs/src/</path>
     <filename>laserScene_8cpp</filename>
@@ -866,6 +881,7 @@
     <path>/Users/markus/develop/direcs/direcs/src/</path>
     <filename>laserThread_8h</filename>
     <includes id="laserSickS300_8h" name="laserSickS300.h" local="yes" imported="no">laserSickS300.h</includes>
+    <includes id="laserHokuyoURGsimple_8h" name="laserHokuyoURGsimple.h" local="yes" imported="no">laserHokuyoURGsimple.h</includes>
     <includes id="inifile_8h" name="inifile.h" local="yes" imported="no">inifile.h</includes>
     <class kind="class">LaserThread</class>
   </compound>
@@ -957,6 +973,45 @@
     <path>/Users/markus/develop/direcs/direcs/src/</path>
     <filename>QtGLContext_8h</filename>
     <class kind="class">QtGLContext</class>
+  </compound>
+  <compound kind="file">
+    <name>QtSpeech.h</name>
+    <path>/Users/markus/develop/direcs/direcs/src/</path>
+    <filename>QtSpeech_8h</filename>
+    <class kind="struct">QtSpeech::CloseError</class>
+    <class kind="struct">QtSpeech::Error</class>
+    <class kind="struct">QtSpeech::InitError</class>
+    <class kind="struct">QtSpeech::LogicError</class>
+    <class kind="class">QtSpeech</class>
+    <class kind="struct">QtSpeech::VoiceName</class>
+  </compound>
+  <compound kind="file">
+    <name>QtSpeech_mac.cpp</name>
+    <path>/Users/markus/develop/direcs/direcs/src/</path>
+    <filename>QtSpeech__mac_8cpp</filename>
+    <includes id="QtSpeech_8h" name="QtSpeech.h" local="yes" imported="no">QtSpeech.h</includes>
+    <class kind="class">QtSpeech::Private</class>
+    <member kind="define">
+      <type>#define</type>
+      <name>SpeechDoneUPP_ARG2</name>
+      <anchorfile>QtSpeech__mac_8cpp.html</anchorfile>
+      <anchor>ac8bdbf26fea949d47d96a216b10806dc</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>SysCall</name>
+      <anchorfile>QtSpeech__mac_8cpp.html</anchorfile>
+      <anchor>ac5ddce498245eecb68b28404c3d4bfe7</anchor>
+      <arglist>(x, e)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>Where</name>
+      <anchorfile>QtSpeech__mac_8cpp.html</anchorfile>
+      <anchor>a40b7cf91a55c2464330bee13ebe3e1fb</anchor>
+      <arglist></arglist>
+    </member>
   </compound>
   <compound kind="file">
     <name>rgbLed.cpp</name>
@@ -1560,11 +1615,19 @@
     <path>/Users/markus/develop/direcs/direcs/src/</path>
     <filename>speakThread_8cpp</filename>
     <includes id="speakThread_8h" name="speakThread.h" local="yes" imported="no">speakThread.h</includes>
+    <member kind="function">
+      <type>void</type>
+      <name>setVoice</name>
+      <anchorfile>speakThread_8cpp.html</anchorfile>
+      <anchor>a71af348984600051471659f9e07628b0</anchor>
+      <arglist>(QString voicename)</arglist>
+    </member>
   </compound>
   <compound kind="file">
     <name>speakThread.h</name>
     <path>/Users/markus/develop/direcs/direcs/src/</path>
     <filename>speakThread_8h</filename>
+    <includes id="QtSpeech_8h" name="QtSpeech.h" local="yes" imported="no">QtSpeech.h</includes>
     <class kind="class">SpeakThread</class>
   </compound>
   <compound kind="file">
@@ -1578,6 +1641,80 @@
     <path>/Users/markus/develop/direcs/direcs/src/</path>
     <filename>timerThread_8h</filename>
     <class kind="class">TimerThread</class>
+  </compound>
+  <compound kind="file">
+    <name>urg_serial_utils.cpp</name>
+    <path>/Users/markus/develop/direcs/direcs/src/</path>
+    <filename>urg__serial__utils_8cpp</filename>
+    <includes id="urg__serial__utils_8h" name="urg_serial_utils.h" local="yes" imported="no">urg_serial_utils.h</includes>
+    <includes id="urg__serial__utils__linux_8cpp" name="urg_serial_utils_linux.cpp" local="yes" imported="no">urg_serial_utils_linux.cpp</includes>
+  </compound>
+  <compound kind="file">
+    <name>urg_serial_utils.h</name>
+    <path>/Users/markus/develop/direcs/direcs/src/</path>
+    <filename>urg__serial__utils_8h</filename>
+    <member kind="function">
+      <type>int</type>
+      <name>urg_serial_find_port</name>
+      <anchorfile>urg__serial__utils_8h.html</anchorfile>
+      <anchor>a372e348197dd3e6c64ef0ac7840a3e01</anchor>
+      <arglist>(void)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>urg_serial_is_urg_port</name>
+      <anchorfile>urg__serial__utils_8h.html</anchorfile>
+      <anchor>a440067b88f385e57efe047a23dd6d37c</anchor>
+      <arglist>(int index)</arglist>
+    </member>
+    <member kind="function">
+      <type>const char *</type>
+      <name>urg_serial_port_name</name>
+      <anchorfile>urg__serial__utils_8h.html</anchorfile>
+      <anchor>a376e239b928dd529650b26b3c9f61bfd</anchor>
+      <arglist>(int index)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>urg_serial_utils_linux.cpp</name>
+    <path>/Users/markus/develop/direcs/direcs/src/</path>
+    <filename>urg__serial__utils__linux_8cpp</filename>
+    <includes id="urg__serial__utils_8h" name="urg_serial_utils.h" local="yes" imported="no">urg_serial_utils.h</includes>
+    <member kind="enumvalue">
+      <type>@</type>
+      <name>MAX_PORTS</name>
+      <anchorfile>urg__serial__utils__linux_8cpp.html</anchorfile>
+      <anchor>adf764cbdea00d65edcd07bb9953ad2b7ad76e689cd1e86cefdb6f2ee4e2e94507</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <type>@</type>
+      <name>DEVICE_NAME_SIZE</name>
+      <anchorfile>urg__serial__utils__linux_8cpp.html</anchorfile>
+      <anchor>adf764cbdea00d65edcd07bb9953ad2b7a9488a321a557829f59557b2c33fa03e2</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>urg_serial_find_port</name>
+      <anchorfile>urg__serial__utils__linux_8cpp.html</anchorfile>
+      <anchor>a372e348197dd3e6c64ef0ac7840a3e01</anchor>
+      <arglist>(void)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>urg_serial_is_urg_port</name>
+      <anchorfile>urg__serial__utils__linux_8cpp.html</anchorfile>
+      <anchor>a440067b88f385e57efe047a23dd6d37c</anchor>
+      <arglist>(int index)</arglist>
+    </member>
+    <member kind="function">
+      <type>const char *</type>
+      <name>urg_serial_port_name</name>
+      <anchorfile>urg__serial__utils__linux_8cpp.html</anchorfile>
+      <anchor>a376e239b928dd529650b26b3c9f61bfd</anchor>
+      <arglist>(int index)</arglist>
+    </member>
   </compound>
   <compound kind="class">
     <name>AboutDialog</name>
@@ -1634,6 +1771,13 @@
       <anchorfile>classCamThread.html</anchorfile>
       <anchor>acc995eeee20b3f7b628be8b303312e7c</anchor>
       <arglist>(int threshold)</arglist>
+    </member>
+    <member kind="slot">
+      <type>bool</type>
+      <name>turnLED</name>
+      <anchorfile>classCamThread.html</anchorfile>
+      <anchor>a2e5a882adbfcfe204da0b2db1c16ec59</anchor>
+      <arglist>(freenect_led_options state)</arglist>
     </member>
     <member kind="signal">
       <type>void</type>
@@ -1893,6 +2037,13 @@
     <filename>classCircuit.html</filename>
     <member kind="slot">
       <type>bool</type>
+      <name>initArduino</name>
+      <anchorfile>classCircuit.html</anchorfile>
+      <anchor>ae3093a8e5e12f9d1ee2157101129e639</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="slot">
+      <type>bool</type>
       <name>initCircuit</name>
       <anchorfile>classCircuit.html</anchorfile>
       <anchor>a0105b84827f9d428c79badee59bcf6b8</anchor>
@@ -2050,6 +2201,13 @@
       <name>mutex</name>
       <anchorfile>classCircuit.html</anchorfile>
       <anchor>a3dba8e1656340fc0789d37491cfadfba</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
+      <name>atmelTimout</name>
+      <anchorfile>classCircuit.html</anchorfile>
+      <anchor>a469b53075ff963c7efb8203b26211635</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -3299,6 +3457,13 @@
     </member>
     <member kind="slot">
       <type>void</type>
+      <name>setRobotState</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>a3703a3a652ab8b5bcc3e4e1386053fd4</anchor>
+      <arglist>(bool state)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
       <name>setSimulationMode</name>
       <anchorfile>classDirecs.html</anchorfile>
       <anchor>aa08c7c9ce0bf89e560e624bdc827ada8</anchor>
@@ -3645,6 +3810,13 @@
       <name>forceSmallGUI</name>
       <anchorfile>classDirecs.html</anchorfile>
       <anchor>a39fa5dc53bf684ff967837fb08a34c74</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>GSMThread *</type>
+      <name>gsmThread</name>
+      <anchorfile>classDirecs.html</anchorfile>
+      <anchor>a90384925b758ef07ed4acce26edbd022</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
@@ -5016,6 +5188,234 @@
     </member>
   </compound>
   <compound kind="class">
+    <name>GSMThread</name>
+    <filename>classGSMThread.html</filename>
+    <member kind="slot">
+      <type>bool</type>
+      <name>init</name>
+      <anchorfile>classGSMThread.html</anchorfile>
+      <anchor>ac7890939b722ab808cd1a3ae98ebc19e</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>setGSMState</name>
+      <anchorfile>classGSMThread.html</anchorfile>
+      <anchor>a222ca0996ae0e674ce827249b15158a3</anchor>
+      <arglist>(bool state)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>setRobotState</name>
+      <anchorfile>classGSMThread.html</anchorfile>
+      <anchor>a2f1541f2336a823a7bbb00b3f4de462e</anchor>
+      <arglist>(bool state)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>setSimulationMode</name>
+      <anchorfile>classGSMThread.html</anchorfile>
+      <anchor>a181c50d44cb30fb810f452a002590894</anchor>
+      <arglist>(bool state)</arglist>
+    </member>
+    <member kind="signal">
+      <type>void</type>
+      <name>GSMDataComplete</name>
+      <anchorfile>classGSMThread.html</anchorfile>
+      <anchor>a6ea613691f0b64b5e83c1d64068511c4</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="signal">
+      <type>void</type>
+      <name>heartbeat</name>
+      <anchorfile>classGSMThread.html</anchorfile>
+      <anchor>a77c8f90c3714209df9b06e231a10d2d1</anchor>
+      <arglist>(unsigned char state)</arglist>
+    </member>
+    <member kind="signal">
+      <type>void</type>
+      <name>message</name>
+      <anchorfile>classGSMThread.html</anchorfile>
+      <anchor>abe48731dbee566a96d5469e02ad00882</anchor>
+      <arglist>(QString text, bool CR=true, bool sayIt=false, bool addTimestamp=true)</arglist>
+    </member>
+    <member kind="signal">
+      <type>void</type>
+      <name>sendNetworkString</name>
+      <anchorfile>classGSMThread.html</anchorfile>
+      <anchor>a3e05f59662c4a04bcd4b925a07c889de</anchor>
+      <arglist>(QString text)</arglist>
+    </member>
+    <member kind="signal">
+      <type>void</type>
+      <name>systemerror</name>
+      <anchorfile>classGSMThread.html</anchorfile>
+      <anchor>a1eb28148ff711393e7f834918a4f089e</anchor>
+      <arglist>(int errorlevel)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>getHeartbeatValue</name>
+      <anchorfile>classGSMThread.html</anchorfile>
+      <anchor>af42c4b434e4adce1c664e683c6418816</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>getSMSavailable</name>
+      <anchorfile>classGSMThread.html</anchorfile>
+      <anchor>ae5a525b63ff0295ea352ed71a83e3434</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>GSMThread</name>
+      <anchorfile>classGSMThread.html</anchorfile>
+      <anchor>a41d0c9fbce59e2a71c61768ba85f0481</anchor>
+      <arglist>(InterfaceAvr *i, QMutex *m)</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual void</type>
+      <name>run</name>
+      <anchorfile>classGSMThread.html</anchorfile>
+      <anchor>a7d18dfe2e6990f569276d2f4e4b0d0d1</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>stop</name>
+      <anchorfile>classGSMThread.html</anchorfile>
+      <anchor>a42057d5f28f4c796e54757f436e0859f</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>~GSMThread</name>
+      <anchorfile>classGSMThread.html</anchorfile>
+      <anchor>aade463c54bbcfdff2e304edd14d0a9c9</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>int</type>
+      <name>countSMS</name>
+      <anchorfile>classGSMThread.html</anchorfile>
+      <anchor>a861a3142dda9f921fe4afba6cc8b4bca</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>bool</type>
+      <name>unlockPIN</name>
+      <anchorfile>classGSMThread.html</anchorfile>
+      <anchor>a9cfcd15450b73d16b8ac44376603bac6</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>int</type>
+      <name>availableSMS</name>
+      <anchorfile>classGSMThread.html</anchorfile>
+      <anchor>a18ed1dc22f674bcb63acabd1805e4f75</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QString</type>
+      <name>className</name>
+      <anchorfile>classGSMThread.html</anchorfile>
+      <anchor>aba8fcff7668c9e2406abb4b2749fbeab</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>bool</type>
+      <name>GSMState</name>
+      <anchorfile>classGSMThread.html</anchorfile>
+      <anchor>aff80399e1919b2d91a2cf601b3cffd6b</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>InterfaceAvr *</type>
+      <name>interface1</name>
+      <anchorfile>classGSMThread.html</anchorfile>
+      <anchor>a4a03a9ad0f27393bd389712ebefd6024</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QMutex *</type>
+      <name>mutex</name>
+      <anchorfile>classGSMThread.html</anchorfile>
+      <anchor>af4472831756b019625342e9a61d9bbfe</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>bool</type>
+      <name>robotState</name>
+      <anchorfile>classGSMThread.html</anchorfile>
+      <anchor>a99811e43f21186a5d1be638f1cddff3a</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>bool</type>
+      <name>simulationMode</name>
+      <anchorfile>classGSMThread.html</anchorfile>
+      <anchor>a903a7b6a49831caed910b2a354a983ed</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>volatile bool</type>
+      <name>stopped</name>
+      <anchorfile>classGSMThread.html</anchorfile>
+      <anchor>afbd45c76eb76a9f89a0839e4dc2626e8</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>GREEN</name>
+      <anchorfile>classGSMThread.html</anchorfile>
+      <anchor>aae38491156a0de90eb85f6de18d205ad</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>LEDOFF</name>
+      <anchorfile>classGSMThread.html</anchorfile>
+      <anchor>ae5c1286207286defa3a211e0e18b743a</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
+      <name>MAXIMUMPLOTHEARTBEAT</name>
+      <anchorfile>classGSMThread.html</anchorfile>
+      <anchor>ae1b7de7a8eb57f5e7a4cf96e76b807fc</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const bool</type>
+      <name>OFF</name>
+      <anchorfile>classGSMThread.html</anchorfile>
+      <anchor>a26c4b6aabdf280184edd5872e15eac68</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const bool</type>
+      <name>ON</name>
+      <anchorfile>classGSMThread.html</anchorfile>
+      <anchor>a201acde9e74c3b04b93af7585c4d904d</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned char</type>
+      <name>RED</name>
+      <anchorfile>classGSMThread.html</anchorfile>
+      <anchor>ae0912309ff22befaed19250d38c52b07</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned long</type>
+      <name>THREADSLEEPTIME</name>
+      <anchorfile>classGSMThread.html</anchorfile>
+      <anchor>a58930410a4cec48b5bbd5783593cd9f0</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="class">
     <name>Gui</name>
     <filename>classGui.html</filename>
     <member kind="slot">
@@ -5121,6 +5521,13 @@
       <name>setLEDCompass</name>
       <anchorfile>classGui.html</anchorfile>
       <anchor>aabcfdee1baa153d5bc055394b28f07e6</anchor>
+      <arglist>(unsigned char state)</arglist>
+    </member>
+    <member kind="slot">
+      <type>void</type>
+      <name>setLEDGSM</name>
+      <anchorfile>classGui.html</anchorfile>
+      <anchor>abd4582bcd546f4b8ca07d858bfd56eff</anchor>
       <arglist>(unsigned char state)</arglist>
     </member>
     <member kind="slot">
@@ -6676,104 +7083,160 @@
     </member>
   </compound>
   <compound kind="class">
-    <name>Heartbeat</name>
-    <filename>classHeartbeat.html</filename>
-    <member kind="slot">
-      <type>void</type>
-      <name>setRobotState</name>
-      <anchorfile>classHeartbeat.html</anchorfile>
-      <anchor>a2b99d807c51f8dbba311fd4ed9f1535c</anchor>
-      <arglist>(bool state)</arglist>
-    </member>
+    <name>HokuyoURGsimple</name>
+    <filename>classHokuyoURGsimple.html</filename>
     <member kind="signal">
       <type>void</type>
-      <name>alarm</name>
-      <anchorfile>classHeartbeat.html</anchorfile>
-      <anchor>a97c66027e11fa161be990254a4c104b3</anchor>
+      <name>message</name>
+      <anchorfile>classHokuyoURGsimple.html</anchorfile>
+      <anchor>a5b81ff07c32c4f845501cf33c5a78b07</anchor>
+      <arglist>(QString text)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>closeComPort</name>
+      <anchorfile>classHokuyoURGsimple.html</anchorfile>
+      <anchor>ac1e0657d71e3d0309f76c97d356c364a</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>findPort</name>
+      <anchorfile>classHokuyoURGsimple.html</anchorfile>
+      <anchor>a04173be0ad6889d3d5d5f2463284f472</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>float</type>
+      <name>getDistance</name>
+      <anchorfile>classHokuyoURGsimple.html</anchorfile>
+      <anchor>a2c8dab332f9746b08b336655e9f7e0ab</anchor>
+      <arglist>(int angleIndex)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>HokuyoURGsimple</name>
+      <anchorfile>classHokuyoURGsimple.html</anchorfile>
+      <anchor>adfe22ae97d250edebe14d9c430b7af3e</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>openComPort</name>
+      <anchorfile>classHokuyoURGsimple.html</anchorfile>
+      <anchor>a7bdd6d81f6c4cb335685b553bc014c89</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>readRequestTelegram</name>
+      <anchorfile>classHokuyoURGsimple.html</anchorfile>
+      <anchor>a70e9f85b50fd26163209e5f16be86f95</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>readUnknownTelegram</name>
+      <anchorfile>classHokuyoURGsimple.html</anchorfile>
+      <anchor>a097346c6a3d6838a1ef38d4db2a7a813</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>receiveChar</name>
+      <anchorfile>classHokuyoURGsimple.html</anchorfile>
+      <anchor>aed22123d81523594d93dc11c1d3b73a9</anchor>
+      <arglist>(unsigned char *character)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>sendChar</name>
+      <anchorfile>classHokuyoURGsimple.html</anchorfile>
+      <anchor>a5c87989b92f3329ccb9df77b7a21be68</anchor>
+      <arglist>(unsigned char character)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>setDevicePort</name>
+      <anchorfile>classHokuyoURGsimple.html</anchorfile>
+      <anchor>af5355461d2a4e14d77a3b5ef8c04060a</anchor>
+      <arglist>(QString serialPort)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>setup</name>
+      <anchorfile>classHokuyoURGsimple.html</anchorfile>
+      <anchor>a4daca641165290797063e78b7ce6b1a9</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function">
       <type></type>
-      <name>Heartbeat</name>
-      <anchorfile>classHeartbeat.html</anchorfile>
-      <anchor>ae3ef1553a75c78027d4a8527e3545a1c</anchor>
-      <arglist>(InterfaceAvr *i, QMutex *m)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>init</name>
-      <anchorfile>classHeartbeat.html</anchorfile>
-      <anchor>a523ddc266779e15d2e93be98791e8065</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>isConnected</name>
-      <anchorfile>classHeartbeat.html</anchorfile>
-      <anchor>a25fb1827e12a071feff19185867d0896</anchor>
-      <arglist>(void)</arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
-      <name>run</name>
-      <anchorfile>classHeartbeat.html</anchorfile>
-      <anchor>aa6561134284777b6e170db4eeac6711c</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>stop</name>
-      <anchorfile>classHeartbeat.html</anchorfile>
-      <anchor>aa348a8b9551a256ee00eaf4700cc157a</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>~Heartbeat</name>
-      <anchorfile>classHeartbeat.html</anchorfile>
-      <anchor>a3197be04a732dc01af98a15bd2df9a92</anchor>
+      <name>~HokuyoURGsimple</name>
+      <anchorfile>classHokuyoURGsimple.html</anchorfile>
+      <anchor>abba37f497a9e6aaac7507b6b1728f431</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="variable" protection="private">
-      <type>bool</type>
-      <name>initDone</name>
-      <anchorfile>classHeartbeat.html</anchorfile>
-      <anchor>a18770462c885665df2e76f2a4e96c601</anchor>
+      <type>int</type>
+      <name>baudRate</name>
+      <anchorfile>classHokuyoURGsimple.html</anchorfile>
+      <anchor>aca1b72a35e9ecf27e1452405a61dee7a</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
-      <type>InterfaceAvr *</type>
-      <name>interface1</name>
-      <anchorfile>classHeartbeat.html</anchorfile>
-      <anchor>a68c6bbc033a8e20b69478b5b80f1f631</anchor>
+      <type>float</type>
+      <name>distances</name>
+      <anchorfile>classHokuyoURGsimple.html</anchorfile>
+      <anchor>a6d9cfa2fb603123aae3a6a872c9c9707</anchor>
+      <arglist>[LASERSAMPLES]</arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QString</type>
+      <name>laserSerialPort</name>
+      <anchorfile>classHokuyoURGsimple.html</anchorfile>
+      <anchor>a01951d1f10a51400cb7fe0c06d806f85</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
-      <type>QMutex *</type>
-      <name>mutex</name>
-      <anchorfile>classHeartbeat.html</anchorfile>
-      <anchor>a682995d36fa78f66d481cce5ee5d2d97</anchor>
-      <arglist></arglist>
+      <type>unsigned char</type>
+      <name>scanData</name>
+      <anchorfile>classHokuyoURGsimple.html</anchorfile>
+      <anchor>af7f15f013f32cc13ef02fdd2a1016bda</anchor>
+      <arglist>[LASERSAMPLES]</arglist>
     </member>
     <member kind="variable" protection="private">
-      <type>bool</type>
-      <name>robotIsOn</name>
-      <anchorfile>classHeartbeat.html</anchorfile>
-      <anchor>a7b43bb30e40e17c1785ebdd2f44def5b</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private">
-      <type>volatile bool</type>
-      <name>stopped</name>
-      <anchorfile>classHeartbeat.html</anchorfile>
-      <anchor>af028fe201c78006058eb35392881e6f9</anchor>
+      <type>DirecsSerial *</type>
+      <name>serialPort</name>
+      <anchorfile>classHokuyoURGsimple.html</anchorfile>
+      <anchor>a539fccba8945d4b9635b4191ee8a1617</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
-      <type>static const unsigned long</type>
-      <name>THREADSLEEPTIME</name>
-      <anchorfile>classHeartbeat.html</anchorfile>
-      <anchor>aa9d7233ad4ad87c03355e838f9b4feb5</anchor>
+      <type>static const float</type>
+      <name>LASERMAXLENGTH</name>
+      <anchorfile>classHokuyoURGsimple.html</anchorfile>
+      <anchor>abba82b516ba814861138a13d0ce75ac8</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const unsigned int</type>
+      <name>LASERSAMPLES</name>
+      <anchorfile>classHokuyoURGsimple.html</anchorfile>
+      <anchor>a9b4f420f53f103500b22d851e541b76d</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const bool</type>
+      <name>OFF</name>
+      <anchorfile>classHokuyoURGsimple.html</anchorfile>
+      <anchor>abb31b8701c3a0f394402f176bda7b7e9</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const bool</type>
+      <name>ON</name>
+      <anchorfile>classHokuyoURGsimple.html</anchorfile>
+      <anchor>a1cb1be34697e20552bef9d2010a71c63</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -6942,8 +7405,8 @@
       <type>bool</type>
       <name>receiveChar</name>
       <anchorfile>classInterfaceAvr.html</anchorfile>
-      <anchor>a45743fd856d0e0102ae79e1bff8bafce</anchor>
-      <arglist>(unsigned char *character, QString callingClassName=&quot;none&quot;)</arglist>
+      <anchor>a7cb44f35fc5bd7b3dfed0028c636f97d</anchor>
+      <arglist>(char *character, QString callingClassName=&quot;none&quot;)</arglist>
     </member>
     <member kind="function">
       <type>bool</type>
@@ -6982,9 +7445,44 @@
     </member>
     <member kind="variable" protection="private">
       <type>QString</type>
+      <name>answer</name>
+      <anchorfile>classInterfaceAvr.html</anchorfile>
+      <anchor>a9485babfaf5c7b21c755fa73cf73ed18</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>const int</type>
+      <name>BAUDRATE</name>
+      <anchorfile>classInterfaceAvr.html</anchorfile>
+      <anchor>a93a7cea46e5965a36509a8cb655835e6</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>QString</type>
       <name>className</name>
       <anchorfile>classInterfaceAvr.html</anchorfile>
       <anchor>a9f355b3ec606e6dec437c0b55794625e</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>bool</type>
+      <name>commandCompleted</name>
+      <anchorfile>classInterfaceAvr.html</anchorfile>
+      <anchor>a315ac43be6af1ad5b3eba039bba95041</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>bool</type>
+      <name>commandStarted</name>
+      <anchorfile>classInterfaceAvr.html</anchorfile>
+      <anchor>ab6ea54b0a3f0b9fb973e65775279c8bc</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>const int</type>
+      <name>MAXCOMMANDLENGTH</name>
+      <anchorfile>classInterfaceAvr.html</anchorfile>
+      <anchor>a53e76f87ff4e9e3cb74f94ec739e647c</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
@@ -6992,13 +7490,6 @@
       <name>serialPort</name>
       <anchorfile>classInterfaceAvr.html</anchorfile>
       <anchor>aedab59c98eb5d3c751ac30ce9fd617d2</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="private" static="yes">
-      <type>static const int</type>
-      <name>BAUDRATE</name>
-      <anchorfile>classInterfaceAvr.html</anchorfile>
-      <anchor>a93a7cea46e5965a36509a8cb655835e6</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -9076,6 +9567,13 @@
       <name>inifileLaserdata</name>
       <anchorfile>classLaserThread.html</anchorfile>
       <anchor>a317607af5e59ab0a576b7160193eb521</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>HokuyoURGsimple *</type>
+      <name>laserHokuyoURGsimple</name>
+      <anchorfile>classLaserThread.html</anchorfile>
+      <anchor>a75545bba508c1373a172ede8c89d2160</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
@@ -11695,6 +12193,260 @@
     </member>
   </compound>
   <compound kind="class">
+    <name>QtSpeech</name>
+    <filename>classQtSpeech.html</filename>
+    <class kind="struct">QtSpeech::CloseError</class>
+    <class kind="struct">QtSpeech::Error</class>
+    <class kind="struct">QtSpeech::InitError</class>
+    <class kind="struct">QtSpeech::LogicError</class>
+    <class kind="class">QtSpeech::Private</class>
+    <class kind="struct">QtSpeech::VoiceName</class>
+    <member kind="typedef">
+      <type>QList&lt; VoiceName &gt;</type>
+      <name>VoiceNames</name>
+      <anchorfile>classQtSpeech.html</anchorfile>
+      <anchor>a0b76049b8c5ce5666291c50166ba999f</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="signal">
+      <type>void</type>
+      <name>finished</name>
+      <anchorfile>classQtSpeech.html</anchorfile>
+      <anchor>aeb27d181c0f9d417d6b562f99eb0d9b3</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>const VoiceName &amp;</type>
+      <name>name</name>
+      <anchorfile>classQtSpeech.html</anchorfile>
+      <anchor>afd9d15f343122ce6a79e9bae5256f450</anchor>
+      <arglist>() const </arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>QtSpeech</name>
+      <anchorfile>classQtSpeech.html</anchorfile>
+      <anchor>a0b5b2e04e836abed8b4153ad5f9ab2f1</anchor>
+      <arglist>(QObject *parent)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>QtSpeech</name>
+      <anchorfile>classQtSpeech.html</anchorfile>
+      <anchor>a41992b47e135e0d3b66e76870b9385f3</anchor>
+      <arglist>(VoiceName n=VoiceName(), QObject *parent=0L)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>say</name>
+      <anchorfile>classQtSpeech.html</anchorfile>
+      <anchor>ae8b7071f80071361d34f45e5c0a87e79</anchor>
+      <arglist>(QString) const </arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>tell</name>
+      <anchorfile>classQtSpeech.html</anchorfile>
+      <anchor>a39c74623ff8c742ddd8f14fa98278e21</anchor>
+      <arglist>(QString) const </arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>tell</name>
+      <anchorfile>classQtSpeech.html</anchorfile>
+      <anchor>ac4177e0b048f12620864644432b54717</anchor>
+      <arglist>(QString, QObject *obj, const char *slot) const </arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual</type>
+      <name>~QtSpeech</name>
+      <anchorfile>classQtSpeech.html</anchorfile>
+      <anchor>a8995a003d7155c76feaa3b0f41b2ef08</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" static="yes">
+      <type>static VoiceNames</type>
+      <name>voices</name>
+      <anchorfile>classQtSpeech.html</anchorfile>
+      <anchor>af1fb6fd54ce9f9a2ccffdd9ed09f84dd</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" protection="protected" virtualness="virtual">
+      <type>virtual void</type>
+      <name>timerEvent</name>
+      <anchorfile>classQtSpeech.html</anchorfile>
+      <anchor>a32f240118947b3058f0d3a646434b4bc</anchor>
+      <arglist>(QTimerEvent *)</arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>Private *</type>
+      <name>d</name>
+      <anchorfile>classQtSpeech.html</anchorfile>
+      <anchor>ad94c420829f7559992fd1f377ed760ef</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>QtSpeech::CloseError</name>
+    <filename>structQtSpeech_1_1CloseError.html</filename>
+    <base>QtSpeech::Error</base>
+    <member kind="function">
+      <type></type>
+      <name>CloseError</name>
+      <anchorfile>structQtSpeech_1_1CloseError.html</anchorfile>
+      <anchor>aaccd27d962fb94d0744f41dcffc75287</anchor>
+      <arglist>(QString s)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>Error</name>
+      <anchorfile>structQtSpeech_1_1Error.html</anchorfile>
+      <anchor>a34095f8241de5fc07048c9de66eb7982</anchor>
+      <arglist>(QString s)</arglist>
+    </member>
+    <member kind="variable">
+      <type>QString</type>
+      <name>msg</name>
+      <anchorfile>structQtSpeech_1_1Error.html</anchorfile>
+      <anchor>a0c885ca031f735bcc1cb92ba15672068</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>QtSpeech::Error</name>
+    <filename>structQtSpeech_1_1Error.html</filename>
+  </compound>
+  <compound kind="struct">
+    <name>QtSpeech::InitError</name>
+    <filename>structQtSpeech_1_1InitError.html</filename>
+    <base>QtSpeech::Error</base>
+    <member kind="function">
+      <type></type>
+      <name>InitError</name>
+      <anchorfile>structQtSpeech_1_1InitError.html</anchorfile>
+      <anchor>ae3a40f58faa23fdfbe7a370cf09419fc</anchor>
+      <arglist>(QString s)</arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>QtSpeech::LogicError</name>
+    <filename>structQtSpeech_1_1LogicError.html</filename>
+    <base>QtSpeech::Error</base>
+    <member kind="function">
+      <type></type>
+      <name>LogicError</name>
+      <anchorfile>structQtSpeech_1_1LogicError.html</anchorfile>
+      <anchor>ab8e5b75cea06d718de8b310c04b88ed2</anchor>
+      <arglist>(QString s)</arglist>
+    </member>
+  </compound>
+  <compound kind="class">
+    <name>QtSpeech::Private</name>
+    <filename>classQtSpeech_1_1Private.html</filename>
+    <member kind="typedef">
+      <type>QPointer&lt; QtSpeech &gt;</type>
+      <name>Ptr</name>
+      <anchorfile>classQtSpeech_1_1Private.html</anchorfile>
+      <anchor>aaad0a70a02ffe998be0aef994884c152</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>Private</name>
+      <anchorfile>classQtSpeech_1_1Private.html</anchorfile>
+      <anchor>ab91bc0539b115222342312c074170f0b</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" static="yes">
+      <type>static void</type>
+      <name>speechFinished</name>
+      <anchorfile>classQtSpeech_1_1Private.html</anchorfile>
+      <anchor>a2ab4203b65b383814102881e8a543617</anchor>
+      <arglist>(SpeechChannel, SpeechDoneUPP_ARG2 refCon)</arglist>
+    </member>
+    <member kind="variable">
+      <type>SpeechChannel</type>
+      <name>channel</name>
+      <anchorfile>classQtSpeech_1_1Private.html</anchorfile>
+      <anchor>a1ee89e2ce896ca88c6b2f73425af016d</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>SpeechDoneUPP</type>
+      <name>doneCall</name>
+      <anchorfile>classQtSpeech_1_1Private.html</anchorfile>
+      <anchor>af4be2c4a957b8220fa4e605ce6a27371</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>bool</type>
+      <name>isWaitingInLoop</name>
+      <anchorfile>classQtSpeech_1_1Private.html</anchorfile>
+      <anchor>a72e7f7e96eb4f4500a62cafef5501d13</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>VoiceName</type>
+      <name>name</name>
+      <anchorfile>classQtSpeech_1_1Private.html</anchorfile>
+      <anchor>abc4aaf22861829f90ad929cacd8bfc59</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>QPointer&lt; QObject &gt;</type>
+      <name>onFinishObj</name>
+      <anchorfile>classQtSpeech_1_1Private.html</anchorfile>
+      <anchor>aec09bb60bf18d2ca34bc83ad310da29d</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>const char *</type>
+      <name>onFinishSlot</name>
+      <anchorfile>classQtSpeech_1_1Private.html</anchorfile>
+      <anchor>a2c5af467d690960101c447eae95ac85c</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>QPointer&lt; QEventLoop &gt;</type>
+      <name>waitEventLoop</name>
+      <anchorfile>classQtSpeech_1_1Private.html</anchorfile>
+      <anchor>a25b221972d7716e775d52dc862537694</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" static="yes">
+      <type>static QList&lt; Ptr &gt;</type>
+      <name>ptrs</name>
+      <anchorfile>classQtSpeech_1_1Private.html</anchorfile>
+      <anchor>a16df153476a1a719798397ebfc907deb</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" static="yes">
+      <type>static const QString</type>
+      <name>VoiceId</name>
+      <anchorfile>classQtSpeech_1_1Private.html</anchorfile>
+      <anchor>a3eb188aff77a103607b174387f062b28</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>QtSpeech::VoiceName</name>
+    <filename>structQtSpeech_1_1VoiceName.html</filename>
+    <member kind="variable">
+      <type>QString</type>
+      <name>id</name>
+      <anchorfile>structQtSpeech_1_1VoiceName.html</anchorfile>
+      <anchor>ac823bea26f67dd078b5895d3161d11b4</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>QString</type>
+      <name>name</name>
+      <anchorfile>structQtSpeech_1_1VoiceName.html</anchorfile>
+      <anchor>ad572734f2151e841e9e70af083fdd493</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="class">
     <name>RgbLed</name>
     <filename>classRgbLed.html</filename>
     <member kind="slot">
@@ -12417,6 +13169,13 @@
       <name>stopped</name>
       <anchorfile>classSensorThread.html</anchorfile>
       <anchor>aaa7092875b87a4e66ff0062159554daf</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>qint64</type>
+      <name>testCounter</name>
+      <anchorfile>classSensorThread.html</anchorfile>
+      <anchor>a8bd0f314fb382b07530af1a482036e3a</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
@@ -13641,24 +14400,10 @@
     </member>
     <member kind="function">
       <type>void</type>
-      <name>setLanguage</name>
-      <anchorfile>classSpeakThread.html</anchorfile>
-      <anchor>a783f92da214dfeae62c4c1da3eaa52a8</anchor>
-      <arglist>(QString language)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>setRate</name>
-      <anchorfile>classSpeakThread.html</anchorfile>
-      <anchor>a5ed29b8457ff8650a2860411f58a485b</anchor>
-      <arglist>(int value)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
       <name>setVoice</name>
       <anchorfile>classSpeakThread.html</anchorfile>
-      <anchor>a029f47723b62b96a535d9b95c535562c</anchor>
-      <arglist>(unsigned char gender, unsigned char age)</arglist>
+      <anchor>af396d629d25b56b0e13c3caee6a7224c</anchor>
+      <arglist>(QString voicename)</arglist>
     </member>
     <member kind="function">
       <type></type>
@@ -13689,6 +14434,13 @@
       <arglist>(QString string)</arglist>
     </member>
     <member kind="variable" protection="private">
+      <type>bool</type>
+      <name>currentlySpeaking</name>
+      <anchorfile>classSpeakThread.html</anchorfile>
+      <anchor>adeef6a8b229195c0351610bbd0fdd8c0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
       <type>int</type>
       <name>mPhase</name>
       <anchorfile>classSpeakThread.html</anchorfile>
@@ -13696,10 +14448,10 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
-      <type>bool</type>
-      <name>saySomething</name>
+      <type>QList&lt; QString &gt;</type>
+      <name>speechQueue</name>
       <anchorfile>classSpeakThread.html</anchorfile>
-      <anchor>a54d310e03cb60fa07d09d33e916b7adf</anchor>
+      <anchor>a03a75e91ed0b10fc7f80c78b70f806b5</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
@@ -13727,6 +14479,20 @@
   <compound kind="class">
     <name>TimerThread</name>
     <filename>classTimerThread.html</filename>
+    <member kind="slot">
+      <type>void</type>
+      <name>setRobotState</name>
+      <anchorfile>classTimerThread.html</anchorfile>
+      <anchor>ab2de1981c7fea673726fb7cd46ab4341</anchor>
+      <arglist>(bool state)</arglist>
+    </member>
+    <member kind="signal">
+      <type>void</type>
+      <name>checkArduinoState</name>
+      <anchorfile>classTimerThread.html</anchorfile>
+      <anchor>a2c9fe3b60deda79a55c472d2123341fe</anchor>
+      <arglist>()</arglist>
+    </member>
     <member kind="signal">
       <type>void</type>
       <name>checkNetworkState</name>
@@ -13785,6 +14551,13 @@
     </member>
     <member kind="variable" protection="private">
       <type>bool</type>
+      <name>arduinoStateSet</name>
+      <anchorfile>classTimerThread.html</anchorfile>
+      <anchor>a74bb81a9864f1a0268f8ed174c1f935e</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>bool</type>
       <name>networkStateSet</name>
       <anchorfile>classTimerThread.html</anchorfile>
       <anchor>a699dd86ca725e108d124bebf1cdd7941</anchor>
@@ -13795,6 +14568,13 @@
       <name>now</name>
       <anchorfile>classTimerThread.html</anchorfile>
       <anchor>a3cee1dce09905a594f76bdb15694d3ad</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>bool</type>
+      <name>robotState</name>
+      <anchorfile>classTimerThread.html</anchorfile>
+      <anchor>aabbccccbc6258823ab457da98507a200</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
@@ -13816,6 +14596,13 @@
       <name>THREADSLEEPTIME</name>
       <anchorfile>classTimerThread.html</anchorfile>
       <anchor>a5e5617bebc798a047ecf9a5608706571</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private" static="yes">
+      <type>static const int</type>
+      <name>timeToArduinoCheck</name>
+      <anchorfile>classTimerThread.html</anchorfile>
+      <anchor>aca00c5da9d740991eef850c79ea77bfd</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">
@@ -13854,12 +14641,12 @@
     <file>direcsSerial.h</file>
     <file>glwidget.cpp</file>
     <file>glwidget.h</file>
+    <file>GSMThread.cpp</file>
+    <file>GSMThread.h</file>
     <file>gui.cpp</file>
     <file>gui.h</file>
     <file>head.cpp</file>
     <file>head.h</file>
-    <file>heartbeat.cpp</file>
-    <file>heartbeat.h</file>
     <file>inifile.cpp</file>
     <file>inifile.h</file>
     <file>interfaceAvr.cpp</file>
@@ -13873,6 +14660,8 @@
     <file>joystickDialog.h</file>
     <file>laser.cpp</file>
     <file>laser.h</file>
+    <file>laserHokuyoURGsimple.cpp</file>
+    <file>laserHokuyoURGsimple.h</file>
     <file>laserScene.cpp</file>
     <file>laserScene.h</file>
     <file>laserSickS300.cpp</file>
@@ -13893,6 +14682,8 @@
     <file>QKinect.h</file>
     <file>QtGLContext.cpp</file>
     <file>QtGLContext.h</file>
+    <file>QtSpeech.h</file>
+    <file>QtSpeech_mac.cpp</file>
     <file>rgbLed.cpp</file>
     <file>rgbLed.h</file>
     <file>RGBWindow.cpp</file>
@@ -13908,5 +14699,8 @@
     <file>speakThread.h</file>
     <file>timerThread.cpp</file>
     <file>timerThread.h</file>
+    <file>urg_serial_utils.cpp</file>
+    <file>urg_serial_utils.h</file>
+    <file>urg_serial_utils_linux.cpp</file>
   </compound>
 </tagfile>

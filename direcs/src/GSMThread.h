@@ -34,6 +34,19 @@
 
 The GSMThread class is a thread, responsible for getting all data from and to the GSM module.
 Currently it checks if new SMS are received and emits a signal. This thread can also delete SMS on the GSM module.
+
+
+The following commands are currently implemented (same on Arduino side):
+
+gsmi	=	init GSM module
+gsmp	=	unlock GSM module with PIN
+gsms	=	(get) GSM status
+
+smsc	=	count available SMS
+smsl	=	read Last SMS
+smsr	=	read SMS #
+smss	=	send SMS
+smsd	=	delete SMS #
 */
 class GSMThread : public QThread
 {
@@ -57,6 +70,25 @@ class GSMThread : public QThread
 		 * @return the no of available SMS's
 		 */
 		int getSMSavailable();
+
+		/**
+		 * @brief Reads the last SMS
+		 * @param returns the text of the SMS (body)
+		 * @return true on success
+		 */
+		bool readLastSMS(QString &text);
+
+		/**
+		 * @return the GSM status
+		 *
+		 * 0 = Not registered
+		 * 1 = Registered (home)
+		 * 2 = Not registered (searching)
+		 * 3 = Denied
+		 * 4 = Unknown
+		 * 5 = Registered roaming
+		 */
+		int getGSMStatus();
 
 		/**
 		@return The heartbeat value which should look like high=5 or low=0 Volt.
@@ -96,15 +128,15 @@ class GSMThread : public QThread
 
 	signals:
 		/**
-		This signal is emitted when all sensors were read.
-		@sa Direcs::showSensorData()
-		*/
-		void GSMDataComplete();
-
-		/**
 		Sends a string over the network.
 		*/
 		void sendNetworkString(QString text);
+
+		/**
+		Emits the current GSM status (i.e. to the GUI GSM LED)
+		@sa Gui::setLEDGSM()
+		*/
+		void GSMStatus(unsigned char status);
 
 		/**
 		This signal is emitted every \todo seconds, when a specific value from the microcontroller was received.
@@ -112,6 +144,13 @@ class GSMThread : public QThread
 		@sa Logfile::writeHeartbeat()
 		*/
 		void heartbeat(unsigned char state);
+
+		/**
+		This signal is emitted when SMS are available (>0).
+		@param the number of available SMS
+		@param text contains the text of the SMS
+		*/
+		void SMSavailable(int noSMS, QString text);
 
 		/**
 		Emits a string to the GUI log / console.
@@ -132,9 +171,9 @@ class GSMThread : public QThread
 
 	private:
 		/**
-		Checks how many SMS are available.
-		@return the amount of available SMS, or -1 in case of error
-		*/
+		 * @brief Checks how many SMS are available.
+		 * @return the amount of available SMS, or -1 in case of error
+		 */
 		int countSMS();
 
 		/**
@@ -142,6 +181,19 @@ class GSMThread : public QThread
 		 * @return true on success
 		 */
 		bool unlockPIN();
+
+		/**
+		 * @brief Gets the GSM status and stores it locally.
+		 * @return true on success
+		 *
+		 * 0 = Not registered
+		 * 1 = Registered (home)
+		 * 2 = Not registered (searching)
+		 * 3 = Denied
+		 * 4 = Unknown
+		 * 5 = Registered roaming
+		 */
+		bool getStatus();
 
 
 		QString className;	/// this will contain the name of _this_ class at runtime for debug messages
@@ -151,6 +203,7 @@ class GSMThread : public QThread
 		bool simulationMode;
 		bool robotState; // stores the robot state within this class
 		bool GSMState; // stores the GSM module state within this class
+		int networkState; // stores the state of the GSM network
 
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds
@@ -171,9 +224,19 @@ class GSMThread : public QThread
 		static const unsigned char LEDOFF	= 0;
 		static const unsigned char RED		= 1;
 		static const unsigned char GREEN	= 2;
+		static const unsigned char BLUE	    = 3;
+		static const unsigned char WHITE	= 4;
+		static const unsigned char YELLOW	= 5;
 
 		static const bool ON  = true;
 		static const bool OFF = false;
+
+		static const int GSM_Not_Registered = 0;
+		static const int GSM_Registered_Home = 1;
+		static const int GSM_Not_Registered_Searching = 2;
+		static const int GSM_Denied = 3;
+		static const int GSM_Unknown = 4;
+		static const int GSM_Registered_Roaming = 5;
 };
 
 #endif

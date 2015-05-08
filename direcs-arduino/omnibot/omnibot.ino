@@ -8,53 +8,53 @@
 #include <SoftwareSerial.h>
 
 // give it a name:
-int ledGreen     =  2;
-int ledYellow    =  3;
+#define ledGreen     13 /// @todo change name (color)
+#define ledYellow    13 /// @todo change name (color)
 // Pin 13 has an LED connected on most Arduino boards.
-int ledRed     = 13; /// @todo change name (color)
+#define ledRed     13 /// @todo change name (color)
 
-int relaisPin    =  4;
+#define relaisPin    13 /// @todo change name (color)
 
 // motor pins
-int motor1aPin   =  5;
-int motor1bPin   =  6;
-int motor1DirPin =  7;
-int motor1PWMPin =  8;
-int motor2aPin   =  9;
-int motor2bPin   = 10;
-int motor2DirPin = 11;
-int motor2PWMPin = 12;
-int motor3aPin   = 13;
-int motor3bPin   = 14;
-int motor3DirPin = 15;
-int motor3PWMPin = 16;
-int motor4aPin   = 17;
-int motor4bPin   = 18;
-int motor4DirPin = 19;
-int motor4PWMPin = 20;
+#define motor1aPin   13
+#define motor1bPin   13
+#define motor1DirPin 13
+#define motor1PWMPin 13
+#define motor2aPin   13
+#define motor2bPin   13
+#define motor2DirPin 13
+#define motor2PWMPin 13
+#define motor3aPin   13
+#define motor3bPin   13
+#define motor3DirPin 13
+#define motor3PWMPin 13
+#define motor4aPin   13
+#define motor4bPin   13
+#define motor4DirPin 13
+#define motor4PWMPin 13
 
 // RGB LED pins
-int RGBLED1red   = 21;
-int RGBLED1green = 22;
-int RGBLED1blue  = 23;
-int RGBLED2red   = 24;
-int RGBLED2green = 25;
-int RGBLED2blue  = 26;
-int RGBLED3red   = 27;
-int RGBLED3green = 28;
-int RGBLED3blue  = 29;
+#define RGBLED1red   13
+#define RGBLED1green 13
+#define RGBLED1blue  13
+#define RGBLED2red   13
+#define RGBLED2green 13
+#define RGBLED2blue  13
+#define RGBLED3red   13
+#define RGBLED3green 13
+#define RGBLED3blue  13
 
 // IR pins for Apple Remote
-int IR_Rcv_PIN   = 30; // pin for TSOP1736 IR sensor output
+#define IR_Rcv_PIN   13 // pin for TSOP1736 IR sensor output
 
-// Adafruit FONA pins  @todo: update pins to a serial port or other HW port on Arduino/seeduino mega!!
-#define FONA_RX 2
-#define FONA_TX 3
+// Adafruit FONA pins (GSM)  @todo: update pins to a serial port or other HW port on Arduino/seeduino mega!!
+#define FONA_RX 9
+#define FONA_TX 10
 #define FONA_RST 4
 
 
 // test:
-const int analogInPin = A0;  // Analog input pin for measuring battery voltage 1
+#define analogInPin A0  // Analog input pin for measuring battery voltage 1
 int sensorValue = 0;         // value read from the battery 1
 
 
@@ -138,6 +138,8 @@ unsigned long repeat = 2011242581; // Wird bei ok und play zusätzlich gesendet
 //const int buttonPin = A0; // Pushbutton
 int8_t smsnum = 0; // the number of available SMS's
 int returnValue = 0;
+// this is a large buffer for replies (SMS)
+char replybuffer[160]; // < < < < max 160 character length ! ! !!
 
 SoftwareSerial fonaSS = SoftwareSerial(FONA_TX, FONA_RX);
 Adafruit_FONA fona = Adafruit_FONA(FONA_RST);
@@ -234,8 +236,10 @@ boolean FONAstate = false;
 /* Commands for interaction with the GSM FONA module
   gsmi  = init GSM module
   gsmp  = unlock GSM module with PIN
+  gsms  = (get) GSM status
 
   smsc  = count available SMS
+  smsl  = read Last SMS
   smsr  = read SMS #
   smss  = send SMS
   smsd  = delete SMS #
@@ -325,7 +329,7 @@ void setup()
   //-------------------------------------------------------------------------------------------------
   // string command check stuff
   //-------------------------------------------------------------------------------------------------
-  // initialize serial
+  // initialize serial communication on the USB port
   Serial.begin(9600);
 
   // reserve 200 bytes for the inputString
@@ -454,6 +458,20 @@ void setup()
   fonaSS.begin(4800); // if you're using software serial
   //Serial1.begin(4800); // if you're using hardware serial
 
+  // See if the FONA is responding (this is the former "gsmi" command)
+  if (! fona.begin(fonaSS))           // can also try fona.begin(Serial1) 
+  {
+    // store state
+    FONAstate = false;
+
+    // all LEDs red
+    allLEDsRed();
+  }
+  else
+  {
+    // store state
+    FONAstate = true;
+  }
 
 
   //-------------------------------------------------------------------------------------------------
@@ -590,6 +608,7 @@ void loop()
 
   do
   {
+    // do we have something on the USB port?
     if (Serial.available())
     {
       // get the new byte
@@ -1540,17 +1559,11 @@ void loop()
   // GSM init (FONA) = "gsmi"
   if (command == "*gsmi#")
   {
-    // See if the FONA is responding    
-    if (! fona.begin(fonaSS))           // can also try fona.begin(Serial1) 
+    // FONA init in setup() okay?    
+    if (FONAstate == false)
     {
-      // store state
-      FONAstate = false;
-
-      // all LEDs red
-      allLEDsRed();
-
-      // answer "ok"
-      if (Serial.print("*err#") < 6)
+      // answer "error"
+      if (Serial.print("*err#") < 5)
       {
         // ERROR!!
         delay(10000);
@@ -1561,9 +1574,6 @@ void loop()
     }
     else
     {
-      // store state
-      FONAstate = true;
-
       // answer "ok"
       if (Serial.print("*gsmi#") < 6)
       {
@@ -1590,7 +1600,7 @@ void loop()
       allLEDsRed();
 
       // answer "ok"
-      if (Serial.print("*err#") < 6)
+      if (Serial.print("*err#") < 5)
       {
         // ERROR!!
         delay(10000);
@@ -1617,11 +1627,45 @@ void loop()
       Serial.flush();
     } // PIN okay
   } // gsmp
+  // (get) GSM status (FONA) = "gsms"
+  if (command == "*gsms#")
+  {
+    // read the network/cellular status
+    uint8_t networkStatus = fona.getNetworkStatus();
+
+    if (Serial.print("*") < 1)
+    {
+      // ERROR!!
+      delay(10000);
+      return;
+    }
+    // write all data immediately!
+    Serial.flush();
+
+    // print network status
+    if (Serial.print( networkStatus ) < 1)
+    {
+      // ERROR!!
+      delay(10000);
+      return;
+    }
+    // write all data immediately!
+    Serial.flush();
+
+    if (Serial.print("#") < 1)
+    {
+      // ERROR!!
+      delay(10000);
+      return;
+    }
+    // write all data immediately!
+    Serial.flush();
+  } // gsms
   else
   // SMS_COUNT / SMS_CHECK = "smsc"
   if (command == "*smsc#")
   {
-    // read the number of SMS's
+    // read and store(!) the number of SMS's
     smsnum = fona.getNumSMS();
 
     // success ?
@@ -1662,6 +1706,52 @@ void loop()
       Serial.flush();
     } // okay
   } // smsc
+  else
+  // read Last SMS = "smsl"
+  if (command == "*smsl#")
+  {
+    // Retrieve content of SMS No. "smsnum"
+    uint16_t smslength;
+
+    // pass in buffer and max len (255)!
+    if (! fona.readSMS(smsnum, replybuffer, 250, &smslength))
+    {
+      // answer with "ERROR"
+      Serial.print("*err#");
+      Serial.flush();
+    }
+    else
+    {
+      // success
+      if (Serial.print("**") < 2) // Expeption: starts with **, not *
+      {
+        // ERROR!!
+        delay(10000);
+        return;
+      }
+      // write all data immediately!
+      Serial.flush();
+
+      // print SMS content
+      if (Serial.print( replybuffer ) < 1)
+      {
+        // ERROR!!
+        delay(10000);
+        return;
+      }
+      // write all data immediately!
+      Serial.flush();
+
+      if (Serial.print("##") < 2) // Expeption: starts with **, not *
+      {
+        // ERROR!!
+        delay(10000);
+        return;
+      }
+      // write all data immediately!
+      Serial.flush();
+    } // okay
+  } // smsl
 
   // no valid command found (i.e. *wtf# )
   // delete command string

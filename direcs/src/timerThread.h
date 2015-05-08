@@ -101,7 +101,7 @@ class TimerThread : public QThread
 		bool networkStateSet; // event occured?
 		bool arduinoStateSet; // event occured?
 		static const int timeToNetworkCheck = 3; // time in seconds
-		static const int timeToArduinoCheck = 3; // time in seconds
+		static const int timeToArduinoCheck = 8; // time in seconds (set to 8, due to GSM module init which needs additional ~4 seconds)
 
 		// Every thread sleeps some time, for having a bit more time fo the other threads!
 		// Time in milliseconds

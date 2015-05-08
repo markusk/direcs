@@ -524,6 +524,20 @@
             </widget>
            </item>
            <item>
+            <widget class="QLabel" name="label_11">
+             <property name="text">
+              <string>SMS:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="lblSMSnumber">
+             <property name="text">
+              <string>0</string>
+             </property>
+            </widget>
+           </item>
+           <item>
             <spacer name="verticalSpacer_5">
              <property name="orientation">
               <enum>Qt::Vertical</enum>
@@ -1451,7 +1465,7 @@
    <property name="minimumSize">
     <size>
      <width>360</width>
-     <height>981</height>
+     <height>1017</height>
     </size>
    </property>
    <property name="windowIcon">

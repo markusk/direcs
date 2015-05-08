@@ -99,7 +99,7 @@ bool Circuit::initCircuit()
 
 bool Circuit::initArduino()
 {
-	emit message(">>> Arduino check now!");
+//	emit message("Arduino check now!");
 
 	// check again!
 	firstInitDone = false;

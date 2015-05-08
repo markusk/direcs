@@ -4196,6 +4196,11 @@ void Gui::showCompassData(float x, float y, float z, float heading)
 */
 }
 
+void Gui::showSMSavailable(int number)
+{
+	ui.lblSMSnumber->setText(QString("%1").arg(number));
+}
+
 
 void Gui::setLEDHeartbeat(unsigned char state)
 {
@@ -4467,6 +4472,16 @@ void Gui::setLEDGSM(unsigned char state)
 {
 	switch (state)
 	{
+		case YELLOW:
+			if (useLargeGUI)
+			{
+				ui.lblLEDGSM->setPixmap(QPixmap(":/images/images/led_yellow.gif"));
+			}
+			else
+			{
+				uiSmall.lblLEDGSM->setPixmap(QPixmap(":/images/images/led_yellow.gif"));
+			}
+			break;
 		case RED:
 			if (useLargeGUI)
 			{
