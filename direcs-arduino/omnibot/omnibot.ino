@@ -19,18 +19,18 @@
 #define motor1aPin   13
 #define motor1bPin   13
 #define motor1DirPin 13
-#define motor1PWMPin 13
+#define motor1PWMPin  6
 #define motor2aPin   13
 #define motor2bPin   13
 #define motor2DirPin 13
-#define motor2PWMPin 13
+#define motor2PWMPin  7
 #define motor3aPin   13
 #define motor3bPin   13
 #define motor3DirPin 13
-#define motor3PWMPin 13
+#define motor3PWMPin  8
 #define motor4aPin   13
 #define motor4bPin   13
-#define motor4DirPin 13
+#define motor4DirPin  9
 #define motor4PWMPin 13
 
 
