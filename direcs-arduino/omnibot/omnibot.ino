@@ -33,16 +33,32 @@
 #define motor4DirPin 13
 #define motor4PWMPin 13
 
+
 // RGB LED pins
 #define RGBLED1red   13
 #define RGBLED1green 13
 #define RGBLED1blue  13
+
 #define RGBLED2red   13
 #define RGBLED2green 13
 #define RGBLED2blue  13
+
 #define RGBLED3red   13
 #define RGBLED3green 13
 #define RGBLED3blue  13
+
+#define RGBLED4red   13
+#define RGBLED4green 13
+#define RGBLED4blue  13
+
+#define RGBLED5red   13
+#define RGBLED5green 13
+#define RGBLED5blue  13
+
+#define RGBLED6red   13
+#define RGBLED6green 13
+#define RGBLED6blue  13
+
 
 // IR pins for Apple Remote
 #define IR_Rcv_PIN   13 // pin for TSOP1736 IR sensor output
