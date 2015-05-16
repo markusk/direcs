@@ -16,33 +16,49 @@
 #define relaisPin    13 /// @todo change name (color)
 
 // motor pins
-#define motor1aPin   13
-#define motor1bPin   13
-#define motor1DirPin 13
-#define motor1PWMPin 13
-#define motor2aPin   13
-#define motor2bPin   13
-#define motor2DirPin 13
-#define motor2PWMPin 13
-#define motor3aPin   13
-#define motor3bPin   13
-#define motor3DirPin 13
-#define motor3PWMPin 13
-#define motor4aPin   13
-#define motor4bPin   13
-#define motor4DirPin 13
-#define motor4PWMPin 13
+#define motor1aPin   22
+#define motor1bPin   23
+#define motor1DirPin 24
+#define motor1PWMPin  2 // all motors same speed
+#define motor2aPin   25
+#define motor2bPin   26
+#define motor2DirPin 27
+#define motor2PWMPin  2 // all motors same speed
+#define motor3aPin   28
+#define motor3bPin   29
+#define motor3DirPin 30
+#define motor3PWMPin  2 // all motors same speed
+#define motor4aPin   31
+#define motor4bPin   32
+#define motor4DirPin 33
+#define motor4PWMPin  2 // all motors same speed
+
 
 // RGB LED pins
-#define RGBLED1red   13
-#define RGBLED1green 13
-#define RGBLED1blue  13
-#define RGBLED2red   13
-#define RGBLED2green 13
-#define RGBLED2blue  13
-#define RGBLED3red   13
-#define RGBLED3green 13
-#define RGBLED3blue  13
+#define RGBLED1red    3
+#define RGBLED1green  4
+#define RGBLED1blue   5
+
+#define RGBLED2red    6
+#define RGBLED2green  7
+#define RGBLED2blue   8
+
+#define RGBLED3red    9
+#define RGBLED3green 10
+#define RGBLED3blue  11
+
+#define RGBLED4red    3 // same like above from here
+#define RGBLED4green  4
+#define RGBLED4blue   5
+
+#define RGBLED5red    6
+#define RGBLED5green  7
+#define RGBLED5blue   8
+
+#define RGBLED6red    9
+#define RGBLED6green 10
+#define RGBLED6blue  11
+
 
 // IR pins for Apple Remote
 #define IR_Rcv_PIN   13 // pin for TSOP1736 IR sensor output
