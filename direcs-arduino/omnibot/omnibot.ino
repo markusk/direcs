@@ -7,13 +7,11 @@
 // For serial communication to the FONA module
 #include <SoftwareSerial.h>
 
-// give it a name:
-#define ledGreen     13 /// @todo change name (color)
-#define ledYellow    13 /// @todo change name (color)
-// Pin 13 has an LED connected on most Arduino boards.
-#define ledRed     13 /// @todo change name (color)
+#define ledRed       34
+#define ledGreen     35
+#define ledYellow    36
 
-#define relaisPin    13 /// @todo change name (color)
+#define relaisPin    37
 
 // motor pins
 #define motor1aPin   22
@@ -61,17 +59,19 @@
 
 
 // IR pins for Apple Remote
-#define IR_Rcv_PIN   13 // pin for TSOP1736 IR sensor output
+// pin for TSOP1736 IR sensor output
+#define IR_Rcv_PIN   38
 
-// Adafruit FONA pins (GSM)  @todo: update pins to a serial port or other HW port on Arduino/seeduino mega!!
-#define FONA_RX 9
-#define FONA_TX 10
-#define FONA_RST 4
+// Adafruit FONA pins (GSM)  @todo: update pins to user a real HW serial port on Arduino/seeduino mega!! < < < <
+#define FONA_TX      16
+#define FONA_RX      17
+#define FONA_RST     18
 
 
-// test:
-#define analogInPin A0  // Analog input pin for measuring battery voltage 1
-int sensorValue = 0;         // value read from the battery 1
+// Analog input pin for measuring battery voltage 1
+#define analogInPin  A0  
+// value read from the battery 1
+int sensorValue = 0;
 
 
 /*------------------ DEBUG 1 ------------------------
@@ -287,7 +287,6 @@ boolean FONAstate = false;
 #define BITZEIT 100     
 
 //--------------------------------------
-
 
 uint8_t leftWheelCounter = 0;
 uint8_t rightWheelCounter = 0;
