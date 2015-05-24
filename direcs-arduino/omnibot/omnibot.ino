@@ -16,19 +16,15 @@
 // motor pins
 #define motor1aPin   22
 #define motor1bPin   23
-#define motor1DirPin 24
 #define motor1PWMPin  2 // all motors same speed
 #define motor2aPin   25
 #define motor2bPin   26
-#define motor2DirPin 27
 #define motor2PWMPin  2 // all motors same speed
 #define motor3aPin   28
 #define motor3bPin   29
-#define motor3DirPin 30
 #define motor3PWMPin  2 // all motors same speed
 #define motor4aPin   31
 #define motor4bPin   32
-#define motor4DirPin 33
 #define motor4PWMPin  2 // all motors same speed
 
 
@@ -320,6 +316,9 @@ String command = "";
 //-------------------------------------------------------------------------------------------------
 
 
+const int DEFAULTMOTORSPEED = 60;
+
+
 void setup()
 {
   /*------------------ DEBUG 1 ------------------------
@@ -363,22 +362,18 @@ void setup()
 
   pinMode(motor1aPin, OUTPUT);
   pinMode(motor1bPin, OUTPUT);
-  pinMode(motor1DirPin, OUTPUT);
   pinMode(motor1PWMPin, OUTPUT);
 
   pinMode(motor2aPin, OUTPUT);
   pinMode(motor2bPin, OUTPUT);
-  pinMode(motor2DirPin, OUTPUT);
   pinMode(motor2PWMPin, OUTPUT);
 
   pinMode(motor3aPin, OUTPUT);
   pinMode(motor3bPin, OUTPUT);
-  pinMode(motor3DirPin, OUTPUT);
   pinMode(motor3PWMPin, OUTPUT);
 
   pinMode(motor4aPin, OUTPUT);
   pinMode(motor4bPin, OUTPUT);
-  pinMode(motor4DirPin, OUTPUT);
   pinMode(motor4PWMPin, OUTPUT);
 
   pinMode(RGBLED1red, OUTPUT);
@@ -447,22 +442,18 @@ void setup()
   //-------------------------------------------------------------------------------------------------
   digitalWrite(motor1aPin, LOW);
   digitalWrite(motor1bPin, LOW);
-  digitalWrite(motor1DirPin, LOW);  
   digitalWrite(motor1PWMPin, LOW);
 
   digitalWrite(motor2aPin, LOW);
   digitalWrite(motor2bPin, LOW);
-  digitalWrite(motor2DirPin, LOW);  
   digitalWrite(motor2PWMPin, LOW);
 
   digitalWrite(motor3aPin, LOW);
   digitalWrite(motor3bPin, LOW);
-  digitalWrite(motor3DirPin, LOW);  
   digitalWrite(motor3PWMPin, LOW);
 
   digitalWrite(motor4aPin, LOW);
   digitalWrite(motor4bPin, LOW);
-  digitalWrite(motor4DirPin, LOW);  
   digitalWrite(motor4PWMPin, LOW);
 
 
@@ -525,18 +516,8 @@ void setup()
 
 */
 
-  // initialize the PWM timer (with compare value 100)  [this is the motor speed!]
-  // This value is changed by the mrs programm, when value is read from ini-file!
-  // 100 * 64 µs = 6400 µs = 6,4 ms
-  //
-  // PWM motor 1
-  analogWrite(motor1PWMPin, 60);
-  // PWM motor 2
-  analogWrite(motor2PWMPin, 60);
-  // PWM motor 3
-  analogWrite(motor3PWMPin, 60);
-  // PWM motor 4
-  analogWrite(motor4PWMPin, 60);
+  // set motor default speed (PWM, 0-255)
+  setMotorSpeed();
 
 /*
   // initialize the servo PWM timers
@@ -815,6 +796,9 @@ void loop()
     digitalWrite(motor2bPin, LOW);
     digitalWrite(motor3aPin, LOW);
     digitalWrite(motor3bPin, LOW);
+
+    // set motor default speed (PWM, 0-255)
+    setMotorSpeed();
 
     // RGB LEDs off
     allLEDsWhite();
@@ -1805,6 +1789,19 @@ void sendUInt(uint16_t value)
    // send answer
    Serial.print(stringbuffer);
    */  // to be ported    
+}
+
+
+void setMotorSpeed()
+{
+  // PWM motor 1
+  analogWrite(motor1PWMPin, DEFAULTMOTORSPEED);
+  // PWM motor 2
+  analogWrite(motor2PWMPin, DEFAULTMOTORSPEED);
+  // PWM motor 3
+  analogWrite(motor3PWMPin, DEFAULTMOTORSPEED);
+  // PWM motor 4
+  analogWrite(motor4PWMPin, DEFAULTMOTORSPEED);
 }
 
 
