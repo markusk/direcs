@@ -1125,7 +1125,7 @@ void loop()
   if (command.startsWith("*mv1"))
   {
     // get the 3 digits which contain the speed
-    command = command.substring(5, 3);
+    command = command.substring(5, command.length() - 1);
     // get value from string and set speed
     analogWrite(motor1PWMPin, command.toInt());
     Serial.print("*mv1#");
@@ -1163,7 +1163,7 @@ void loop()
   if (command.startsWith("*mv2"))
   {
     // get the 3 digits which contain the speed
-    command = command.substring(5, 3);
+    command = command.substring(5, command.length() - 1);
     // get value from string and set speed
     analogWrite(motor2PWMPin, command.toInt());
     Serial.print("*mv2#");
@@ -1201,7 +1201,7 @@ void loop()
   if (command.startsWith("*mv3"))
   {
     // get the 3 digits which contain the speed
-    command = command.substring(5, 3);
+    command = command.substring(5, command.length() - 1);
     // get value from string and set speed
     analogWrite(motor3PWMPin, command.toInt());
     Serial.print("*mv3#");
@@ -1239,7 +1239,7 @@ void loop()
   if (command.startsWith("*mv4"))
   {
     // get the 3 digits which contain the speed
-    command = command.substring(5, 3);
+    command = command.substring(5, command.length() - 1);
     // get value from string and set speed
     analogWrite(motor4PWMPin, command.toInt());
     Serial.print("*mv4#");
@@ -1250,7 +1250,7 @@ void loop()
   if (command == "*mv0#")
   {
     // get the 3 digits which contain the speed
-    command = command.substring(5, 3);
+    command = command.substring(5, command.length() - 1);
     // get value from string and set speed
     analogWrite(motor1PWMPin, command.toInt());
     analogWrite(motor2PWMPin, command.toInt());
@@ -1263,7 +1263,7 @@ void loop()
   if (command == "*rgb1")
   {
     // get the 3 digits which contain the brightness
-    command = command.substring(5, 3);
+    command = command.substring(5, command.length() - 1);
     // get value from string and set value
     analogWrite(RGBLED1red, command.toInt());
     Serial.print("*rgb1#");
@@ -1274,7 +1274,7 @@ void loop()
   if (command == "*rgb2")
   {
     // get the 3 digits which contain the brightness
-    command = command.substring(5, 3);
+    command = command.substring(5, command.length() - 1);
     // get value from string and set value
     analogWrite(RGBLED1green, command.toInt());
     Serial.print("*rgb2#");
@@ -1285,7 +1285,7 @@ void loop()
   if (command == "*rgb3")
   {
     // get the 3 digits which contain the brightness
-    command = command.substring(5, 3);
+    command = command.substring(5, command.length() - 1);
     // get value from string and set value
     analogWrite(RGBLED1blue, command.toInt());
     Serial.print("*rgb3#");
@@ -1296,7 +1296,7 @@ void loop()
   if (command == "*rgb4")
   {
     // get the 3 digits which contain the brightness
-    command = command.substring(5, 3);
+    command = command.substring(5, command.length() - 1);
     // get value from string and set value
     analogWrite(RGBLED2red, command.toInt());
     Serial.print("*rgb4#");
@@ -1307,7 +1307,7 @@ void loop()
   if (command == "*rgb5")
   {
     // get the 3 digits which contain the brightness
-    command = command.substring(5, 3);
+    command = command.substring(5, command.length() - 1);
     // get value from string and set value
     analogWrite(RGBLED2green, command.toInt());
     Serial.print("*rgb5#");
@@ -1318,7 +1318,7 @@ void loop()
   if (command == "*rgb6")
   {
     // get the 3 digits which contain the brightness
-    command = command.substring(5, 3);
+    command = command.substring(5, command.length() - 1);
     // get value from string and set value
     analogWrite(RGBLED2blue, command.toInt());
     Serial.print("*rgb6#");
@@ -1329,7 +1329,7 @@ void loop()
   if (command == "*rgb7")
   {
     // get the 3 digits which contain the brightness
-    command = command.substring(5, 3);
+    command = command.substring(5, command.length() - 1);
     // get value from string and set value
     analogWrite(RGBLED3red, command.toInt());
     Serial.print("*rgb7#");
@@ -1340,7 +1340,7 @@ void loop()
   if (command == "*rgb8")
   {
     // get the 3 digits which contain the brightness
-    command = command.substring(5, 3);
+    command = command.substring(5, command.length() - 1);
     // get value from string and set value
     analogWrite(RGBLED3green, command.toInt());
     Serial.print("*rgb8#");
@@ -1351,7 +1351,7 @@ void loop()
   if (command == "*rgb9")
   {
     // get the 3 digits which contain the brightness
-    command = command.substring(5, 3);
+    command = command.substring(5, command.length() - 1);
     // get value from string and set value
     analogWrite(RGBLED3blue, command.toInt());
     Serial.print("*rgb9#");
