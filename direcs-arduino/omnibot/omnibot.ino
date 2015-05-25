@@ -1247,7 +1247,7 @@ void loop()
   }
   else
   // SPEED_SET_ALLMOTORS
-  if (command == "*mv0#")
+  if (command.startsWith("*mv0"))
   {
     // get the 3 digits which contain the speed
     command = command.substring(5, command.length() - 1);
