@@ -17,14 +17,14 @@
 #define motor1aPin   22
 #define motor1bPin   23
 #define motor1PWMPin  2 // all motors same speed
-#define motor2aPin   25
-#define motor2bPin   26
+#define motor2aPin   24
+#define motor2bPin   25
 #define motor2PWMPin  2 // all motors same speed
-#define motor3aPin   28
-#define motor3bPin   29
+#define motor3aPin   26
+#define motor3bPin   27
 #define motor3PWMPin  2 // all motors same speed
-#define motor4aPin   31
-#define motor4bPin   32
+#define motor4aPin   28
+#define motor4bPin   29
 #define motor4PWMPin  2 // all motors same speed
 
 
