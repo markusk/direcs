@@ -1429,13 +1429,25 @@ void Direcs::shutdown()
 
 	if (forceShutdown==false)
 	{
-		// turn off all RGB LEDs
+		// turn 'off' all RGB LEDs
 		rgbLeds->setBrightness(RGBLED1, 1);
 		rgbLeds->setBrightness(RGBLED2, 1);
 		rgbLeds->setBrightness(RGBLED3, 1);
 		rgbLeds->setBrightness(RGBLED4, 1);
 		rgbLeds->setBrightness(RGBLED5, 1);
 		rgbLeds->setBrightness(RGBLED6, 1);
+		rgbLeds->setBrightness(RGBLED7, 1);
+		rgbLeds->setBrightness(RGBLED8, 1);
+		rgbLeds->setBrightness(RGBLED9, 1);
+		rgbLeds->setBrightness(RGBLED10, 1);
+		rgbLeds->setBrightness(RGBLED11, 1);
+		rgbLeds->setBrightness(RGBLED12, 1);
+		rgbLeds->setBrightness(RGBLED13, 1);
+		rgbLeds->setBrightness(RGBLED14, 1);
+		rgbLeds->setBrightness(RGBLED15, 1);
+		rgbLeds->setBrightness(RGBLED16, 1);
+		rgbLeds->setBrightness(RGBLED17, 1);
+		rgbLeds->setBrightness(RGBLED18, 1);
 	}
 
 
@@ -5379,44 +5391,129 @@ void Direcs::drivingLight(unsigned char color)
 			rgbLeds->setBrightness(RGBLED1, MAXPWM);
 			rgbLeds->setBrightness(RGBLED2, MINPWM);
 			rgbLeds->setBrightness(RGBLED3, MINPWM);
+
 			rgbLeds->setBrightness(RGBLED4, MAXPWM);
 			rgbLeds->setBrightness(RGBLED5, MINPWM);
 			rgbLeds->setBrightness(RGBLED6, MINPWM);
+
+			rgbLeds->setBrightness(RGBLED7, MAXPWM);
+			rgbLeds->setBrightness(RGBLED8, MINPWM);
+			rgbLeds->setBrightness(RGBLED9, MINPWM);
+
+			rgbLeds->setBrightness(RGBLED10, MAXPWM);
+			rgbLeds->setBrightness(RGBLED11, MINPWM);
+			rgbLeds->setBrightness(RGBLED12, MINPWM);
+
+			rgbLeds->setBrightness(RGBLED13, MAXPWM);
+			rgbLeds->setBrightness(RGBLED14, MINPWM);
+			rgbLeds->setBrightness(RGBLED15, MINPWM);
+
+			rgbLeds->setBrightness(RGBLED16, MAXPWM);
+			rgbLeds->setBrightness(RGBLED17, MINPWM);
+			rgbLeds->setBrightness(RGBLED18, MINPWM);
 			break;
 		case GREEN:
 			rgbLeds->setBrightness(RGBLED1, MINPWM);
 			rgbLeds->setBrightness(RGBLED2, MAXPWM);
 			rgbLeds->setBrightness(RGBLED3, MINPWM);
+
 			rgbLeds->setBrightness(RGBLED4, MINPWM);
 			rgbLeds->setBrightness(RGBLED5, MAXPWM);
 			rgbLeds->setBrightness(RGBLED6, MINPWM);
+
+			rgbLeds->setBrightness(RGBLED7, MINPWM);
+			rgbLeds->setBrightness(RGBLED8, MAXPWM);
+			rgbLeds->setBrightness(RGBLED9, MINPWM);
+
+			rgbLeds->setBrightness(RGBLED10, MINPWM);
+			rgbLeds->setBrightness(RGBLED11, MAXPWM);
+			rgbLeds->setBrightness(RGBLED12, MINPWM);
+
+			rgbLeds->setBrightness(RGBLED13, MINPWM);
+			rgbLeds->setBrightness(RGBLED14, MAXPWM);
+			rgbLeds->setBrightness(RGBLED15, MINPWM);
+
+			rgbLeds->setBrightness(RGBLED16, MINPWM);
+			rgbLeds->setBrightness(RGBLED17, MAXPWM);
+			rgbLeds->setBrightness(RGBLED18, MINPWM);
 			break;
 
 		case BLUE:
 			rgbLeds->setBrightness(RGBLED1, MINPWM);
 			rgbLeds->setBrightness(RGBLED2, MINPWM);
 			rgbLeds->setBrightness(RGBLED3, MAXPWM);
+
 			rgbLeds->setBrightness(RGBLED4, MINPWM);
 			rgbLeds->setBrightness(RGBLED5, MINPWM);
 			rgbLeds->setBrightness(RGBLED6, MAXPWM);
+
+			rgbLeds->setBrightness(RGBLED7, MINPWM);
+			rgbLeds->setBrightness(RGBLED8, MINPWM);
+			rgbLeds->setBrightness(RGBLED9, MAXPWM);
+
+			rgbLeds->setBrightness(RGBLED10, MINPWM);
+			rgbLeds->setBrightness(RGBLED11, MINPWM);
+			rgbLeds->setBrightness(RGBLED12, MAXPWM);
+
+			rgbLeds->setBrightness(RGBLED13, MINPWM);
+			rgbLeds->setBrightness(RGBLED14, MINPWM);
+			rgbLeds->setBrightness(RGBLED15, MAXPWM);
+
+			rgbLeds->setBrightness(RGBLED16, MINPWM);
+			rgbLeds->setBrightness(RGBLED17, MINPWM);
+			rgbLeds->setBrightness(RGBLED18, MAXPWM);
 			break;
 
 		case WHITE:
 			rgbLeds->setBrightness(RGBLED1, MAXPWM);
 			rgbLeds->setBrightness(RGBLED2, MAXPWM);
 			rgbLeds->setBrightness(RGBLED3, MAXPWM);
+
 			rgbLeds->setBrightness(RGBLED4, MAXPWM);
 			rgbLeds->setBrightness(RGBLED5, MAXPWM);
 			rgbLeds->setBrightness(RGBLED6, MAXPWM);
+
+			rgbLeds->setBrightness(RGBLED7, MAXPWM);
+			rgbLeds->setBrightness(RGBLED8, MAXPWM);
+			rgbLeds->setBrightness(RGBLED9, MAXPWM);
+
+			rgbLeds->setBrightness(RGBLED10, MAXPWM);
+			rgbLeds->setBrightness(RGBLED11, MAXPWM);
+			rgbLeds->setBrightness(RGBLED12, MAXPWM);
+
+			rgbLeds->setBrightness(RGBLED13, MAXPWM);
+			rgbLeds->setBrightness(RGBLED14, MAXPWM);
+			rgbLeds->setBrightness(RGBLED15, MAXPWM);
+
+			rgbLeds->setBrightness(RGBLED16, MAXPWM);
+			rgbLeds->setBrightness(RGBLED17, MAXPWM);
+			rgbLeds->setBrightness(RGBLED18, MAXPWM);
 			break;
 
 		case LEDOFF:
 			rgbLeds->setBrightness(RGBLED1, MINPWM);
 			rgbLeds->setBrightness(RGBLED2, MINPWM);
 			rgbLeds->setBrightness(RGBLED3, MINPWM);
+
 			rgbLeds->setBrightness(RGBLED4, MINPWM);
 			rgbLeds->setBrightness(RGBLED5, MINPWM);
 			rgbLeds->setBrightness(RGBLED6, MINPWM);
+
+			rgbLeds->setBrightness(RGBLED7, MINPWM);
+			rgbLeds->setBrightness(RGBLED8, MINPWM);
+			rgbLeds->setBrightness(RGBLED9, MINPWM);
+
+			rgbLeds->setBrightness(RGBLED10, MINPWM);
+			rgbLeds->setBrightness(RGBLED11, MINPWM);
+			rgbLeds->setBrightness(RGBLED12, MINPWM);
+
+			rgbLeds->setBrightness(RGBLED13, MINPWM);
+			rgbLeds->setBrightness(RGBLED14, MINPWM);
+			rgbLeds->setBrightness(RGBLED15, MINPWM);
+
+			rgbLeds->setBrightness(RGBLED16, MINPWM);
+			rgbLeds->setBrightness(RGBLED17, MINPWM);
+			rgbLeds->setBrightness(RGBLED18, MINPWM);
 			break;
 	}
 }
