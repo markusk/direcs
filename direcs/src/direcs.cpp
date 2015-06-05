@@ -5447,10 +5447,10 @@ void Direcs::test()
 {
 	QString text;
 
-
+/*
 	gsmThread->readLastSMS(text);
 	emit message(QString("SMS-Test: %1").arg(text));
-
+*/
 /*
 	#ifdef Q_OS_LINUX
 	Phonon::MediaObject *music = Phonon::createPlayer(Phonon::MusicCategory, Phonon::MediaSource("../../../../dr.mp3"));
@@ -5477,7 +5477,7 @@ void Direcs::test()
 
 //	static bool toggle = false;
 
-/*
+
 #ifdef Q_OS_LINUX
 	speakThread->setLanguage("en");
 #endif
@@ -5486,7 +5486,7 @@ void Direcs::test()
 //    emit speak(tr("The voltage for battery %1 is %2 Volt. For battery %3 it is %4 Volt.").arg( 1 ).arg( sensorThread->getVoltage(VOLTAGESENSOR1) ).arg( 2 ).arg( sensorThread->getVoltage(VOLTAGESENSOR2) ));
 	emit speak(tr("Die Akkuspannung %1 ist %2 Volt. Akku %3 hat noch %4 Volt.").arg( 1 ).arg( sensorThread->getVoltage(VOLTAGESENSOR1) ).arg( 2 ).arg( sensorThread->getVoltage(VOLTAGESENSOR2) ));
 	emit speak(tr("Alles klar, los geht's!"));
-*/
+
 
 //	toggle = !toggle;
 /*
