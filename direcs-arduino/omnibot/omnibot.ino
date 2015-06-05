@@ -387,6 +387,18 @@ void setup()
   pinMode(RGBLED3red, OUTPUT);
   pinMode(RGBLED3green, OUTPUT);
   pinMode(RGBLED3blue, OUTPUT);
+
+  pinMode(RGBLED4red, OUTPUT);
+  pinMode(RGBLED4green, OUTPUT);
+  pinMode(RGBLED4blue, OUTPUT);
+
+  pinMode(RGBLED5red, OUTPUT);
+  pinMode(RGBLED5green, OUTPUT);
+  pinMode(RGBLED5blue, OUTPUT);
+
+  pinMode(RGBLED6red, OUTPUT);
+  pinMode(RGBLED6green, OUTPUT);
+  pinMode(RGBLED6blue, OUTPUT);
   //-------------------------------------------------------------------------------------------------
 
 
@@ -1852,71 +1864,141 @@ void greenLED(uint8_t state)
 
 void allLEDsRed()
 {
-  digitalWrite(RGBLED1red, HIGH);
-  digitalWrite(RGBLED1green, LOW);
-  digitalWrite(RGBLED1blue, LOW);
-  digitalWrite(RGBLED2red, HIGH);
-  digitalWrite(RGBLED2green, LOW);
-  digitalWrite(RGBLED2blue, LOW);
-  digitalWrite(RGBLED3red, HIGH);
-  digitalWrite(RGBLED3green, LOW);
-  digitalWrite(RGBLED3blue, LOW);
+  digitalWrite(RGBLED1red,   128);
+  digitalWrite(RGBLED1green,   0);
+  digitalWrite(RGBLED1blue,    0);
+
+  digitalWrite(RGBLED2red,   128);
+  digitalWrite(RGBLED2green,   0);
+  digitalWrite(RGBLED2blue,    0);
+
+  digitalWrite(RGBLED3red,   128);
+  digitalWrite(RGBLED3green,   0);
+  digitalWrite(RGBLED3blue,    0);
+  
+  digitalWrite(RGBLED4red,   128);
+  digitalWrite(RGBLED4green,   0);
+  digitalWrite(RGBLED4blue,    0);
+  
+  digitalWrite(RGBLED5red,   128);
+  digitalWrite(RGBLED5green,   0);
+  digitalWrite(RGBLED5blue,    0);
+  
+  digitalWrite(RGBLED6red,   128);
+  digitalWrite(RGBLED6green,   0);
+  digitalWrite(RGBLED6blue,    0);
 }
 
 
 void allLEDsGreen()
 {
-  digitalWrite(RGBLED1red, LOW);
-  digitalWrite(RGBLED1green, HIGH);
-  digitalWrite(RGBLED1blue, LOW);
-  digitalWrite(RGBLED2red, LOW);
-  digitalWrite(RGBLED2green, HIGH);
-  digitalWrite(RGBLED2blue, LOW);
-  digitalWrite(RGBLED3red, LOW);
-  digitalWrite(RGBLED3green, HIGH);
-  digitalWrite(RGBLED3blue, LOW);
+  analogWrite(RGBLED1red,     0);
+  analogWrite(RGBLED1green, 128);
+  analogWrite(RGBLED1blue,    0);
+
+  analogWrite(RGBLED2red,     0);
+  analogWrite(RGBLED2green, 128);
+  analogWrite(RGBLED2blue,    0);
+
+  analogWrite(RGBLED3red,     0);
+  analogWrite(RGBLED3green, 128);
+  analogWrite(RGBLED3blue,    0);
+
+  analogWrite(RGBLED4red,     0);
+  analogWrite(RGBLED4green, 128);
+  analogWrite(RGBLED4blue,    0);
+
+  analogWrite(RGBLED5red,     0);
+  analogWrite(RGBLED5green, 128);
+  analogWrite(RGBLED5blue,    0);
+  
+  analogWrite(RGBLED6red,     0);
+  analogWrite(RGBLED6green, 128);
+  analogWrite(RGBLED6blue,    0);
 }
 
 
 void allLEDsBlue()
 {
-  digitalWrite(RGBLED1red, LOW);
-  digitalWrite(RGBLED1green, LOW);
-  digitalWrite(RGBLED1blue, HIGH);
-  digitalWrite(RGBLED2red, LOW);
-  digitalWrite(RGBLED2green, LOW);
-  digitalWrite(RGBLED2blue, HIGH);
-  digitalWrite(RGBLED3red, LOW);
-  digitalWrite(RGBLED3green, LOW);
-  digitalWrite(RGBLED3blue, HIGH);
+  analogWrite(RGBLED1red,    0);
+  analogWrite(RGBLED1green,  0);
+  analogWrite(RGBLED1blue, 128);
+
+  analogWrite(RGBLED2red,    0);
+  analogWrite(RGBLED2green,  0);
+  analogWrite(RGBLED2blue, 128);
+
+  analogWrite(RGBLED3red,    0);
+  analogWrite(RGBLED3green,  0);
+  analogWrite(RGBLED3blue, 128);
+  
+  analogWrite(RGBLED4red,    0);
+  analogWrite(RGBLED4green,  0);
+  analogWrite(RGBLED4blue, 128);
+  
+  analogWrite(RGBLED5red,    0);
+  analogWrite(RGBLED5green,  0);
+  analogWrite(RGBLED5blue, 128);
+  
+  analogWrite(RGBLED6red,    0);
+  analogWrite(RGBLED6green,  0);
+  analogWrite(RGBLED6blue, 128);
 }
 
 
 void allLEDsWhite()
 {
-  digitalWrite(RGBLED1red, HIGH);
-  digitalWrite(RGBLED1green, HIGH);
-  digitalWrite(RGBLED1blue, HIGH);
-  digitalWrite(RGBLED2red, HIGH);
-  digitalWrite(RGBLED2green, HIGH);
-  digitalWrite(RGBLED2blue, HIGH);
-  digitalWrite(RGBLED3red, HIGH);
-  digitalWrite(RGBLED3green, HIGH);
-  digitalWrite(RGBLED3blue, HIGH);
+  analogWrite(RGBLED1red,   128);
+  analogWrite(RGBLED1green, 128);
+  analogWrite(RGBLED1blue,  128);
+
+  analogWrite(RGBLED2red,   128);
+  analogWrite(RGBLED2green, 128);
+  analogWrite(RGBLED2blue,  128);
+
+  analogWrite(RGBLED3red,   128);
+  analogWrite(RGBLED3green, 128);
+  analogWrite(RGBLED3blue,  128);
+
+  analogWrite(RGBLED4red,   128);
+  analogWrite(RGBLED4green, 128);
+  analogWrite(RGBLED4blue,  128);
+
+  analogWrite(RGBLED5red,   128);
+  analogWrite(RGBLED5green, 128);
+  analogWrite(RGBLED5blue,  128);
+
+  analogWrite(RGBLED6red,   128);
+  analogWrite(RGBLED6green, 128);
+  analogWrite(RGBLED6blue,  128);
 }
 
 
 void allLEDsOff()
 {
-  digitalWrite(RGBLED1red, LOW);
-  digitalWrite(RGBLED1green, LOW);
-  digitalWrite(RGBLED1blue, LOW);
-  digitalWrite(RGBLED2red, LOW);
-  digitalWrite(RGBLED2green, LOW);
-  digitalWrite(RGBLED2blue, LOW);
-  digitalWrite(RGBLED3red, LOW);
-  digitalWrite(RGBLED3green, LOW);
-  digitalWrite(RGBLED3blue, LOW);
+  analogWrite(RGBLED1red, 0);
+  analogWrite(RGBLED1green, 0);
+  analogWrite(RGBLED1blue, 0);
+
+  analogWrite(RGBLED2red, 0);
+  analogWrite(RGBLED2green, 0);
+  analogWrite(RGBLED2blue, 0);
+
+  analogWrite(RGBLED3red, 0);
+  analogWrite(RGBLED3green, 0);
+  analogWrite(RGBLED3blue, 0);
+  
+  analogWrite(RGBLED4red, 0);
+  analogWrite(RGBLED4green, 0);
+  analogWrite(RGBLED4blue, 0);
+  
+  analogWrite(RGBLED5red, 0);
+  analogWrite(RGBLED5green, 0);
+  analogWrite(RGBLED5blue, 0);
+  
+  analogWrite(RGBLED6red, 0);
+  analogWrite(RGBLED6green, 0);
+  analogWrite(RGBLED6blue, 0);
 }
 
 
