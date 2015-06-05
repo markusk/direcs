@@ -100,7 +100,7 @@ class RgbLed : public QObject
 		static const unsigned long THREADSLEEPTIME = 500; // Default: 25 ms
 
 		/// defines the size of the rgbLed[] arrays.
-		static const unsigned char NUMBEROFRGBLEDS = 6; /// \todo also defined in direcs.h !!!
+		static const unsigned char NUMBEROFRGBLEDS = 36; /// \todo also defined in direcs.h !!!
 		int minBrightness[NUMBEROFRGBLEDS];
 		int maxBrightness[NUMBEROFRGBLEDS];
 		int defaultBrightness[NUMBEROFRGBLEDS];
@@ -118,21 +118,30 @@ class RgbLed : public QObject
 		static const unsigned char RGBLEDMIN     = 2;
 		static const unsigned char RGBLEDMAX     = 3;
 
-		/// the RGB LED numbers
-		static const unsigned char RGBLED1 = 0;
-		static const unsigned char RGBLED2 = 1;
-		static const unsigned char RGBLED3 = 2;
-		static const unsigned char RGBLED4 = 3;
-		static const unsigned char RGBLED5 = 4;
-		static const unsigned char RGBLED6 = 5;
+		/// the RGB LED numbers @sa rgbLed::rgbLed(), direcs.h, demoThread
+		static const unsigned char RGBLED1 = 0; // RGB 1 R
+		static const unsigned char RGBLED2 = 1; // RGB 1 G
+		static const unsigned char RGBLED3 = 2; // RGB 1 B
 
-		/// the command for the microcontroller
-		static const unsigned char SET_RGBLED1 = 42;
-		static const unsigned char SET_RGBLED2 = 43;
-		static const unsigned char SET_RGBLED3 = 44;
-		static const unsigned char SET_RGBLED4 = 45;
-		static const unsigned char SET_RGBLED5 = 46;
-		static const unsigned char SET_RGBLED6 = 47;
+		static const unsigned char RGBLED4 = 3; // RGB 2 R
+		static const unsigned char RGBLED5 = 4; // RGB 2 G
+		static const unsigned char RGBLED6 = 5; // RGB 2 B
+
+		static const unsigned char RGBLED7 = 6; // RGB 3 R
+		static const unsigned char RGBLED8 = 7; // RGB 3 G
+		static const unsigned char RGBLED9 = 8; // RGB 3 B
+
+		static const unsigned char RGBLED10 = 9; // RGB 4 R
+		static const unsigned char RGBLED11 = 10; // RGB 4 G
+		static const unsigned char RGBLED12 = 11; // RGB 4 B
+
+		static const unsigned char RGBLED13 = 12; // RGB 5 R
+		static const unsigned char RGBLED14 = 13; // RGB 5 G
+		static const unsigned char RGBLED15 = 14; // RGB 5 B
+
+		static const unsigned char RGBLED16 = 15; // RGB 6 R
+		static const unsigned char RGBLED17 = 16; // RGB 6 G
+		static const unsigned char RGBLED18 = 17; // RGB 6 B
 };
 
 #endif

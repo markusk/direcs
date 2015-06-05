@@ -87,13 +87,30 @@ class DemoThread : public QThread
 		// Time in milliseconds every ms the run method is called
 		static const unsigned long THREADSLEEPTIME = 200; // 250 ms
 
-		/// the RGB LED numbers @sa rgbLed::rgbLed()
-		static const unsigned char RGBLED1 = 0;
-		static const unsigned char RGBLED2 = 1;
-		static const unsigned char RGBLED3 = 2;
-		static const unsigned char RGBLED4 = 3;
-		static const unsigned char RGBLED5 = 4;
-		static const unsigned char RGBLED6 = 5;
+		/// the RGB LED numbers @sa rgbLed::rgbLed(), direcs.h, demoThread
+		static const unsigned char RGBLED1 = 0; // RGB 1 R
+		static const unsigned char RGBLED2 = 1; // RGB 1 G
+		static const unsigned char RGBLED3 = 2; // RGB 1 B
+
+		static const unsigned char RGBLED4 = 3; // RGB 2 R
+		static const unsigned char RGBLED5 = 4; // RGB 2 G
+		static const unsigned char RGBLED6 = 5; // RGB 2 B
+
+		static const unsigned char RGBLED7 = 6; // RGB 3 R
+		static const unsigned char RGBLED8 = 7; // RGB 3 G
+		static const unsigned char RGBLED9 = 8; // RGB 3 B
+
+		static const unsigned char RGBLED10 = 9; // RGB 4 R
+		static const unsigned char RGBLED11 = 10; // RGB 4 G
+		static const unsigned char RGBLED12 = 11; // RGB 4 B
+
+		static const unsigned char RGBLED13 = 12; // RGB 5 R
+		static const unsigned char RGBLED14 = 13; // RGB 5 G
+		static const unsigned char RGBLED15 = 14; // RGB 5 B
+
+		static const unsigned char RGBLED16 = 15; // RGB 6 R
+		static const unsigned char RGBLED17 = 16; // RGB 6 G
+		static const unsigned char RGBLED18 = 17; // RGB 6 B
 };
 
 #endif
