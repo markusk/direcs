@@ -560,10 +560,10 @@ void setup()
   sei();
   */  // end to be ported
 
-
+/*
   // Start the IR receiver
   irrecv.enableIRIn();
-
+*/
 
   //-------------------------------------------------------------------------------------------------
   // setup complete - all LEDs  g r e e n
@@ -579,7 +579,7 @@ void loop()
   //  letter("w", LED_RED);
 
 
-
+/*
   //- - - - - - - - -
   // IR TEST  START
   //- - - - - - - - -
@@ -611,7 +611,7 @@ void loop()
   //- - - - - - - - -
   // IR TEST  END
   //- - - - - - - - -
-
+*/
 
 
   do
