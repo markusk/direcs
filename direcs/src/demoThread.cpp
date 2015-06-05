@@ -43,9 +43,9 @@ void DemoThread::stop()
 
 void DemoThread::run()
 {
-	int number1 = 1;
-	int number2 = 1;
-	int number3 = 1;
+	int brightness1 = 1;
+	int brightness2 = 1;
+	int brightness3 = 1;
 	//	static bool toggle = false;
 
 	//
@@ -66,17 +66,17 @@ void DemoThread::run()
 		}
 		else
 		{
-			number1 = qrand() % 99 +1;
-			number2 = qrand() % 99 +1;
-			number3 = qrand() % 99 +1;
+			brightness1 = qrand() % 99 +1;
+			brightness2 = qrand() % 99 +1;
+			brightness3 = qrand() % 99 +1;
 
-			emit setRGBLEDBrightness(RGBLED1, number1);
-			emit setRGBLEDBrightness(RGBLED2, number2);
-			emit setRGBLEDBrightness(RGBLED3, number3);
+			emit setRGBLEDBrightness(RGBLED1, brightness1);
+			emit setRGBLEDBrightness(RGBLED2, brightness2);
+			emit setRGBLEDBrightness(RGBLED3, brightness3);
 
-			emit setRGBLEDBrightness(RGBLED4, number1);
-			emit setRGBLEDBrightness(RGBLED5, number2);
-			emit setRGBLEDBrightness(RGBLED6, number3);
+			emit setRGBLEDBrightness(RGBLED4, brightness1);
+			emit setRGBLEDBrightness(RGBLED5, brightness2);
+			emit setRGBLEDBrightness(RGBLED6, brightness3);
 		}
 
 		// let the thread sleep some time - kind of timer...
