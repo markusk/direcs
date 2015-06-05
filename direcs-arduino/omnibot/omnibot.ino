@@ -2139,16 +2139,10 @@ int unlockSIM()
 
 
   // PIN
-//  PIN[0] = '0';
-//  PIN[1] = '0';
-//  PIN[2] = '0';
-//  PIN[3] = '0';
-//  PIN[4] = NULL;
-
-  PIN[0] = '4';
-  PIN[1] = '7';
-  PIN[2] = '3';
-  PIN[3] = '8';
+  PIN[0] = '5';
+  PIN[1] = '5';
+  PIN[2] = '5';
+  PIN[3] = '5';
   PIN[4] = NULL;
 
   // unlock
