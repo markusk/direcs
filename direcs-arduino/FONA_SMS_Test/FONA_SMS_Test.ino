@@ -196,28 +196,27 @@ void loop() {
           Serial.print(F("VPct = ")); Serial.print(vbat); Serial.println(F("%"));
         }
 
-        delay(2000);
 
 //        break;
 //      }
 
-/*
-    case 'U': {
-        // Unlock the SIM with a PIN code
-        char PIN[5];
-        flushSerial();
-        Serial.println(F("Enter 4-digit PIN"));
-        readline(PIN, 3);
-        Serial.println(PIN);
+
+//    case 'U': {
+        // Unlock the SIM with PIN code
+        char PIN[5] = { '5', '5', '5', '5', NULL};
+
         Serial.print(F("Unlocking SIM card: "));
         if (! fona.unlockSIM(PIN)) {
           Serial.println(F("Failed"));
         } else {
           Serial.println(F("OK!"));
         }
-        break;
-      }
+//        break;
+//      }
 
+delay(10000);
+
+/*
     case 'C': {
         // read the CCID
         fona.getSIMCCID(replybuffer);  // make sure replybuffer is at least 21 bytes!
