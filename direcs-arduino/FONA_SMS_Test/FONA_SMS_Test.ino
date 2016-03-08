@@ -17,16 +17,14 @@
   BSD license, all text above must be included in any redistribution
  ****************************************************/
 
-/*
-THIS CODE IS STILL IN PROGRESS!
-
-Open up the serial console on the Arduino at 115200 baud to interact with FONA
-
-Note that if you need to set a GPRS APN, username, and password scroll down to
-the commented section below at the end of the setup() function.
-*/
 #include "Adafruit_FONA.h"
 
+// disable debugging!
+#ifdef ADAFRUIT_FONA_DEBUG
+  #undef ADAFRUIT_FONA_DEBUG
+#endif
+
+// the Arduino Pins
 #define FONA_RX 2
 #define FONA_TX 10 // digital 10 for Mega, otherwise digital 3
 #define FONA_RST 4
@@ -46,8 +44,6 @@ SoftwareSerial *fonaSerial = &fonaSS;
 
 // Use this for FONA 800 and 808s
 Adafruit_FONA fona = Adafruit_FONA(FONA_RST);
-// Use this one for FONA 3G
-//Adafruit_FONA_3G fona = Adafruit_FONA_3G(FONA_RST);
 
 uint8_t readline(char *buff, uint8_t maxbuff, uint16_t timeout = 0);
 
@@ -92,21 +88,10 @@ void setup() {
     Serial.print("Module IMEI: "); Serial.println(imei);
   }
 
-  // Optionally configure a GPRS APN, username, and password.
-  // You might need to do this to access your network's GPRS/data
-  // network.  Contact your provider for the exact APN, username,
-  // and password values.  Username and password are optional and
-  // can be removed, but APN is required.
-  //fona.setGPRSNetworkSettings(F("your APN"), F("your username"), F("your password"));
 
-  // Optionally configure HTTP gets to follow redirects over SSL.
-  // Default is not to follow SSL redirects, however if you uncomment
-  // the following line then redirects over SSL will be followed.
-  //fona.setHTTPSRedirect(true);
-
-  printMenu();
 }
 
+/*
 void printMenu(void) {
   Serial.println(F("-------------------------------------"));
   Serial.println(F("[?] Print this menu"));
@@ -170,26 +155,20 @@ void printMenu(void) {
   Serial.println(F("[S] create Serial passthru tunnel"));
   Serial.println(F("-------------------------------------"));
   Serial.println(F(""));
-
 }
+*/
+
+
 void loop() {
-  Serial.print(F("FONA> "));
-  while (! Serial.available() ) {
-    if (fona.available()) {
-      Serial.write(fona.read());
-    }
-  }
+  Serial.println("Ready!");
+
 
   char command = Serial.read();
   Serial.println(command);
 
 
-  switch (command) {
-    case '?': {
-        printMenu();
-        break;
-      }
-
+//  switch (command) {
+/*
     case 'a': {
         // read the ADC
         uint16_t adc;
@@ -200,8 +179,8 @@ void loop() {
         }
         break;
       }
-
-    case 'b': {
+*/
+//    case 'b': {
         // read the battery voltage and percentage
         uint16_t vbat;
         if (! fona.getBattVoltage(&vbat)) {
@@ -217,9 +196,10 @@ void loop() {
           Serial.print(F("VPct = ")); Serial.print(vbat); Serial.println(F("%"));
         }
 
-        break;
-      }
+//        break;
+//      }
 
+/*
     case 'U': {
         // Unlock the SIM with a PIN code
         char PIN[5];
@@ -275,7 +255,7 @@ void loop() {
         break;
       }
 
-    /*** Audio ***/
+    // *** Audio ***
     case 'v': {
         // set volume
         flushSerial();
@@ -342,7 +322,7 @@ void loop() {
         break;
       }
 
-    /*** FM Radio ***/
+    //*** FM Radio ***
 
     case 'f': {
         // get freq
@@ -410,7 +390,7 @@ void loop() {
         break;
       }
 
-    /*** PWM ***/
+    //*** PWM ***
 
     case 'P': {
         // PWM Buzzer output @ 2KHz max
@@ -426,7 +406,7 @@ void loop() {
         break;
       }
 
-    /*** Call ***/
+    //*** Call ***
     case 'c': {
         // call a phone!
         char number[30];
@@ -476,7 +456,7 @@ void loop() {
         break;
       }
 
-    /*** SMS ***/
+    //*** SMS ***
 
     case 'N': {
         // read the number of SMS's!
@@ -605,7 +585,7 @@ void loop() {
       }
     }
 
-    /*** Time ***/
+    //*** Time ***
 
     case 'y': {
         // enable network time sync
@@ -631,7 +611,7 @@ void loop() {
       }
 
 
-    /*********************************** GPS (SIM808 only) */
+    //*********************************** GPS (SIM808 only)
 
     case 'o': {
         // turn GPS off
@@ -686,7 +666,7 @@ void loop() {
         break;
       }
 
-    /*********************************** GPRS */
+    //*********************************** GPRS
 
     case 'g': {
         // turn GPRS off
@@ -737,7 +717,7 @@ void loop() {
 
             // Serial.write is too slow, we'll write directly to Serial register!
 #if defined(__AVR_ATmega328P__) || defined(__AVR_ATmega168__)
-            loop_until_bit_is_set(UCSR0A, UDRE0); /* Wait until data register empty. */
+            loop_until_bit_is_set(UCSR0A, UDRE0); // Wait until data register empty.
             UDR0 = c;
 #else
             Serial.write(c);
@@ -777,7 +757,7 @@ void loop() {
             char c = fona.read();
 
 #if defined(__AVR_ATmega328P__) || defined(__AVR_ATmega168__)
-            loop_until_bit_is_set(UCSR0A, UDRE0); /* Wait until data register empty. */
+            loop_until_bit_is_set(UCSR0A, UDRE0); // Wait until data register empty.
             UDR0 = c;
 #else
             Serial.write(c);
@@ -791,7 +771,7 @@ void loop() {
         fona.HTTP_POST_end();
         break;
       }
-    /*****************************************/
+    //*****************************************
 
     case 'S': {
         Serial.println(F("Creating SERIAL TUBE"));
@@ -812,14 +792,18 @@ void loop() {
         printMenu();
         break;
       }
-  }
+//  } // switch
+  
   // flush input
   flushSerial();
+*/
+  
   while (fona.available()) {
     Serial.write(fona.read());
   }
 
 }
+
 
 void flushSerial() {
   while (Serial.available())
