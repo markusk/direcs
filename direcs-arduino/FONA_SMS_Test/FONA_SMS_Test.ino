@@ -49,6 +49,9 @@ uint8_t readline(char *buff, uint8_t maxbuff, uint16_t timeout = 0);
 
 uint8_t type;
 
+bool SIMunlocked = false;
+
+
 void setup() {
   while (!Serial);
 
@@ -159,12 +162,9 @@ void printMenu(void) {
 */
 
 
-void loop() {
+void loop() {  
   Serial.println("Ready!");
 
-
-  char command = Serial.read();
-  Serial.println(command);
 
 
 //  switch (command) {
@@ -180,7 +180,7 @@ void loop() {
         break;
       }
 */
-//    case 'b': {
+
         // read the battery voltage and percentage
         uint16_t vbat;
         if (! fona.getBattVoltage(&vbat)) {
@@ -189,7 +189,6 @@ void loop() {
           Serial.print(F("VBat = ")); Serial.print(vbat); Serial.println(F(" mV"));
         }
 
-
         if (! fona.getBattPercent(&vbat)) {
           Serial.println(F("Failed to read Batt"));
         } else {
@@ -197,24 +196,24 @@ void loop() {
         }
 
 
-//        break;
-//      }
-
-
-//    case 'U': {
+      // unlock SIM
+      if (SIMunlocked == false)
+      {
         // Unlock the SIM with PIN code
         char PIN[5] = { '5', '5', '5', '5', NULL};
 
         Serial.print(F("Unlocking SIM card: "));
+
         if (! fona.unlockSIM(PIN)) {
+          SIMunlocked = false;
           Serial.println(F("Failed"));
         } else {
+          SIMunlocked = true;
           Serial.println(F("OK!"));
         }
-//        break;
-//      }
+      }
 
-delay(10000);
+      delay(2000);
 
 /*
     case 'C': {
