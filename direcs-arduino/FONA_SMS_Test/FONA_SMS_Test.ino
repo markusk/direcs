@@ -196,6 +196,8 @@ void loop() {
           Serial.print(F("VPct = ")); Serial.print(vbat); Serial.println(F("%"));
         }
 
+        delay(2000);
+
 //        break;
 //      }
 
