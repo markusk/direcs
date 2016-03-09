@@ -47,12 +47,12 @@ Adafruit_FONA fona = Adafruit_FONA(FONA_RST);
 
 uint8_t readline(char *buff, uint8_t maxbuff, uint16_t timeout = 0);
 
-uint8_t type;
 
 // Markus
-bool SIMunlocked = false;
+uint8_t FONAtype;
+uint16_t FONAvoltage = 0;
 uint8_t FONAnetworkStatus = 0;
-
+bool SIMunlocked = false;
 
 
 void setup()
@@ -70,10 +70,10 @@ void setup()
     while (1);
   }
   
-  type = fona.type();
+  FONAtype = fona.type();
   Serial.println(F("FONA is OK"));
   Serial.print(F("Found "));
-  switch (type)
+  switch (FONAtype)
   {
     case FONA800L:
       Serial.println(F("FONA 800L")); break; // Markus' module
@@ -100,25 +100,23 @@ void setup()
   }
 
 
-  // read the battery voltage and percentage
-  uint16_t vbat;
-  
-  if (! fona.getBattVoltage(&vbat))
+  // read the battery voltage and percentage  
+  if (! fona.getBattVoltage(&FONAvoltage))
   {
     Serial.println(F("Failed to read Batt"));
   }
   else
   {
-    Serial.print(F("VBat = ")); Serial.print(vbat); Serial.println(F(" mV"));
+    Serial.print(F("VBat = ")); Serial.print(FONAvoltage); Serial.println(F(" mV"));
   }
   
-  if (! fona.getBattPercent(&vbat))
+  if (! fona.getBattPercent(&FONAvoltage))
   {
     Serial.println(F("Failed to read Batt"));
   }
   else
   {
-    Serial.print(F("VPct = ")); Serial.print(vbat); Serial.println(F("%"));
+    Serial.print(F("VPct = ")); Serial.print(FONAvoltage); Serial.println(F("%"));
   }
 
 
@@ -260,7 +258,7 @@ void loop()
     case 'v': {
         // set volume
         flushSerial();
-        if ( (type == FONA3G_A) || (type == FONA3G_E) ) {
+        if ( (FONAtype == FONA3G_A) || (FONAtype == FONA3G_E) ) {
           Serial.print(F("Set Vol [0-8] "));
         } else {
           Serial.print(F("Set Vol % [0-100] "));
@@ -278,7 +276,7 @@ void loop()
     case 'V': {
         uint8_t v = fona.getVolume();
         Serial.print(v);
-        if ( (type == FONA3G_A) || (type == FONA3G_E) ) {
+        if ( (FONAtype == FONA3G_A) || (FONAtype == FONA3G_E) ) {
           Serial.println(" / 8");
         } else {
           Serial.println("%");
@@ -503,7 +501,7 @@ void loop()
         uint16_t smslen;
         int8_t smsn;
 
-        if ( (type == FONA3G_A) || (type == FONA3G_E) ) {
+        if ( (FONAtype == FONA3G_A) || (FONAtype == FONA3G_E) ) {
           smsn = 0; // zero indexed
           smsnum--;
         } else {
@@ -643,7 +641,7 @@ void loop()
         // check for GPS location
         char gpsdata[120];
         fona.getGPS(0, gpsdata, 120);
-        if (type == FONA808_V1)
+        if (FONAtype == FONA808_V1)
           Serial.println(F("Reply in format: mode,longitude,latitude,altitude,utctime(yyyymmddHHMMSS),ttff,satellites,speed,course"));
         else 
           Serial.println(F("Reply in format: mode,fixstatus,utctime(yyyymmddHHMMSS),latitude,longitude,altitude,speed,course,fixmode,reserved1,HDOP,PDOP,VDOP,reserved2,view_satellites,used_satellites,reserved3,C/N0max,HPA,VPA"));
@@ -654,7 +652,7 @@ void loop()
 
     case 'E': {
         flushSerial();
-        if (type == FONA808_V1) {
+        if (FONAtype == FONA808_V1) {
           Serial.print(F("GPS NMEA output sentences (0 = off, 34 = RMC+GGA, 255 = all)"));
         } else {
           Serial.print(F("On (1) or Off (0)? "));
