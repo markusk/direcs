@@ -52,7 +52,8 @@ uint8_t type;
 bool SIMunlocked = false;
 
 
-void setup() {
+void setup()
+{
   while (!Serial);
 
   Serial.begin(115200);
@@ -60,14 +61,17 @@ void setup() {
   Serial.println(F("Initializing....(May take 3 seconds)"));
 
   fonaSerial->begin(4800);
-  if (! fona.begin(*fonaSerial)) {
+  if (! fona.begin(*fonaSerial))
+  {
     Serial.println(F("Couldn't find FONA"));
     while (1);
   }
+  
   type = fona.type();
   Serial.println(F("FONA is OK"));
   Serial.print(F("Found "));
-  switch (type) {
+  switch (type)
+  {
     case FONA800L:
       Serial.println(F("FONA 800L")); break;
     case FONA800H:
@@ -87,12 +91,55 @@ void setup() {
   // Print module IMEI number.
   char imei[15] = {0}; // MUST use a 16 character buffer for IMEI!
   uint8_t imeiLen = fona.getIMEI(imei);
-  if (imeiLen > 0) {
+  if (imeiLen > 0)
+  {
     Serial.print("Module IMEI: "); Serial.println(imei);
   }
 
 
-}
+  // read the battery voltage and percentage
+  uint16_t vbat;
+  
+  if (! fona.getBattVoltage(&vbat))
+  {
+    Serial.println(F("Failed to read Batt"));
+  }
+  else
+  {
+    Serial.print(F("VBat = ")); Serial.print(vbat); Serial.println(F(" mV"));
+  }
+  
+  if (! fona.getBattPercent(&vbat))
+  {
+    Serial.println(F("Failed to read Batt"));
+  }
+  else
+  {
+    Serial.print(F("VPct = ")); Serial.print(vbat); Serial.println(F("%"));
+  }
+
+
+  // unlock SIM
+  if (SIMunlocked == false)
+  {
+    // Unlock the SIM with PIN code
+    char PIN[5] = { '5', '5', '5', '5', NULL};
+
+    Serial.print(F("Unlocking SIM card: "));
+
+    if (! fona.unlockSIM(PIN))
+    {
+      SIMunlocked = false;
+      Serial.println(F("Failed"));
+    }
+    else
+    {
+      SIMunlocked = true;
+      Serial.println(F("OK!"));
+    }
+  }
+
+} // setup
 
 /*
 void printMenu(void) {
@@ -162,9 +209,8 @@ void printMenu(void) {
 */
 
 
-void loop() {  
-  Serial.println("Ready!");
-
+void loop()
+{  
 
 
 //  switch (command) {
@@ -181,37 +227,6 @@ void loop() {
       }
 */
 
-        // read the battery voltage and percentage
-        uint16_t vbat;
-        if (! fona.getBattVoltage(&vbat)) {
-          Serial.println(F("Failed to read Batt"));
-        } else {
-          Serial.print(F("VBat = ")); Serial.print(vbat); Serial.println(F(" mV"));
-        }
-
-        if (! fona.getBattPercent(&vbat)) {
-          Serial.println(F("Failed to read Batt"));
-        } else {
-          Serial.print(F("VPct = ")); Serial.print(vbat); Serial.println(F("%"));
-        }
-
-
-      // unlock SIM
-      if (SIMunlocked == false)
-      {
-        // Unlock the SIM with PIN code
-        char PIN[5] = { '5', '5', '5', '5', NULL};
-
-        Serial.print(F("Unlocking SIM card: "));
-
-        if (! fona.unlockSIM(PIN)) {
-          SIMunlocked = false;
-          Serial.println(F("Failed"));
-        } else {
-          SIMunlocked = true;
-          Serial.println(F("OK!"));
-        }
-      }
 
       delay(2000);
 
@@ -797,11 +812,18 @@ void loop() {
   // flush input
   flushSerial();
 */
-  
-  while (fona.available()) {
+
+ 
+/*
+ * 
+ * read all data available from FONA and show them on Arduinos serial monitor with Serial.write()
+ * 
+ * /
+  while (fona.available())
+  {
     Serial.write(fona.read());
   }
-
+*/
 }
 
 
