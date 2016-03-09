@@ -458,7 +458,11 @@ void loop()
     //*** SMS ***
 
     case 'N': {
-        // read the number of SMS's!
+*/
+  // read the number of SMS's
+  // (if we are online and not roaming)
+  if (FONAnetworkStatus == 1)
+  {
         int8_t smsnum = fona.getNumSMS();
         if (smsnum < 0) {
           Serial.println(F("Could not read # SMS"));
@@ -466,6 +470,8 @@ void loop()
           Serial.print(smsnum);
           Serial.println(F(" SMS's on SIM card!"));
         }
+  }
+/*
         break;
       }
     case 'r': {
