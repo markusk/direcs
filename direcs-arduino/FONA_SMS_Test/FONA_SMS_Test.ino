@@ -53,6 +53,8 @@ uint8_t FONAtype;
 uint16_t FONAvoltage = 0;
 uint8_t FONAnetworkStatus = 0;
 bool SIMunlocked = false;
+int8_t FONAsmsnum = 0;
+
 
 
 void setup()
@@ -459,18 +461,24 @@ void loop()
 
     case 'N': {
 */
+
   // read the number of SMS's
-  // (if we are online and not roaming)
+  // (if we are online and not roaming (1))
   if (FONAnetworkStatus == 1)
   {
-        int8_t smsnum = fona.getNumSMS();
-        if (smsnum < 0) {
-          Serial.println(F("Could not read # SMS"));
-        } else {
-          Serial.print(smsnum);
-          Serial.println(F(" SMS's on SIM card!"));
-        }
+    FONAsmsnum = fona.getNumSMS();
+    
+    if (FONAsmsnum < 0)
+    {
+      Serial.println(F("Could not read # SMS"));
+    }
+    else
+    {
+      Serial.print(FONAsmsnum);
+      Serial.println(F(" SMS's on SIM card!"));
+    }
   }
+
 /*
         break;
       }
