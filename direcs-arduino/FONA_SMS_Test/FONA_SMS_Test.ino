@@ -49,7 +49,10 @@ uint8_t readline(char *buff, uint8_t maxbuff, uint16_t timeout = 0);
 
 uint8_t type;
 
+// Markus
 bool SIMunlocked = false;
+uint8_t FONAnetworkStatus = 0;
+
 
 
 void setup()
@@ -73,7 +76,7 @@ void setup()
   switch (type)
   {
     case FONA800L:
-      Serial.println(F("FONA 800L")); break;
+      Serial.println(F("FONA 800L")); break; // Markus' module
     case FONA800H:
       Serial.println(F("FONA 800H")); break;
     case FONA808_V1:
@@ -190,17 +193,6 @@ void printMenu(void) {
   Serial.println(F("[l] Query GSMLOC (GPRS)"));
   Serial.println(F("[w] Read webpage (GPRS)"));
   Serial.println(F("[W] Post to website (GPRS)"));
-
-  // GPS
-  if ((type == FONA3G_A) || (type == FONA3G_E) || (type == FONA808_V1) || (type == FONA808_V2)) {
-    Serial.println(F("[O] Turn GPS on (FONA 808 & 3G)"));
-    Serial.println(F("[o] Turn GPS off (FONA 808 & 3G)"));
-    Serial.println(F("[L] Query GPS location (FONA 808 & 3G)"));
-    if (type == FONA808_V1) {
-      Serial.println(F("[x] GPS fix status (FONA808 v1 only)"));
-    }
-    Serial.println(F("[E] Raw NMEA out (FONA808)"));
-  }
   
   Serial.println(F("[S] create Serial passthru tunnel"));
   Serial.println(F("-------------------------------------"));
@@ -210,9 +202,7 @@ void printMenu(void) {
 
 
 void loop()
-{  
-
-
+{
 //  switch (command) {
 /*
     case 'a': {
@@ -225,12 +215,7 @@ void loop()
         }
         break;
       }
-*/
 
-
-      delay(2000);
-
-/*
     case 'C': {
         // read the CCID
         fona.getSIMCCID(replybuffer);  // make sure replybuffer is at least 21 bytes!
@@ -256,20 +241,21 @@ void loop()
       }
 
     case 'n': {
-        // read the network/cellular status
-        uint8_t n = fona.getNetworkStatus();
-        Serial.print(F("Network status "));
-        Serial.print(n);
-        Serial.print(F(": "));
-        if (n == 0) Serial.println(F("Not registered"));
-        if (n == 1) Serial.println(F("Registered (home)"));
-        if (n == 2) Serial.println(F("Not registered (searching)"));
-        if (n == 3) Serial.println(F("Denied"));
-        if (n == 4) Serial.println(F("Unknown"));
-        if (n == 5) Serial.println(F("Registered roaming"));
-        break;
-      }
+*/
+  // read the network/cellular status
+  FONAnetworkStatus = fona.getNetworkStatus();
+  
+  Serial.print(F("Network status "));
+  Serial.print(FONAnetworkStatus);
+  Serial.print(F(": "));
+  if (FONAnetworkStatus == 0) Serial.println(F("Not registered"));
+  if (FONAnetworkStatus == 1) Serial.println(F("Registered (home)"));
+  if (FONAnetworkStatus == 2) Serial.println(F("Not registered (searching)"));
+  if (FONAnetworkStatus == 3) Serial.println(F("Denied"));
+  if (FONAnetworkStatus == 4) Serial.println(F("Unknown"));
+  if (FONAnetworkStatus == 5) Serial.println(F("Registered roaming"));
 
+/*
     // *** Audio ***
     case 'v': {
         // set volume
@@ -824,6 +810,8 @@ void loop()
     Serial.write(fona.read());
   }
 */
+
+  delay(2000);
 }
 
 
