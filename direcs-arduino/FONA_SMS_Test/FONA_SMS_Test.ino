@@ -54,6 +54,8 @@ uint16_t FONAvoltage = 0;
 uint8_t FONAnetworkStatus = 0;
 bool SIMunlocked = false;
 int8_t FONAsmsnum = 0;
+int8_t FONAsmsInitialNum = 0;
+bool initialSMScounted = false;
 
 
 
@@ -141,7 +143,6 @@ void setup()
       Serial.println(F("OK!"));
     }
   }
-
 } // setup
 
 /*
@@ -462,10 +463,31 @@ void loop()
     case 'N': {
 */
 
-  // read the number of SMS's
+
   // (if we are online and not roaming (1))
   if (FONAnetworkStatus == 1)
   {
+
+    // read initial amount of exisiting SMS on SIM card
+    if (initialSMScounted == false)
+    {
+      FONAsmsInitialNum = fona.getNumSMS();
+      
+      if (FONAsmsInitialNum < 0)
+      {
+        FONAsmsInitialNum = 0;
+        Serial.println(F("Could not read initial # SMS"));
+      }
+      else
+      {
+        initialSMScounted = true;
+        Serial.print(FONAsmsInitialNum);
+        Serial.println(F(" exisiting SMS's on SIM."));
+      }
+    }
+
+    
+    // read new/current the number of SMS's
     FONAsmsnum = fona.getNumSMS();
     
     if (FONAsmsnum < 0)
@@ -477,6 +499,7 @@ void loop()
       Serial.print(FONAsmsnum);
       Serial.println(F(" SMS's on SIM card!"));
 
+/*
       // read all SMS
       uint16_t smslen;
       int8_t smsn;
@@ -514,7 +537,17 @@ void loop()
         Serial.print(" ("); Serial.print(smslen); Serial.println(F(") bytes *****"));
         Serial.println(replybuffer);
         Serial.println(F("*****"));
+      } // num SMS
+ */
+
+      // are there new SMS?
+      if (FONAsmsnum > FONAsmsInitialNum)
+      {
+        Serial.print(F("*** "));
+        Serial.print(FONAsmsnum - FONAsmsInitialNum);
+        Serial.println(F(" new SMS's on SIM card! ***"));
       }
+ 
     } // SMS > 0
   } // GSM ok
 
