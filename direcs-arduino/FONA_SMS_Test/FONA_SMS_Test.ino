@@ -476,8 +476,47 @@ void loop()
     {
       Serial.print(FONAsmsnum);
       Serial.println(F(" SMS's on SIM card!"));
-    }
-  }
+
+      // read all SMS
+      uint16_t smslen;
+      int8_t smsn;
+
+      if ( (FONAtype == FONA3G_A) || (FONAtype == FONA3G_E) )
+      {
+        smsn = 0; // zero indexed
+        FONAsmsnum--;
+      }
+      else
+      {
+        smsn = 1;  // 1 indexed
+      }
+      
+      for ( ; smsn <= FONAsmsnum; smsn++)
+      {
+        Serial.print(F("\n\rReading SMS #")); Serial.println(smsn);
+        if (!fona.readSMS(smsn, replybuffer, 250, &smslen))
+        {  // pass in buffer and max len!
+          Serial.println(F("Failed!"));
+          break;
+        }
+        
+        // if the length is zero, its a special case where the index number is higher
+        // so increase the max we'll look at!
+        if (smslen == 0)
+        {
+          Serial.println(F("[empty slot]"));
+          FONAsmsnum++;
+          continue;
+        }
+
+        // content of SMS
+        Serial.print(F("***** SMS #")); Serial.print(smsn);
+        Serial.print(" ("); Serial.print(smslen); Serial.println(F(") bytes *****"));
+        Serial.println(replybuffer);
+        Serial.println(F("*****"));
+      }
+    } // SMS > 0
+  } // GSM ok
 
 /*
         break;
@@ -623,61 +662,6 @@ void loop()
         break;
       }
 
-
-    //*********************************** GPS (SIM808 only)
-
-    case 'o': {
-        // turn GPS off
-        if (!fona.enableGPS(false))
-          Serial.println(F("Failed to turn off"));
-        break;
-      }
-    case 'O': {
-        // turn GPS on
-        if (!fona.enableGPS(true))
-          Serial.println(F("Failed to turn on"));
-        break;
-      }
-    case 'x': {
-        int8_t stat;
-        // check GPS fix
-        stat = fona.GPSstatus();
-        if (stat < 0)
-          Serial.println(F("Failed to query"));
-        if (stat == 0) Serial.println(F("GPS off"));
-        if (stat == 1) Serial.println(F("No fix"));
-        if (stat == 2) Serial.println(F("2D fix"));
-        if (stat == 3) Serial.println(F("3D fix"));
-        break;
-      }
-
-    case 'L': {
-        // check for GPS location
-        char gpsdata[120];
-        fona.getGPS(0, gpsdata, 120);
-        if (FONAtype == FONA808_V1)
-          Serial.println(F("Reply in format: mode,longitude,latitude,altitude,utctime(yyyymmddHHMMSS),ttff,satellites,speed,course"));
-        else 
-          Serial.println(F("Reply in format: mode,fixstatus,utctime(yyyymmddHHMMSS),latitude,longitude,altitude,speed,course,fixmode,reserved1,HDOP,PDOP,VDOP,reserved2,view_satellites,used_satellites,reserved3,C/N0max,HPA,VPA"));
-        Serial.println(gpsdata);
-
-        break;
-      }
-
-    case 'E': {
-        flushSerial();
-        if (FONAtype == FONA808_V1) {
-          Serial.print(F("GPS NMEA output sentences (0 = off, 34 = RMC+GGA, 255 = all)"));
-        } else {
-          Serial.print(F("On (1) or Off (0)? "));
-        }
-        uint8_t nmeaout = readnumber();
-
-        // turn on NMEA output
-        fona.enableGPSNMEA(nmeaout);
-
-        break;
-      }
 
     //*********************************** GPRS
 
