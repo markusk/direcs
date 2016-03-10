@@ -117,6 +117,7 @@ unix|macx {
 				-lopencv_imgproc \
 				-lphonon
 
+	# For QtSpeech!
 	LIBS *= -framework AppKit
 
 	QMAKE_CXXFLAGS_DEBUG += -pg
