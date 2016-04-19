@@ -124,6 +124,7 @@ void setup() {
     
 }
 
+/*
 void printMenu(void) {
   Serial.println(F("-------------------------------------"));
   Serial.println(F("[?] Print this menu"));
@@ -189,6 +190,7 @@ void printMenu(void) {
   Serial.println(F(""));
 
 }
+*/
 
 
 void loop()
@@ -223,22 +225,29 @@ void loop()
         break;
       }
 
-    case 'b': {
+    case 'b': { */
+    
         // read the battery voltage and percentage
         uint16_t vbat;
-        if (! fona.getBattVoltage(&vbat)) {
+        if (! fona.getBattVoltage(&vbat))
+        {
           Serial.println(F("Failed to read Batt"));
-        } else {
+        }
+        else
+        {
           Serial.print(F("VBat = ")); Serial.print(vbat); Serial.println(F(" mV"));
         }
 
 
-        if (! fona.getBattPercent(&vbat)) {
+        if (! fona.getBattPercent(&vbat))
+        {
           Serial.println(F("Failed to read Batt"));
-        } else {
+        }
+        else
+        {
           Serial.print(F("VPct = ")); Serial.print(vbat); Serial.println(F("%"));
         }
-
+/*
         break;
       }
 
