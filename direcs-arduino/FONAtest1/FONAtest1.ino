@@ -291,7 +291,7 @@ void loop()
         break;
       }
 
-    case 'n': {
+    case 'n': { */
         // read the network/cellular status
         uint8_t n = fona.getNetworkStatus();
         Serial.print(F("Network status "));
@@ -303,7 +303,7 @@ void loop()
         if (n == 3) Serial.println(F("Denied"));
         if (n == 4) Serial.println(F("Unknown"));
         if (n == 5) Serial.println(F("Registered roaming"));
-        break;
+/*        break;
       }
 
     //*** Audio ***
