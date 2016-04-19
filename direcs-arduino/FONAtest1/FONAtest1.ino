@@ -498,17 +498,22 @@ void loop()
         break;
       }
 */
-    /*** SMS ***/
+    //*** SMS ***
 
 //    case 'N': {
         // read the number of SMS's!
         int8_t smsnum = fona.getNumSMS();
-        if (smsnum < 0) {
+        if (smsnum < 0)
+        {
           Serial.println(F("Could not read # SMS"));
-        } else {
+        }
+        else
+        {
           Serial.print(smsnum);
           Serial.println(F(" SMS's on SIM card!"));
         }
+
+
 //        break;
 //      }
 
@@ -540,28 +545,37 @@ void loop()
 
         break;
       }
-    case 'R': {
+    case 'R': { */
         // read all SMS
-        int8_t smsnum = fona.getNumSMS();
+//        int8_t smsnum = fona.getNumSMS();
+        smsnum = fona.getNumSMS();
         uint16_t smslen;
         int8_t smsn;
 
-        if ( (type == FONA3G_A) || (type == FONA3G_E) ) {
+        if ( (type == FONA3G_A) || (type == FONA3G_E) )
+        {
           smsn = 0; // zero indexed
           smsnum--;
-        } else {
+        }
+        else
+        {
           smsn = 1;  // 1 indexed
         }
 
-        for ( ; smsn <= smsnum; smsn++) {
+        for ( ; smsn <= smsnum; smsn++)
+        {
           Serial.print(F("\n\rReading SMS #")); Serial.println(smsn);
-          if (!fona.readSMS(smsn, replybuffer, 250, &smslen)) {  // pass in buffer and max len!
+          
+          if (!fona.readSMS(smsn, replybuffer, 250, &smslen))
+          {  // pass in buffer and max len!
             Serial.println(F("Failed!"));
             break;
           }
+          
           // if the length is zero, its a special case where the index number is higher
           // so increase the max we'll look at!
-          if (smslen == 0) {
+          if (smslen == 0)
+          {
             Serial.println(F("[empty slot]"));
             smsnum++;
             continue;
@@ -572,7 +586,7 @@ void loop()
           Serial.println(replybuffer);
           Serial.println(F("*****"));
         }
-        break;
+/*        break;
       }
 
     case 'd': {
