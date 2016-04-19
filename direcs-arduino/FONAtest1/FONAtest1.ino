@@ -49,6 +49,8 @@ Adafruit_FONA fona = Adafruit_FONA(FONA_RST);
 // Use this one for FONA 3G
 //Adafruit_FONA_3G fona = Adafruit_FONA_3G(FONA_RST);
 
+
+// takes the input buffer from the serial monitor (i.e. SMS text to be sent)
 uint8_t readline(char *buff, uint8_t maxbuff, uint16_t timeout = 0);
 
 uint8_t type;
@@ -104,7 +106,22 @@ void setup() {
   // the following line then redirects over SSL will be followed.
   //fona.setHTTPSRedirect(true);
 
-  printMenu();
+//  printMenu();
+
+  // Unlock the SIM with PIN code
+  char PIN[5] = { '5', '5', '5', '5', NULL};
+
+  Serial.print(F("Unlocking SIM card: "));
+
+  if (! fona.unlockSIM(PIN))
+  {
+    Serial.println(F("Failed"));
+  }
+  else
+  {
+    Serial.println(F("OK!"));
+  }
+    
 }
 
 void printMenu(void) {
@@ -172,8 +189,12 @@ void printMenu(void) {
   Serial.println(F(""));
 
 }
-void loop() {
+
+
+void loop()
+{
   Serial.print(F("FONA> "));
+/*
   while (! Serial.available() ) {
     if (fona.available()) {
       Serial.write(fona.read());
@@ -182,8 +203,9 @@ void loop() {
 
   char command = Serial.read();
   Serial.println(command);
+*/
 
-
+/*
   switch (command) {
     case '?': {
         printMenu();
@@ -275,7 +297,7 @@ void loop() {
         break;
       }
 
-    /*** Audio ***/
+    //*** Audio ***
     case 'v': {
         // set volume
         flushSerial();
@@ -342,7 +364,7 @@ void loop() {
         break;
       }
 
-    /*** FM Radio ***/
+    //*** FM Radio ***
 
     case 'f': {
         // get freq
@@ -410,7 +432,7 @@ void loop() {
         break;
       }
 
-    /*** PWM ***/
+    //*** PWM ***
 
     case 'P': {
         // PWM Buzzer output @ 2KHz max
@@ -426,7 +448,7 @@ void loop() {
         break;
       }
 
-    /*** Call ***/
+    //*** Call ***
     case 'c': {
         // call a phone!
         char number[30];
@@ -475,10 +497,10 @@ void loop() {
         }
         break;
       }
-
+*/
     /*** SMS ***/
 
-    case 'N': {
+//    case 'N': {
         // read the number of SMS's!
         int8_t smsnum = fona.getNumSMS();
         if (smsnum < 0) {
@@ -487,8 +509,10 @@ void loop() {
           Serial.print(smsnum);
           Serial.println(F(" SMS's on SIM card!"));
         }
-        break;
-      }
+//        break;
+//      }
+
+/*
     case 'r': {
         // read an SMS
         flushSerial();
@@ -605,7 +629,7 @@ void loop() {
       }
     }
 
-    /*** Time ***/
+    //*** Time ***
 
     case 'y': {
         // enable network time sync
@@ -631,7 +655,7 @@ void loop() {
       }
 
 
-    /*********************************** GPS (SIM808 only) */
+    //*********************************** GPS (SIM808 only) *
 
     case 'o': {
         // turn GPS off
@@ -686,7 +710,7 @@ void loop() {
         break;
       }
 
-    /*********************************** GPRS */
+    //*********************************** GPRS *
 
     case 'g': {
         // turn GPRS off
@@ -737,7 +761,7 @@ void loop() {
 
             // Serial.write is too slow, we'll write directly to Serial register!
 #if defined(__AVR_ATmega328P__) || defined(__AVR_ATmega168__)
-            loop_until_bit_is_set(UCSR0A, UDRE0); /* Wait until data register empty. */
+            loop_until_bit_is_set(UCSR0A, UDRE0); //* Wait until data register empty. *
             UDR0 = c;
 #else
             Serial.write(c);
@@ -777,7 +801,7 @@ void loop() {
             char c = fona.read();
 
 #if defined(__AVR_ATmega328P__) || defined(__AVR_ATmega168__)
-            loop_until_bit_is_set(UCSR0A, UDRE0); /* Wait until data register empty. */
+            loop_until_bit_is_set(UCSR0A, UDRE0); //* Wait until data register empty. *
             UDR0 = c;
 #else
             Serial.write(c);
@@ -791,7 +815,7 @@ void loop() {
         fona.HTTP_POST_end();
         break;
       }
-    /*****************************************/
+    //*****************************************
 
     case 'S': {
         Serial.println(F("Creating SERIAL TUBE"));
@@ -812,12 +836,17 @@ void loop() {
         printMenu();
         break;
       }
-  }
+//  }
+*/
+/*  
   // flush input
   flushSerial();
   while (fona.available()) {
     Serial.write(fona.read());
   }
+*/
+
+  delay(1000);
 
 }
 
@@ -830,6 +859,7 @@ char readBlocking() {
   while (!Serial.available());
   return Serial.read();
 }
+
 uint16_t readnumber() {
   uint16_t x = 0;
   char c;
@@ -846,6 +876,8 @@ uint16_t readnumber() {
   return x;
 }
 
+
+// takes the input buffer from the serial monitor (i.e. SMS text to be sent)
 uint8_t readline(char *buff, uint8_t maxbuff, uint16_t timeout) {
   uint16_t buffidx = 0;
   boolean timeoutvalid = true;
